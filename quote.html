@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Request Quote · Chemotech International</title>
-<meta name="description" content="Request a quotation from Chemotech International for electrical panels, UPS, VFD, PLC, SCADA, water treatment plants, process chemicals and building systems.">
+<meta name="description" content="Request a quotation from Chemotech International for panels, transformers, DG sets, UPS, VFD, PLC, SCADA, water treatment plants, hygiene stations, pre-fab structures, networking and CCTV.">
 <meta name="theme-color" content="#000080">
 <meta property="og:title" content="Request Quote · Chemotech International">
-<meta property="og:description" content="Request a quotation from Chemotech International for electrical panels, UPS, VFD, PLC, SCADA, water treatment plants, process chemicals and building systems.">
+<meta property="og:description" content="Request a quotation from Chemotech International for panels, transformers, DG sets, UPS, VFD, PLC, SCADA, water treatment plants, hygiene stations, pre-fab structures, networking and CCTV.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/img/chemotech-logo.png">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -67,13 +67,19 @@
           <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" data-label="Phone" required data-msg="Please enter a phone number." autocomplete="tel"><span class="err" data-err-for="phone" aria-live="polite"></span></div>
         </div>
       </fieldset>
-      <fieldset class="checks-wrap" data-label="Verticals">
+      <fieldset>
         <legend>2 · What do you need?</legend>
-        <div class="checks"><label><input type="checkbox" name="vertical" value="Electrical Works &amp; Power Distribution">Electrical Works &amp; Power Distribution</label><label><input type="checkbox" name="vertical" value="Power Backup, Quality &amp; Energy">Power Backup, Quality &amp; Energy</label><label><input type="checkbox" name="vertical" value="Automation &amp; Instrumentation">Automation &amp; Instrumentation</label><label><input type="checkbox" name="vertical" value="Water, Steam &amp; Process Utilities">Water, Steam &amp; Process Utilities</label><label><input type="checkbox" name="vertical" value="Process Chemicals &amp; Hygiene">Process Chemicals &amp; Hygiene</label><label><input type="checkbox" name="vertical" value="Building &amp; Infrastructure Solutions">Building &amp; Infrastructure Solutions</label></div>
+        <div class="picked" id="picked" hidden>
+          <p><b>From the catalogue:</b> these products will be included in your request.</p>
+          <ul></ul>
+          <a class="text-link" href="products.html">Add more products <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+        <input type="hidden" id="picked-input" data-label="Catalogue products">
+        <div class="checks" role="group" aria-label="Categories" data-label="Categories"><label><input type="checkbox" name="category" value="Power Distribution">Power Distribution</label><label><input type="checkbox" name="category" value="Switchgear &amp; Controls">Switchgear &amp; Controls</label><label><input type="checkbox" name="category" value="Cabling, Lighting &amp; Safety">Cabling, Lighting &amp; Safety</label><label><input type="checkbox" name="category" value="Power Backup &amp; Energy">Power Backup &amp; Energy</label><label><input type="checkbox" name="category" value="Automation &amp; Instrumentation">Automation &amp; Instrumentation</label><label><input type="checkbox" name="category" value="Water &amp; Process">Water &amp; Process</label><label><input type="checkbox" name="category" value="Building &amp; ICT">Building &amp; ICT</label><label><input type="checkbox" name="category" value="Services">Services</label></div>
       </fieldset>
       <fieldset>
         <legend>3 · Scope</legend>
-        <div class="field"><label for="requirement">Products or systems required</label><textarea id="requirement" name="requirement" data-label="Requirement" required data-msg="Please describe what you need." placeholder="e.g. 2 × 200 kVA online UPS with 30 min backup; 5 HP VFD panels for pumps; 50 KLD STP"></textarea><span class="err" data-err-for="requirement" aria-live="polite"></span></div>
+        <div class="field"><label for="requirement">Quantities, ratings and details</label><textarea id="requirement" name="requirement" data-label="Requirement" required data-msg="Please describe what you need." placeholder="e.g. 2 × 200 kVA online UPS with 30 min backup; 5 HP VFD panels for pumps; 50 KLD STP (MBBR)"></textarea><span class="err" data-err-for="requirement" aria-live="polite"></span></div>
         <div class="row">
           <div class="field"><label for="site">Site location</label><input id="site" name="site" type="text" data-label="Site location" required data-msg="Please enter the site location." placeholder="City, state, country"><span class="err" data-err-for="site" aria-live="polite"></span></div>
           <div class="field">
@@ -96,7 +102,7 @@
               <option>Service / AMC</option>
             </select>
           </div>
-          <div class="field"><label for="ref">Product codes <span class="opt">(optional)</span></label><input id="ref" name="ref" type="text" data-label="Product codes" placeholder="e.g. 2.1.1, 3.1.1"></div>
+          <div class="field"><label for="makes">Preferred makes <span class="opt">(optional)</span></label><input id="makes" name="makes" type="text" data-label="Preferred makes" placeholder="e.g. Delta, Kirloskar, L&amp;T"></div>
         </div>
       </fieldset>
       <div class="form-status" role="status" hidden>
@@ -124,8 +130,8 @@
         <a href="mailto:info.chemotechinternational@gmail.com">info.chemotechinternational@gmail.com</a>
       </div>
       <div class="aside-card">
-        <h3>Find product codes</h3>
-        <p>Every item in our <a href="products.html">product catalogue</a> has a reference code, such as 3.1.1 for variable frequency drives.</p>
+        <h3>Pick from the catalogue</h3>
+        <p>Open any product in our <a href="products.html">catalogue</a> and choose &ldquo;Add to enquiry&rdquo;. Your picks appear in this form.</p>
       </div>
     </aside>
   </div>
@@ -137,17 +143,18 @@
       <div class="footer-brand">
         <div class="logo-tile"><img src="assets/img/chemotech-logo.png" width="880" height="135" alt="Chemotech International" loading="lazy"></div>
         <p class="tagline">…a Clean and Conditioning company</p>
-        <p>Integrated electrical, power, automation, water and process-utility solutions for industry and government projects since 2014–15.</p>
+        <p>Integrated electrical, power, automation, water, process, building and ICT solutions for industry and government projects since 2014–15.</p>
       </div>
       <div>
         <h4>Our products</h4>
-        <ul><li><a href="products.html#electrical">Electrical Works &amp; Power Distribution</a></li><li><a href="products.html#power">Power Backup, Quality &amp; Energy</a></li><li><a href="products.html#automation">Automation &amp; Instrumentation</a></li><li><a href="products.html#water">Water, Steam &amp; Process Utilities</a></li><li><a href="products.html#chemicals">Process Chemicals &amp; Hygiene</a></li><li><a href="products.html#building">Building &amp; Infrastructure Solutions</a></li></ul>
+        <ul><li><a href="products.html#cat-pd">Power Distribution</a></li><li><a href="products.html#cat-sw">Switchgear &amp; Controls</a></li><li><a href="products.html#cat-cl">Cabling, Lighting &amp; Safety</a></li><li><a href="products.html#cat-pb">Power Backup &amp; Energy</a></li><li><a href="products.html#cat-au">Automation &amp; Instrumentation</a></li><li><a href="products.html#cat-wp">Water &amp; Process</a></li><li><a href="products.html#cat-bi">Building &amp; ICT</a></li><li><a href="products.html#cat-sv">Services</a></li></ul>
       </div>
       <div>
         <h4>Company</h4>
         <ul>
           <li><a href="about.html">About Us</a></li>
           <li><a href="company-profile.html">Company Profile</a></li>
+          <li><a href="company-profile.html#clients">Clients &amp; Projects</a></li>
           <li><a href="certifications.html">Certifications</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="quote.html">Request Quote</a></li>
@@ -156,10 +163,7 @@
       <div>
         <h4>Reach us</h4>
         <ul>
-          <li><a href="tel:+919899982418">+91 98999 82418</a></li>
-          <li><a href="tel:+919910680998">+91 99106 80998</a></li>
-          <li><a href="tel:+918757446605">+91 87574 46605</a></li>
-          <li><a href="tel:+919312282418">+91 93122 82418</a> <span class="muted">(Delhi)</span></li>
+          <li><a href="tel:+919899982418">+91 98999 82418</a></li><li><a href="tel:+919910680998">+91 99106 80998</a></li><li><a href="tel:+918757446605">+91 87574 46605</a></li><li><a href="tel:+919312282418">+91 93122 82418</a></li>
           <li><a href="mailto:info.chemotechinternational@gmail.com">info.chemotechinternational@gmail.com</a></li>
           <li>Mon – Sat: 9 AM – 7 PM</li>
         </ul>
@@ -179,5 +183,6 @@
   </div>
 </footer>
 <script src="assets/js/main.js"></script>
+
 </body>
 </html>

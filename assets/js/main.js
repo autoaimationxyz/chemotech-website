@@ -77,6 +77,33 @@
     document.querySelectorAll(".vsection").forEach(function (s) { io.observe(s); });
   }
 
+  /* ---- Quote form: products picked in the catalogue ---- */
+  var picked = document.getElementById("picked");
+  if (picked) {
+    var KEY = "chemotech-enquiry";
+    var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return []; } };
+    var write = function (l) { try { localStorage.setItem(KEY, JSON.stringify(l)); } catch (e) { /* ignore */ } };
+    var input = document.getElementById("picked-input");
+    var list = picked.querySelector("ul");
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var render = function () {
+      var items = read();
+      picked.hidden = items.length === 0;
+      list.innerHTML = items.map(function (x) {
+        return '<li><code>' + pad(x.no) + '</code>' + esc(x.name) + '<button type="button" data-remove="' + x.no + '" aria-label="Remove ' + esc(x.name) + '">&times;</button></li>';
+      }).join("");
+      input.value = items.map(function (x) { return pad(x.no) + " " + x.name; }).join("; ");
+    };
+    picked.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-remove]");
+      if (!b) return;
+      write(read().filter(function (x) { return x.no !== +b.dataset.remove; }));
+      render();
+    });
+    render();
+  }
+
   /* ---- Forms: validate, then open the visitor's email app ---- */
   document.querySelectorAll("form[data-mailto]").forEach(function (form) {
     var status = form.querySelector(".form-status");
@@ -96,7 +123,7 @@
       var lines = [];
       form.querySelectorAll("[data-label]").forEach(function (el) {
         var val;
-        if (el.matches("fieldset")) {
+        if (el.matches("fieldset, [role=group]")) {
           val = Array.prototype.map.call(el.querySelectorAll("input:checked"), function (c) { return c.value; }).join(", ");
         } else {
           val = el.value.trim();
