@@ -86,8 +86,6 @@ EXTRA_IMAGES = {
     29: [("assets/img/servo-stabilizer.jpg", "Servo Voltage Stabiliser", "Air-cooled, panel-mounted controls", "Krykard")],
     39: [("assets/img/wtp-softener.jpg", "Softener & Filter Vessels", "FRP vessels with multiport valves", "Micro Filteration Technologies")],
 }
-COVER = {"wtp-on-site", "led-video-wall", "prefab-building", "ss-fabricated-plant", "solar-power",
-         "cold-clean-rooms", "silent-dg-set", "industrial-ro-plant", "ultrafiltration", "softening-dm-vessels"}
 
 for p in PRODUCTS:
     p["cat"] = CAT_BY_NO[p["no"]]
@@ -702,9 +700,8 @@ def products():
         c = CAT[p["cat"]]
         if p["images"]:
             im = p["images"][0]
-            slug = im["src"].rsplit("/", 1)[1][:-4]
             badge = f'<span class="count-badge">{len(p["images"])} photos</span>' if len(p["images"]) > 1 else ""
-            media = f'<img src="{im["src"]}" alt="" loading="lazy" class="{"cover" if slug in COVER else ""}">{badge}'
+            media = f'<img src="{im["src"]}" alt="" loading="lazy">{badge}'
         else:
             media = f'<div class="equipment-tile"><span class="equipment-no">{p["no"]:02d} / {E(c[1])}</span>{product_illustration(p)}<span class="illustration-caption">Configuration illustration</span></div>'
         mk = "".join(f"<li>{E(m)}</li>" for m in p["main_makes"][:3])

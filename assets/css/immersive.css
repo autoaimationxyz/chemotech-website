@@ -388,3 +388,37 @@ a:hover { color: #fff; }
 .portfolio-link > .btn { flex: none; }
 .office[id] { scroll-margin-top: 100px; }
 @media (max-width:600px) { .office-links a + a { padding-left: 20px; } .office-links b { font-size: 22px; } .portfolio-link { flex-direction: column; align-items: start; } }
+/* A single responsive image canvas across product and solution cards. */
+:root { --product-image-ratio: 3 / 2; --product-image-padding: 16px; }
+.pcard__open { grid-template-rows: auto minmax(0,1fr); align-content: start; }
+.pcard__media,
+.sol .media,
+.feature-card__image,
+.home-featured-grid .feature-card__image {
+  display: block;
+  position: relative;
+  aspect-ratio: var(--product-image-ratio);
+  block-size: auto;
+  min-block-size: 0;
+  padding: 0;
+  overflow: hidden;
+  flex: none;
+}
+.pcard__media { inline-size: calc(100% - 24px); align-self: start; }
+.sol .media { inline-size: 100%; align-self: start; }
+.feature-card__image,
+.home-featured-grid .feature-card__image { inline-size: calc(100% - 24px); margin: 12px; align-self: center; }
+.pcard__media img,
+.pcard__media img.cover,
+.sol .media img,
+.feature-card__image img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: var(--product-image-padding);
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: normal;
+}
