@@ -474,3 +474,9 @@ a:hover { color: #fff; }
 .photo-credit-links { display: flex !important; flex-wrap: wrap; gap: 6px 18px; padding-top: 6px; font-size: 11px; }
 .photo-credit-links a { display: inline-flex; align-items: center; min-height: 28px; color: #c4e88d; }
 @media (min-width:901px) { .home-delivery { padding-block: 64px; } }
+/* Font-independent line arrows, consistent across devices and operating systems. */
+svg.arrow { display: inline-block; inline-size: 18px; block-size: 18px; flex: 0 0 18px; vertical-align: middle; }
+.home-explore b .arrow, .office-links b .arrow { color: var(--green); }
+.photo-credit-links a { gap: 6px; }
+.pd-nav button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.photo-credit-links .arrow { inline-size: 14px; block-size: 14px; flex-basis: 14px; }

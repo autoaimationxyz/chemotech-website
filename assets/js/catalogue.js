@@ -155,6 +155,13 @@
   /* ---------------- Product dialog ---------------- */
   var dlg = $("#pdialog");
   var current = null;
+  function arrowSvg(direction) {
+    var paths = { right: "M4 12h16m-6-6 6 6-6 6", left: "M20 12H4m6-6-6 6 6 6", "up-right": "M6 18 18 6M6 6h12v12" };
+    return '<svg class="arrow arrow--' + direction + '" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="' + paths[direction] + '"/></svg>';
+  }
+  var RIGHT_ARROW = arrowSvg("right");
+  var LEFT_ARROW = arrowSvg("left");
+  var UP_RIGHT_ARROW = arrowSvg("up-right");
   var X_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   function highlight(text) {
@@ -200,7 +207,7 @@
     var h = '<div class="pd-main"><img src="' + im.src + '" alt="' + esc(im.title) + '"></div>' +
       '<div class="pd-caption"><b>' + esc(im.title) + "</b>" + (im.sub ? "<span>" + esc(im.sub) + "</span>" : "") +
       (im.make ? "<em>Make: " + esc(im.make) + "</em>" : "") +
-      (im.source ? '<span class="photo-credit-links"><a href="' + esc(im.source) + '" target="_blank" rel="noopener noreferrer">Photo source ↗</a>' + (im.license_url ? '<a href="' + esc(im.license_url) + '" target="_blank" rel="noopener noreferrer">Licence ↗</a>' : '') + '</span>' : '') + "</div>";
+      (im.source ? '<span class="photo-credit-links"><a href="' + esc(im.source) + '" target="_blank" rel="noopener noreferrer">Photo source ' + UP_RIGHT_ARROW + '</a>' + (im.license_url ? '<a href="' + esc(im.license_url) + '" target="_blank" rel="noopener noreferrer">Licence ' + UP_RIGHT_ARROW + '</a>' : '') + '</span>' : '') + "</div>";
     if (imgs.length > 1) {
       h += '<div class="thumbs" role="group" aria-label="More photos">' + imgs.map(function (x, k) {
         return '<button type="button" data-thumb="' + k + '" aria-current="' + (k === i) + '" aria-label="Photo ' + (k + 1) + ": " + esc(x.title) + '"><img src="' + x.src + '" alt=""></button>';
@@ -235,9 +242,9 @@
       '<div class="application-note"><b>Where it fits</b>' + esc(p.application || '') + '</div>' +
       '<div class="pd-block"><h3>Main makes</h3><ul class="mk">' + p.main.map(function (m) { return '<li class="' + (m === state.make ? "is-hit" : "") + '">' + esc(m) + "</li>"; }).join("") + "</ul></div>" +
       '<div class="pd-block"><h3>' + p.variants.length + (p.variants.length === 1 ? " type" : " variants & types") + " · makes we supply</h3>" + vhtml + "</div></div></div>" +
-      '<footer class="pd-foot"><div class="pd-nav"><button type="button" data-step="-1" aria-label="Previous product">&larr;<span class="lbl"> Previous</span></button><button type="button" data-step="1" aria-label="Next product"><span class="lbl">Next </span>&rarr;</button></div>' +
+      '<footer class="pd-foot"><div class="pd-nav"><button type="button" data-step="-1" aria-label="Previous product">' + LEFT_ARROW + '<span class="lbl"> Previous</span></button><button type="button" data-step="1" aria-label="Next product"><span class="lbl">Next </span>' + RIGHT_ARROW + '</button></div>' +
       '<div class="btn-row"><button class="add-btn" type="button" data-add="' + p.no + '" aria-pressed="' + inList(p.no) + '"><span class="ic-off">+ Add to enquiry</span><span class="ic-on">&check; In your enquiry</span></button>' +
-      '<a class="btn" href="quote.html" data-quote-one="' + p.no + '">Request quote &rarr;</a></div></footer>';
+      '<a class="btn" href="quote.html" data-quote-one="' + p.no + '">Request quote ' + RIGHT_ARROW + '</a></div></footer>';
     dlg.setAttribute("aria-labelledby", "pd-title");
     if (!dlg.open) {
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
@@ -294,9 +301,9 @@
     lb.innerHTML =
       '<div class="lb-head"><span>' + esc(d.group) + " · " + (lbIndex + 1) + " / " + list.length + '</span><button class="icon-btn" type="button" data-close aria-label="Close">' + X_ICON + "</button></div>" +
       '<div class="lb-stage"><img src="' + d.img + '" alt="' + esc(d.title) + '">' +
-      '<button class="icon-btn lb-arrow prev" type="button" data-lb="-1" aria-label="Previous photo">&larr;</button><button class="icon-btn lb-arrow next" type="button" data-lb="1" aria-label="Next photo">&rarr;</button></div>' +
+      '<button class="icon-btn lb-arrow prev" type="button" data-lb="-1" aria-label="Previous photo">' + LEFT_ARROW + '</button><button class="icon-btn lb-arrow next" type="button" data-lb="1" aria-label="Next photo">' + RIGHT_ARROW + '</button></div>' +
       '<div class="lb-cap"><div><b>' + esc(d.title) + "</b><span>" + esc(d.sub) + " · Make: " + esc(d.make) + "</span></div>" +
-      (prod ? '<button class="btn btn--green" type="button" data-lb-product="' + prod + '">View ' + esc(BY_NO[prod].name) + " &rarr;</button>" : "") + "</div>";
+      (prod ? '<button class="btn btn--green" type="button" data-lb-product="' + prod + '">View ' + esc(BY_NO[prod].name) + " " + RIGHT_ARROW + "</button>" : "") + "</div>";
     if (!lb.open) { lb.showModal(); document.body.classList.add("has-dialog"); }
   }
   sols.forEach(function (s) {

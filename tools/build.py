@@ -31,7 +31,14 @@ NAV = [
     ("contact.html", "Contact"),
 ]
 
-ARROW = '<span class="arrow" aria-hidden="true">&rarr;</span>'
+def arrow_svg(direction="right"):
+    paths = {"right": "M4 12h16m-6-6 6 6-6 6", "up-right": "M6 18 18 6M6 6h12v12", "down": "M12 4v16m-6-6 6 6 6-6"}
+    return f'<svg class="arrow arrow--{direction}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="{paths[direction]}"/></svg>'
+
+
+ARROW = arrow_svg()
+ARROW_UP_RIGHT = arrow_svg("up-right")
+ARROW_DOWN = arrow_svg("down")
 
 ICONS = {
     "electrical": '<rect x="4" y="3" width="16" height="18"/><path d="M13 6.5 9.5 12h4L11 17.5"/>',
@@ -523,12 +530,12 @@ def system_graphic():
 def ecosystem_band():
     names = ["Delta", "Siemens", "ABB", "Schneider", "Honeywell", "Grundfos", "Kirloskar", "Eaton"]
     brands = ''.join(f'<span>{E(n)}</span>' for n in names if n in PARTNERS)
-    return f'<section class="ecosystem-band" aria-label="Selected makes from our technology ecosystem"><div class="wrap"><p>Global technology.<br><b>Local accountability.</b></p><div class="ecosystem-makes">{brands}</div><a href="company-profile.html#partners" aria-label="See all business partners and makes">↗</a></div></section>'
+    return f'<section class="ecosystem-band" aria-label="Selected makes from our technology ecosystem"><div class="wrap"><p>Global technology.<br><b>Local accountability.</b></p><div class="ecosystem-makes">{brands}</div><a href="company-profile.html#partners" aria-label="See all business partners and makes">{ARROW_UP_RIGHT}</a></div></section>'
 
 
 def solution_gateways():
     groups = [("pd", "01", "Power that keeps you moving.", "From HT distribution to backup generation. Connect reliable equipment with complete electrical execution.", "silent-dg-set"), ("au", "02", "Intelligence in every process.", "Drives, controls and instrumentation that bring your machines, people and plant together.", "scada-system"), ("wp", "03", "A better flow of resources.", "Water treatment, wastewater, steam and process utilities. Designed around your operating conditions.", "wtp-on-site"), ("bi", "04", "Infrastructure for what’s next.", "Building systems, clean rooms, ICT and security. Connected spaces built for real working environments.", "cold-clean-rooms")]
-    return ''.join(f'''<a class="solution-gateway" href="#cat-{cid}" data-gateway="{cid}"><img src="{sol(slug)['img']}" alt="{E(sol(slug)['title'])}" loading="lazy"><div><span>{num} / {E(CAT[cid][1])}</span><h3>{E(title)}</h3><p>{E(desc)}</p><b>Explore the capability <span aria-hidden="true">↗</span></b></div></a>''' for cid, num, title, desc, slug in groups)
+    return ''.join(f'''<a class="solution-gateway" href="#cat-{cid}" data-gateway="{cid}"><img src="{sol(slug)['img']}" alt="{E(sol(slug)['title'])}" loading="lazy"><div><span>{num} / {E(CAT[cid][1])}</span><h3>{E(title)}</h3><p>{E(desc)}</p><b>Explore the capability {ARROW_UP_RIGHT}</b></div></a>''' for cid, num, title, desc, slug in groups)
 
 
 def home():
@@ -553,7 +560,7 @@ def home():
       <p>We connect power, automation, water and infrastructure. From engineering and integration to commissioning and long-term support, your entire project moves with one team.</p>
       <div class="btn-row">
         <a class="btn btn--green" href="products.html">Discover our solutions {ARROW}</a>
-        <a class="btn btn--line-light" href="contact.html">Talk to our team ↗</a>
+        <a class="btn btn--line-light" href="contact.html">Talk to our team {ARROW_UP_RIGHT}</a>
       </div>
     </div>
     {system_graphic()}
@@ -608,9 +615,9 @@ def home():
 
 <nav class="home-explore" aria-label="Explore Chemotech">
   <div class="wrap">
-    <a href="about.html"><span>Our people &amp; approach</span><b>Meet Chemotech <span aria-hidden="true">↗</span></b></a>
-    <a href="company-profile.html#clients"><span>Clients &amp; project references</span><b>Explore our experience <span aria-hidden="true">↗</span></b></a>
-    <a href="certifications.html"><span>Licences &amp; registrations</span><b>View our credentials <span aria-hidden="true">↗</span></b></a>
+    <a href="about.html"><span>Our people &amp; approach</span><b>Meet Chemotech {ARROW_UP_RIGHT}</b></a>
+    <a href="company-profile.html#clients"><span>Clients &amp; project references</span><b>Explore our experience {ARROW_UP_RIGHT}</b></a>
+    <a href="certifications.html"><span>Licences &amp; registrations</span><b>View our credentials {ARROW_UP_RIGHT}</b></a>
   </div>
 </nav>
 {cta()}"""
@@ -784,7 +791,7 @@ def products():
             <p>{E(p['desc'])}</p>
             <div class="variant-preview"><span>Available options</span><ul>{"".join(f"<li>{E(n)}</li>" for n in tile_names(p)[:2])}</ul></div>
             <ul class="mk" aria-label="Main makes">{mk}</ul>
-            <span class="pcard__discover">Specifications &amp; all variants <span aria-hidden="true">↗</span></span>
+            <span class="pcard__discover">Specifications &amp; all variants {ARROW_UP_RIGHT}</span>
           </div>
         </button>
         <div class="pcard__foot"><small>{nv} {"type" if nv == 1 else "variants"}</small>
@@ -816,7 +823,7 @@ def products():
     body = f"""
 {page_hero("Our Products", "Intelligent systems.<br>Lasting impact.", f"Explore {N_PRODUCTS} product families, {N_VARIANTS} variants and connected engineering expertise. Explore the capability, discover the equipment, and shape a solution around your site.", "Product catalogue")}
 
-<section class="section solution-discovery"><div class="wrap"><div class="section-head section-head--split"><div class="stack"><span class="tag">Explore by capability</span><h2>Start with the outcome.</h2><p>Every system begins with a real operating need. Find the discipline behind your next project.</p></div><a class="text-link" href="#catalogue">Browse all product families ↓</a></div><div class="solution-gateways">{solution_gateways()}</div></div></section>
+<section class="section solution-discovery"><div class="wrap"><div class="section-head section-head--split"><div class="stack"><span class="tag">Explore by capability</span><h2>Start with the outcome.</h2><p>Every system begins with a real operating need. Find the discipline behind your next project.</p></div><a class="text-link" href="#catalogue">Browse all product families {ARROW_DOWN}</a></div><div class="solution-gateways">{solution_gateways()}</div></div></section>
 <div class="cat-toolbar" role="search" aria-label="Filter products">
   <div class="wrap">
     <div class="cat-row">
@@ -928,7 +935,7 @@ def company_profile():
   </div>
 </section>
 
-<nav class="office-links" aria-label="Office locations"><div class="wrap"><a href="contact.html#office-patna"><span>Head office · Bihar</span><b>Patna <span aria-hidden="true">↗</span></b></a><a href="contact.html#office-delhi"><span>Branch office · Delhi</span><b>Delhi <span aria-hidden="true">↗</span></b></a></div></nav>
+<nav class="office-links" aria-label="Office locations"><div class="wrap"><a href="contact.html#office-patna"><span>Head office · Bihar</span><b>Patna {ARROW_UP_RIGHT}</b></a><a href="contact.html#office-delhi"><span>Branch office · Delhi</span><b>Delhi {ARROW_UP_RIGHT}</b></a></div></nav>
 
 <section class="section" id="clients">
   <div class="wrap">
