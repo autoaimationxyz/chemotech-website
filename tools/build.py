@@ -87,10 +87,51 @@ EXTRA_IMAGES = {
     39: [("assets/img/wtp-softener.jpg", "Softener & Filter Vessels", "FRP vessels with multiport valves", "Micro Filteration Technologies")],
 }
 
+# Representative product photos from Wikimedia Commons (credits: assets/img/products/CREDITS.md)
+COMMONS_PHOTOS = {
+    1: ('assets/img/products/01-ht-panels.jpg', 'HT Panels', 'Representative photo · Zen 38 · CC BY-SA 3.0 · Wikimedia Commons'),
+    2: ('assets/img/products/02-lt-pcc-distribution-panels.jpg', 'LT / PCC & Distribution Panels', 'Representative photo · Kgbo · CC BY-SA 4.0 · Wikimedia Commons'),
+    3: ('assets/img/products/03-mcc-motor-control-panels.jpg', 'MCC & Motor Control Panels', 'Representative photo · Wtshymanski · CC BY-SA 3.0 · Wikimedia Commons'),
+    4: ('assets/img/products/04-synchronising-amf-panels.jpg', 'Synchronising & AMF Panels', 'Representative photo · Andy Dingley · CC BY-SA 3.0 · Wikimedia Commons'),
+    5: ('assets/img/products/05-apfc-capacitor-panels.jpg', 'APFC & Capacitor Panels', 'Representative photo · Wikimedia Commons contributor · CC BY-SA 3.0 · Wikimedia Commons'),
+    6: ('assets/img/products/06-feeder-pillars-street-light-panels.jpg', 'Feeder Pillars & Street-Light Panels', 'Representative photo · Андрей Романенко · CC BY-SA 4.0 · Wikimedia Commons'),
+    8: ('assets/img/products/08-compact-unitised-substations.jpg', 'Compact / Unitised Substations', 'Representative photo · AndrewHarvey4 · CC0 · Wikimedia Commons'),
+    11: ('assets/img/products/11-circuit-breakers.jpg', 'Circuit Breakers', 'Representative photo · Balurbala · CC BY-SA 3.0 · Wikimedia Commons'),
+    12: ('assets/img/products/12-earth-leakage-protection.jpg', 'Earth-Leakage Protection', 'Representative photo · Jimbob82 · Public domain · Wikimedia Commons'),
+    13: ('assets/img/products/13-distribution-boards.jpg', 'Distribution Boards', 'Representative photo · Dmitry G · CC BY-SA 3.0 · Wikimedia Commons'),
+    14: ('assets/img/products/14-isolators-changeover-ats.jpg', 'Isolators, Changeover & ATS', 'Representative photo · StcudorPrewoP · CC BY-SA 3.0 · Wikimedia Commons'),
+    15: ('assets/img/products/15-contactors-starters-relays.jpg', 'Contactors, Starters & Relays', 'Representative photo · Kae · CC BY-SA 3.0 · Wikimedia Commons'),
+    16: ('assets/img/products/16-control-indication-metering.jpg', 'Control, Indication & Metering', 'Representative photo · Quist161 · CC BY-SA 4.0 · Wikimedia Commons'),
+    17: ('assets/img/products/17-ht-lt-power-control-cables.jpg', 'HT & LT Power & Control Cables', 'Representative photo · Hannes Grobe · CC BY-SA 3.0 · Wikimedia Commons'),
+    18: ('assets/img/products/18-wires-special-cables.jpg', 'Wires & Special Cables', 'Representative photo · Cjp24 · CC BY-SA 4.0 · Wikimedia Commons'),
+    19: ('assets/img/products/19-cable-accessories-containment.jpg', 'Cable Accessories & Containment', 'Representative photo · Santeri Viinamäki · CC BY-SA 4.0 · Wikimedia Commons'),
+    20: ('assets/img/products/20-wiring-accessories.jpg', 'Wiring Accessories', 'Representative photo · Santeri Viinamäki · CC BY-SA 4.0 · Wikimedia Commons'),
+    21: ('assets/img/products/21-indoor-industrial-led-lighting.jpg', 'Indoor & Industrial LED Lighting', 'Representative photo · Flametechcontrolgear · CC0 · Wikimedia Commons'),
+    22: ('assets/img/products/22-street-area-solar-lighting.jpg', 'Street, Area & Solar Lighting', 'Representative photo · Jacek Halicki · CC BY-SA 4.0 · Wikimedia Commons'),
+    23: ('assets/img/products/23-fans.jpg', 'Fans', 'Representative photo · Muthukumaran Esakkiappan · CC BY-SA 4.0 · Wikimedia Commons'),
+    24: ('assets/img/products/24-earthing-lightning-protection.jpg', 'Earthing & Lightning Protection', 'Representative photo · Wikimedia Commons contributor · CC BY-SA 3.0 · Wikimedia Commons'),
+    25: ('assets/img/products/25-fire-detection-alarm.jpg', 'Fire Detection & Alarm', 'Representative photo · Wikimedia Commons contributor · CC BY-SA 4.0 · Wikimedia Commons'),
+    26: ('assets/img/products/26-public-address-sound-systems.jpg', 'Public Address & Sound Systems', 'Representative photo · Misternomer · CC BY 3.0 · Wikimedia Commons'),
+    30: ('assets/img/products/30-harmonic-filters-pf-correction.jpg', 'Harmonic Filters & PF Correction', 'Representative photo · Holger Urban · CC BY-SA 4.0 · Wikimedia Commons'),
+    31: ('assets/img/products/31-energy-management-system.jpg', 'Energy Management System', 'Representative photo · Rasik Tirodkar · CC BY-SA 4.0 · Wikimedia Commons'),
+    34: ('assets/img/products/34-electrical-motors-actuators.jpg', 'Electrical Motors & Actuators', 'Representative photo · ZngZng · CC BY-SA 3.0 · Wikimedia Commons'),
+    45: ('assets/img/products/45-process-chemicals-lubrication.jpg', 'Process Chemicals & Lubrication', 'Representative photo · LaurelBloch · CC BY-SA 4.0 · Wikimedia Commons'),
+    48: ('assets/img/products/48-lifts.jpg', 'Lifts', 'Representative photo · P1898 · CC BY 4.0 · Wikimedia Commons'),
+    49: ('assets/img/products/49-air-conditioning-ventilation.jpg', 'Air-Conditioning & Ventilation', 'Representative photo · Dinkun Chen · CC BY-SA 4.0 · Wikimedia Commons'),
+    52: ('assets/img/products/52-structured-cabling-networking-lan.jpg', 'Structured Cabling & Networking (LAN)', 'Representative photo · Dsimic · CC BY-SA 4.0 · Wikimedia Commons'),
+    53: ('assets/img/products/53-cctv-security.jpg', 'CCTV & Security', 'Representative photo · MichalPL · CC BY-SA 4.0 · Wikimedia Commons'),
+    54: ('assets/img/products/54-it-communication.jpg', 'IT & Communication', 'Representative photo · -stk · CC BY-SA 4.0 · Wikimedia Commons'),
+    55: ('assets/img/products/55-electrical-installation-contracting.jpg', 'Electrical Installation & Contracting', 'Representative photo · Team Massachusetts 4D Home · CC BY 2.0 · Wikimedia Commons'),
+    56: ('assets/img/products/56-testing-commissioning-o-m-amc.jpg', 'Testing, Commissioning, O&M & AMC', 'Representative photo · MTA Capital Construction Mega Projects · CC BY 2.0 · Wikimedia Commons'),
+}
+
 for p in PRODUCTS:
     p["cat"] = CAT_BY_NO[p["no"]]
     imgs = [dict(src=s["img"], title=s["title"], sub=s["sub"], make=s["make"]) for s in SOLUTIONS if p["no"] in s["products"]]
     imgs += [dict(src=a, title=b, sub=c, make=d) for a, b, c, d in EXTRA_IMAGES.get(p["no"], [])]
+    if not imgs and p["no"] in COMMONS_PHOTOS:
+        src, title, sub = COMMONS_PHOTOS[p["no"]]
+        imgs = [dict(src=src, title=title, sub=sub, make="")]
     p["images"] = imgs
     if not SHOW_VARIANT_MAKES:
         for v in p["variants"]:
