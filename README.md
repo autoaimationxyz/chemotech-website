@@ -99,3 +99,9 @@ NODE_PATH=/tmp/chemotech-checks/node_modules node tools/browser-check.cjs
 ```
 
 Keep the local server running in another terminal. `SITE_URL` can override the default test server address. Checks cover all seven pages at 320, 390, 768, 1024, 1440 and 1920 pixels, catalogue filters, enquiries, product deep links, mobile navigation, dialogs and reduced motion. These checks use Chromium; physical iOS/Android devices and Safari are separate compatibility checks.
+
+## GitHub Pages hosting
+
+The latest website is on `website-redesign`. In repository Settings → Pages, select **Deploy from a branch**, then **website-redesign** and **/ (root)**, and save. The `.nojekyll` file ensures the generated HTML and assets are served directly. A public repository can use GitHub Pages on GitHub Free.
+
+No custom domain or DNS changes are required for the GitHub-provided address. Publishing Pages makes the website publicly accessible. This does not replace the existing schoolerp.org website.
