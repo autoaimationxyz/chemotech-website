@@ -75,11 +75,13 @@ message to `info.chemotechinternational@gmail.com` (set in `assets/js/main.js`).
 - All 56 families retain their descriptions, 328 variants, makes, filtering and enquiry workflow.
 - Cards preview available options. Product dialogs add specification summaries and application guidance.
 - Specifications are maintained in `SPECIFICATIONS` in `tools/build.py`; model-specific ratings must be confirmed with the engineering team. Do not invent missing ratings.
-- Where a product has no supplied photo, a labelled conceptual equipment illustration is shown. Add actual photos through the existing image data when available.
+- All 56 product families currently have photographs. The 34 added Wikimedia images are representative equipment photos; their source and licence links appear in product details. Credits are maintained in `assets/img/products/CREDITS.md`. A labelled illustration remains as a fallback for future families without photography.
 - `assets/css/immersive.css` applies the dark industrial theme across all seven pages on top of the shared layouts.
 - The latest profiles confirm 23 sectors, 44 named partner makes, 56 product families and 328 variants. Unsupported turnover/business-hours claims and old production/group-company copy were removed.
 - Profile PDFs and their public download links were removed. Office GST rows align at the bottom of equal-height cards.
-- Internet photo sourcing and live-site inspection currently require the pending network-domain access changes; do not describe these as completed.
+- The newly supplied photographs are included and checked locally. Independent verification of the live site and external photo-source metadata remains blocked by this environment’s network policy.
+- The homepage includes a compact three-stage delivery preview; detailed clients and licences stay on their own pages.
+- Bullets, step numbers and text use explicit columns for consistent wrapping and alignment.
 
 ## Local preview and checks
 

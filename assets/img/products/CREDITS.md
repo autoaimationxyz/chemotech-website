@@ -1,6 +1,8 @@
 # Product photo credits
 
-Representative photos from Wikimedia Commons, used under the licences below. They show the type of equipment, not a specific make or model.
+Representative photos from Wikimedia Commons, with the supplied source and licence records below. They illustrate a product family rather than a specific supplied make or model.
+
+Creator records for products 05, 24 and 25 currently use the generic label “Wikimedia Commons contributor”; confirm the named creators against the linked source pages before treating those attributions as complete.
 
 - **01 HT Panels** — `assets/img/products/01-ht-panels.jpg` — [Medium_voltage_panel.jpg](https://commons.wikimedia.org/wiki/File:Medium_voltage_panel.jpg) by Zen 38, CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)
 - **02 LT / PCC & Distribution Panels** — `assets/img/products/02-lt-pcc-distribution-panels.jpg` — [Main_switchboard_in_large_commercial_building,_Brisbane.jpg](https://commons.wikimedia.org/wiki/File:Main_switchboard_in_large_commercial_building,_Brisbane.jpg) by Kgbo, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)

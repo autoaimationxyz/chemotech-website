@@ -125,13 +125,22 @@ COMMONS_PHOTOS = {
     56: ('assets/img/products/56-testing-commissioning-o-m-amc.jpg', 'Testing, Commissioning, O&M & AMC', 'Representative photo · MTA Capital Construction Mega Projects · CC BY 2.0 · Wikimedia Commons'),
 }
 
+# Keep the supplied source and licence links available beside representative photos.
+COMMONS_CREDITS = {}
+with open(os.path.join(HERE, "../assets/img/products/CREDITS.md"), encoding="utf-8") as credit_file:
+    for line in credit_file:
+        credit = re.match(r"- \*\*(\d+) .*?\*\*.*?\]\((https://commons\.wikimedia\.org/.*?)\) by (.*?), (.*)$", line)
+        if credit:
+            licence_link = re.search(r"(https://creativecommons\.org/[^\s)]+)", credit[4])
+            COMMONS_CREDITS[int(credit[1])] = {"source": credit[2], "license_url": licence_link[1] if licence_link else ""}
+
 for p in PRODUCTS:
     p["cat"] = CAT_BY_NO[p["no"]]
     imgs = [dict(src=s["img"], title=s["title"], sub=s["sub"], make=s["make"]) for s in SOLUTIONS if p["no"] in s["products"]]
     imgs += [dict(src=a, title=b, sub=c, make=d) for a, b, c, d in EXTRA_IMAGES.get(p["no"], [])]
     if not imgs and p["no"] in COMMONS_PHOTOS:
         src, title, sub = COMMONS_PHOTOS[p["no"]]
-        imgs = [dict(src=src, title=title, sub=sub, make="")]
+        imgs = [dict(src=src, title=title, sub=sub, make="", **COMMONS_CREDITS.get(p["no"], {}))]
     p["images"] = imgs
     if not SHOW_VARIANT_MAKES:
         for v in p["variants"]:
@@ -356,7 +365,7 @@ def cta():
 
 
 def industries_list():
-    return "".join(f'<li{" class=\"is-key\"" if "Government" in n else ""}><span>{i:02d}</span>{E(n)}</li>' for i, n in enumerate(INDUSTRIES, 1))
+    return "".join(f'<li{" class=\"is-key\"" if "Government" in n else ""}><span class="list-number" aria-hidden="true">{i:02d}</span><span class="list-copy">{E(n)}</span></li>' for i, n in enumerate(INDUSTRIES, 1))
 
 
 def office_cards():
@@ -580,6 +589,23 @@ def home():
   </div>
 </section>
 
+<section class="section home-delivery">
+  <div class="wrap delivery-layout">
+    <figure class="delivery-visual"><img src="assets/img/solutions/wtp-on-site.jpg" alt="Process installation with treatment vessels, piping and electrical controls" loading="lazy" width="1000" height="750"><figcaption><span>CONNECTED EXECUTION</span><b>From individual systems<br>to a coordinated facility.</b></figcaption></figure>
+    <div class="delivery-copy">
+      <span class="tag">How your project takes shape</span>
+      <h2>Clarity at every stage.<br>Continuity beyond handover.</h2>
+      <p>We coordinate equipment, controls and utilities around your site requirements, with an agreed scope from the first discussion through ongoing service.</p>
+      <ol class="delivery-steps">
+        <li><span class="list-number" aria-hidden="true">01</span><div><h3>Understand &amp; engineer</h3><p>Study operating conditions, align specifications and select equipment that fits the process.</p></div></li>
+        <li><span class="list-number" aria-hidden="true">02</span><div><h3>Supply &amp; integrate</h3><p>Coordinate sourcing and installation across electrical, automation and process requirements.</p></div></li>
+        <li><span class="list-number" aria-hidden="true">03</span><div><h3>Commission &amp; support</h3><p>Test the installation, support handover and plan maintenance around the agreed service scope.</p></div></li>
+      </ol>
+      <a class="text-link" href="about.html#approach">Discover our approach {ARROW}</a>
+    </div>
+  </div>
+</section>
+
 <nav class="home-explore" aria-label="Explore Chemotech">
   <div class="wrap">
     <a href="about.html"><span>Our people &amp; approach</span><b>Meet Chemotech <span aria-hidden="true">↗</span></b></a>
@@ -634,7 +660,7 @@ def about():
     body = f"""
 {page_hero("About Us", "A young team with decades of plant experience", "We understand how production works, what quality means on the shop floor, and how to present a solution that fits. That is how we have earned the trust of organisations of repute.", "About Chemotech")}
 
-<section class="section">
+<section class="section" id="approach">
   <div class="wrap split">
     <div class="stack" style="gap:18px">
       <span class="tag">Who we are</span>
@@ -664,7 +690,7 @@ def about():
         <h3 style="font-size:var(--fs-xl)">Our mission</h3>
         <p class="muted">Consistently exceed customer expectations. To do this, we commit to:</p>
       </div>
-      <ul class="checklist">{"".join(f"<li>{m}</li>" for m in mission)}</ul>
+      <ul class="checklist">{"".join(f'<li><span class="list-copy">{m}</span></li>' for m in mission)}</ul>
     </div>
     <div class="mt-lg stack" style="gap:20px">
       <div class="stack" style="gap:8px">
@@ -685,9 +711,9 @@ def about():
     <div class="stack" style="gap:20px">
       <h3 style="font-size:var(--fs-lg)">We will</h3>
       <ol class="commit">
-        <li><b>01</b>Understand the needs of our customers.</li>
-        <li><b>02</b>Keep improving our systems and our Quality Management System.</li>
-        <li><b>03</b>Give our customers the best of our services.</li>
+        <li><b class="list-number" aria-hidden="true">01</b><span class="list-copy">Understand the needs of our customers.</span></li>
+        <li><b class="list-number" aria-hidden="true">02</b><span class="list-copy">Keep improving our systems and our Quality Management System.</span></li>
+        <li><b class="list-number" aria-hidden="true">03</b><span class="list-copy">Give our customers the best of our services.</span></li>
       </ol>
       <p class="note">Everyone in the company is responsible for striving for the highest level of excellence and performance in everything we do.</p>
     </div>
@@ -713,7 +739,7 @@ def about():
       <span class="tag">Our approach</span>
       <h2>Expertise you can build on</h2>
     </div>
-    <ul class="reasons">{"".join(f"<li>{r}</li>" for r in reasons)}</ul>
+    <ul class="reasons">{"".join(f'<li><span class="list-copy">{r}</span></li>' for r in reasons)}</ul>
   </div>
 </section>
 {cta()}"""
@@ -753,7 +779,7 @@ def products():
         <button class="pcard__open" type="button" aria-haspopup="dialog">
           <div class="pcard__media">{media}</div>
           <div class="pcard__body">
-            <div class="pcard__meta"><span>{E(c[1])}</span><span>{len(p["variants"])} types</span></div>
+            <div class="pcard__meta"><span>{E(c[1])}</span><span>{len(p["variants"])} {"type" if len(p["variants"]) == 1 else "types"}</span></div>
             <h3>{E(p['name'])}</h3>
             <p>{E(p['desc'])}</p>
             <div class="variant-preview"><span>Available options</span><ul>{"".join(f"<li>{E(n)}</li>" for n in tile_names(p)[:2])}</ul></div>
@@ -777,7 +803,7 @@ def products():
         f'<span class="cap"><em>{E(s["make"])}</em><b>{E(s["title"])}</b><span>{E(s["sub"])}</span></span></button>'
         for i, s in enumerate(SOLUTIONS))
 
-    services = "".join(f"<li><span>{i:02d}</span>{E(s)}</li>" for i, s in enumerate(SERVICES, 1))
+    services = "".join(f'<li><span class="list-number" aria-hidden="true">{i:02d}</span><span class="list-copy">{E(s)}</span></li>' for i, s in enumerate(SERVICES, 1))
 
     data = {
         "categories": [{"id": c[0], "name": c[1], "blurb": c[4], "icon": icon(c[3], "")} for c in CATEGORIES],
@@ -816,7 +842,7 @@ def products():
       <button class="link-btn" type="button" data-reset>Reset filters</button>
       <p id="cat-title-note">Select a product to see every variant and the makes we supply.</p>
     </div>
-    <p class="catalogue-guidance">Explore specifications and types in each product. Final ratings, model availability and selection are confirmed against your project requirements.</p>
+    <p class="catalogue-guidance">Explore specifications and types in each product. Photos illustrate product families; final makes, ratings and model availability are confirmed against your project requirements.</p>
     <div class="pgrid">{"".join(cards)}</div>
     <div class="empty-state" id="cat-empty" hidden>
       <b>No products match these filters</b>
@@ -862,7 +888,7 @@ def products():
 <script type="application/json" id="catalogue-data">{data_json}</script>"""
     page("products.html", "Our Products",
          f"Chemotech International product catalogue: {N_PRODUCTS} products and {N_VARIANTS} variants across power distribution, switchgear, cabling, power backup, automation, water & process, building & ICT and services.",
-         body, '<script src="assets/js/catalogue.js"></script>')
+         body, '<script src="assets/js/catalogue.js?v=' + hashlib.sha256(open(os.path.join(HERE, "../assets/js/catalogue.js"), "rb").read()).hexdigest()[:12] + '"></script>')
 
 
 # --------------------------------------------------------------------------
@@ -1184,9 +1210,9 @@ def quote():
       <div class="aside-card">
         <h3>What happens next</h3>
         <ol>
-          <li>We review your requirement and operating conditions.</li>
-          <li>An engineer calls if we need site details or drawings.</li>
-          <li>You receive a technical and commercial offer.</li>
+          <li><span class="list-copy">We review your requirement and operating conditions.</span></li>
+          <li><span class="list-copy">An engineer calls if we need site details or drawings.</span></li>
+          <li><span class="list-copy">You receive a technical and commercial offer.</span></li>
         </ol>
       </div>
       <div class="aside-card">

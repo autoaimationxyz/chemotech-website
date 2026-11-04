@@ -199,7 +199,8 @@
     var im = imgs[i];
     var h = '<div class="pd-main"><img src="' + im.src + '" alt="' + esc(im.title) + '"></div>' +
       '<div class="pd-caption"><b>' + esc(im.title) + "</b>" + (im.sub ? "<span>" + esc(im.sub) + "</span>" : "") +
-      (im.make ? "<em>Make: " + esc(im.make) + "</em>" : "") + "</div>";
+      (im.make ? "<em>Make: " + esc(im.make) + "</em>" : "") +
+      (im.source ? '<span class="photo-credit-links"><a href="' + esc(im.source) + '" target="_blank" rel="noopener noreferrer">Photo source ↗</a>' + (im.license_url ? '<a href="' + esc(im.license_url) + '" target="_blank" rel="noopener noreferrer">Licence ↗</a>' : '') + '</span>' : '') + "</div>";
     if (imgs.length > 1) {
       h += '<div class="thumbs" role="group" aria-label="More photos">' + imgs.map(function (x, k) {
         return '<button type="button" data-thumb="' + k + '" aria-current="' + (k === i) + '" aria-label="Photo ' + (k + 1) + ": " + esc(x.title) + '"><img src="' + x.src + '" alt=""></button>';

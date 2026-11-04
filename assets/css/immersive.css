@@ -422,3 +422,55 @@ a:hover { color: #fff; }
   object-position: center;
   mix-blend-mode: normal;
 }
+/* Project-delivery preview restores useful homepage depth. */
+.delivery-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: center; gap: clamp(32px,5vw,72px); }
+.delivery-visual { position: relative; margin: 0; min-width: 0; height: 500px; overflow: hidden; border: 1px solid #344d59; border-radius: 4px; }
+.delivery-visual > img { width: 100%; height: 100%; object-fit: cover; }
+.delivery-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg,transparent 35%,#080e17e8); pointer-events: none; }
+.delivery-visual figcaption { position: absolute; z-index: 1; left: 28px; right: 28px; bottom: 28px; display: grid; gap: 12px; }
+.delivery-visual figcaption > span { font-size: 9px; color: var(--green); letter-spacing: .15em; }
+.delivery-visual figcaption b { color: #f1f6f7; font-size: 25px; font-weight: 400; line-height: 1.25; letter-spacing: -.025em; }
+.delivery-copy { display: grid; gap: 22px; min-width: 0; }
+.delivery-copy h2 { font-size: clamp(28px,3vw,39px); font-weight: 400; line-height: 1.15; }
+.delivery-copy > p { font-size: 14px; line-height: 1.8; color: #a5b7c6; }
+.delivery-steps { display: grid; margin: 0; padding: 0; }
+.delivery-steps li { display: grid; grid-template-columns: 2.5rem minmax(0,1fr); gap: 16px; align-items: start; padding: 18px 0; border-top: 1px solid #304351; }
+.delivery-steps .list-number { color: var(--green); font-size: 14px; line-height: 24px; font-variant-numeric: tabular-nums; }
+.delivery-steps h3 { font-size: 16px; font-weight: 500; line-height: 24px; letter-spacing: -.015em; }
+.delivery-steps p { margin-top: 8px; font-size: 12px; line-height: 1.8; color: #a5b7c6; }
+/* Explicit columns keep wrapped text independent of bullets and step numbers. */
+.list-copy { display: block; min-width: 0; overflow-wrap: break-word; }
+.checklist li, .reasons li { align-items: start; grid-template-columns: 12px minmax(0,1fr); gap: 14px; }
+.checklist li::before, .reasons li::before { width: 6px; height: 6px; margin: 11px 0 0; border-radius: 50%; }
+.checklist .list-copy, .reasons .list-copy { font-size: 15px; line-height: 28px; }
+.commit li { grid-template-columns: 2.5rem minmax(0,1fr); align-items: start; gap: 16px; padding: 18px 14px; font-weight: 400; }
+.commit .list-number, .commit .list-copy { margin: 0; font-size: 15px; line-height: 28px; }
+.commit .list-number { font-weight: 600; font-variant-numeric: tabular-nums; }
+.chain li { grid-template-rows: auto 1fr; align-content: start; gap: 12px; }
+.chain li small { line-height: 20px; }
+.chain li b { font-size: 15px; font-weight: 500; line-height: 24px; }
+.aside-card ol li { align-items: start; grid-template-columns: 24px minmax(0,1fr); gap: 12px; }
+.aside-card ol li::before, .aside-card ol .list-copy { line-height: 24px; }
+.services li { grid-template-columns: 2rem minmax(0,1fr); align-items: start; gap: 12px; padding: 22px 20px 22px 0; font-weight: 400; }
+.services li .list-number, .services li .list-copy { font-size: 13px; line-height: 24px; letter-spacing: 0; }
+.services li .list-copy { color: #d1dfe7; }
+.industries li { align-items: start; }
+.industries li > span { line-height: inherit; }
+.person__yrs b { font-variant-numeric: tabular-nums; }
+@media (max-width:900px) { .delivery-layout { grid-template-columns: minmax(0,1fr); gap: 32px; } .delivery-visual { height: 320px; } }
+@media (max-width:600px) {
+ .delivery-visual { height: 300px; }
+ .delivery-copy { gap: 24px; }
+ .delivery-copy h2 { font-size: 30px; }
+ .delivery-steps li { padding-block: 22px; }
+ .delivery-steps p { font-size: 13px; }
+ .services { grid-template-columns: minmax(0,1fr); }
+ .reasons { gap: 0; }
+}
+.industries li { display: grid; grid-template-columns: 2ch minmax(0,1fr); gap: 12px; }
+.industries li > .list-number { font-size: 12px; line-height: 24px; font-variant-numeric: tabular-nums; }
+.industries li > .list-copy { color: #c5d1da; font-size: 14px; line-height: 24px; letter-spacing: 0; }
+.industries li.is-key > .list-copy { color: var(--green); }
+.photo-credit-links { display: flex !important; flex-wrap: wrap; gap: 6px 18px; padding-top: 6px; font-size: 11px; }
+.photo-credit-links a { display: inline-flex; align-items: center; min-height: 28px; color: #c4e88d; }
+@media (min-width:901px) { .home-delivery { padding-block: 64px; } }

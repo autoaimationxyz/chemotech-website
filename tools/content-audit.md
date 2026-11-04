@@ -11,7 +11,7 @@ Reference material: latest uploaded Company Profile (DOCX and PDF), Work Profile
 - Office cards use equal-height layouts with aligned GST rows; registration identifiers use consistent numeric typography and controlled wrapping.
 - Solution images are described as equipment/solution imagery rather than claiming every manufacturer image is a completed Chemotech project.
 
-## Outstanding external access
+## External verification limits
 
 The environment returns an HTTP proxy 403 for the supplied live site at web.schoolerp.org and for Wikimedia Commons image sourcing. The required hostnames are saved in the environment draft, preserving the package-manager presets:
 
@@ -19,7 +19,7 @@ The environment returns an HTTP proxy 403 for the supplied live site at web.scho
 - commons.wikimedia.org
 - upload.wikimedia.org
 
-The draft save does not apply live network access. Internet photo selection, licence/attribution records, and live-site comparison remain unfinished until the user saves/publishes the environment configuration. Do not claim every product has an internet-sourced photograph; products without supplied photography still use explicitly labelled conceptual illustrations.
+The draft save does not apply live network access. The user subsequently supplied 34 representative Wikimedia photographs with credit records, covering every product family. These local files and source links are checked; independent verification of the live site and source metadata remains blocked. Three supplied credit records use the generic author label “Wikimedia Commons contributor” and still need confirmation from the original source pages.
 
 ## Further repetition and detail audit
 
@@ -29,4 +29,12 @@ The draft save does not apply live network access. Internet photo selection, lic
 - Haryana contractor registration appears once on Certifications, in the contractor section.
 - Product support is described as available according to agreed scope, rather than automatically included with every supply.
 - Product cards and detail dialogs consistently use “Add to enquiry”. Form actions say “Prepare message” / “Prepare quote email” to describe the existing email-app behavior accurately.
-- `missing-photos.csv` identifies the 34 families without supplied photographs. Wikimedia requests still return a proxy 403 through both standard and elevated execution. No unrelated photos have been substituted for those products.
+- `missing-photos.csv` now records the 34 supplied representative photo additions; no product family is missing a photograph.
+
+## Homepage expansion, image and alignment review
+
+- Fast-forwarded to the user’s photo commit `4f1c8ba`, preserving all 34 image binaries and existing credit records.
+- Every image file decodes, all 56 catalogue families have images, and the 34 added image records link to their recorded Commons source. Licence links are exposed where the supplied record includes one. Images describe product types rather than promising the displayed brand/model.
+- Added a three-stage delivery preview to Home, increasing rendered page length by approximately 20% while keeping detailed client/registration lists on their dedicated pages.
+- About mission/reason bullets, quality-policy numbers, workflow labels, product service numbers, industry numbers and quote-process text use explicit marker/text columns aligned to the first line.
+- Fixed singular variant labels (“1 type”). Updated stale documentation that still claimed 34 product photos were missing.
