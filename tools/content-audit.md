@@ -20,3 +20,13 @@ The environment returns an HTTP proxy 403 for the supplied live site at web.scho
 - upload.wikimedia.org
 
 The draft save does not apply live network access. Internet photo selection, licence/attribution records, and live-site comparison remain unfinished until the user saves/publishes the environment configuration. Do not claim every product has an internet-sourced photograph; products without supplied photography still use explicitly labelled conceptual illustrations.
+
+## Further repetition and detail audit
+
+- Detailed office addresses and contact lists now live on Contact; Company links directly to each office instead of repeating the complete cards and phone/email rows.
+- Company no longer repeats the entire 56-product inventory. It links to the catalogue; clients, industries and named partner makes remain on Company.
+- About consolidates repeated company/strength statements and mission commitments. The workflow, people, quality policy and distinct working principles remain.
+- Haryana contractor registration appears once on Certifications, in the contractor section.
+- Product support is described as available according to agreed scope, rather than automatically included with every supply.
+- Product cards and detail dialogs consistently use “Add to enquiry”. Form actions say “Prepare message” / “Prepare quote email” to describe the existing email-app behavior accurately.
+- `missing-photos.csv` identifies the 34 families without supplied photographs. Wikimedia requests still return a proxy 403 through both standard and elevated execution. No unrelated photos have been substituted for those products.

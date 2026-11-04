@@ -1,0 +1,35 @@
+product_number,product_family,category,status
+1,HT Panels,pd,Internet sourcing blocked; labelled illustration retained
+2,LT / PCC & Distribution Panels,pd,Internet sourcing blocked; labelled illustration retained
+3,MCC & Motor Control Panels,pd,Internet sourcing blocked; labelled illustration retained
+4,Synchronising & AMF Panels,pd,Internet sourcing blocked; labelled illustration retained
+5,APFC & Capacitor Panels,pd,Internet sourcing blocked; labelled illustration retained
+6,Feeder Pillars & Street-Light Panels,pd,Internet sourcing blocked; labelled illustration retained
+8,Compact / Unitised Substations,pd,Internet sourcing blocked; labelled illustration retained
+11,Circuit Breakers,sw,Internet sourcing blocked; labelled illustration retained
+12,Earth-Leakage Protection,sw,Internet sourcing blocked; labelled illustration retained
+13,Distribution Boards,sw,Internet sourcing blocked; labelled illustration retained
+14,"Isolators, Changeover & ATS",sw,Internet sourcing blocked; labelled illustration retained
+15,"Contactors, Starters & Relays",sw,Internet sourcing blocked; labelled illustration retained
+16,"Control, Indication & Metering",sw,Internet sourcing blocked; labelled illustration retained
+17,HT & LT Power & Control Cables,cl,Internet sourcing blocked; labelled illustration retained
+18,Wires & Special Cables,cl,Internet sourcing blocked; labelled illustration retained
+19,Cable Accessories & Containment,cl,Internet sourcing blocked; labelled illustration retained
+20,Wiring Accessories,cl,Internet sourcing blocked; labelled illustration retained
+21,Indoor & Industrial LED Lighting,cl,Internet sourcing blocked; labelled illustration retained
+22,"Street, Area & Solar Lighting",cl,Internet sourcing blocked; labelled illustration retained
+23,Fans,cl,Internet sourcing blocked; labelled illustration retained
+24,Earthing & Lightning Protection,cl,Internet sourcing blocked; labelled illustration retained
+25,Fire Detection & Alarm,cl,Internet sourcing blocked; labelled illustration retained
+26,Public Address & Sound Systems,cl,Internet sourcing blocked; labelled illustration retained
+30,Harmonic Filters & PF Correction,pb,Internet sourcing blocked; labelled illustration retained
+31,Energy Management System,pb,Internet sourcing blocked; labelled illustration retained
+34,Electrical Motors & Actuators,au,Internet sourcing blocked; labelled illustration retained
+45,Process Chemicals & Lubrication,wp,Internet sourcing blocked; labelled illustration retained
+48,Lifts,bi,Internet sourcing blocked; labelled illustration retained
+49,Air-Conditioning & Ventilation,bi,Internet sourcing blocked; labelled illustration retained
+52,Structured Cabling & Networking (LAN),bi,Internet sourcing blocked; labelled illustration retained
+53,CCTV & Security,bi,Internet sourcing blocked; labelled illustration retained
+54,IT & Communication,bi,Internet sourcing blocked; labelled illustration retained
+55,Electrical Installation & Contracting,sv,Internet sourcing blocked; labelled illustration retained
+56,"Testing, Commissioning, O&M & AMC",sv,Internet sourcing blocked; labelled illustration retained

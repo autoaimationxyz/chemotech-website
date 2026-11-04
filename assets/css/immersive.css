@@ -374,3 +374,17 @@ a:hover { color: #fff; }
   .home-explore a, .home-explore a:first-child { padding: 22px 0; border-left: 0; border-top: 1px solid #2b3f4c; }
   .home-explore a:first-child { border-top: 0; }
 }
+.office-links { background: #101c29; border-block: 1px solid #2b3f4c; }
+.office-links .wrap { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+.office-links a { display: grid; gap: 9px; padding: 28px 0; text-decoration: none; }
+.office-links a + a { border-left: 1px solid #2b3f4c; padding-left: 30px; }
+.office-links a > span { font-size: 10px; color: #9fb3c2; }
+.office-links b { display: flex; align-items: center; gap: 30px; font-size: 26px; font-weight: 400; color: #e3ecf0; }
+.office-links b span { color: var(--green); font-size: 18px; }
+.office-links a:hover b { color: var(--green); }
+.portfolio-link { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+.portfolio-link h2 { font-size: clamp(24px,3vw,38px); font-weight: 400; margin-top: 15px; }
+.portfolio-link p { color: var(--muted); font-size: 14px; margin-top: 14px; }
+.portfolio-link > .btn { flex: none; }
+.office[id] { scroll-margin-top: 100px; }
+@media (max-width:600px) { .office-links a + a { padding-left: 20px; } .office-links b { font-size: 22px; } .portfolio-link { flex-direction: column; align-items: start; } }

@@ -324,7 +324,7 @@ def office_cards():
     pp = "<br>".join(f'<a href="tel:{a}">{b}</a>' for a, b in PHONES_PATNA)
     dp = "<br>".join(f'<a href="tel:{a}">{b}</a>' for a, b in PHONES_DELHI)
     return f"""<div class="offices">
-      <article class="office">
+      <article class="office" id="office-patna">
         <span class="tag">Head office · Bihar</span>
         <h3>Patna</h3>
         <address>Pratiksha Bhawan, Maurya Vihar Colony,<br>Near Bihar Urology Centre, Transport Nagar,<br>Patna, Bihar – 800026</address>
@@ -334,7 +334,7 @@ def office_cards():
         </dl>
         <div class="gstin"><span class="gstin__label">GSTIN · Bihar</span><span class="gstin__number">10AATFC8340G1ZJ</span></div>
       </article>
-      <article class="office">
+      <article class="office" id="office-delhi">
         <span class="tag">Branch office · Delhi</span>
         <h3>Delhi</h3>
         <address>Maya Garden, Ground Floor, Kh. No. 44/18 &amp; 44/19,<br>Gate No. 02, Inderprastha (IP) Colony, Block-C,<br>Village Burari, North Delhi – 110084</address>
@@ -560,9 +560,9 @@ def home():
 def about():
     chain = ["Requirement & Design", "Sourcing & Supply", "Installation", "Commissioning", "Service & AMC"]
     chain_html = "".join(f"<li><small>Step {i}</small><b>{c}</b></li>" for i, c in enumerate(chain, 1))
-    mission = ["Keep a work culture that drives results and engagement.", "Serve our customers' needs.",
-               "Respect what our customers want.", "Provide solutions tailored to each customer's needs.",
-               "Follow a customer-driven strategy that keeps improving satisfaction."]
+    mission = ["Understand each customer's needs, priorities and operating conditions.",
+               "Provide tailored solutions through a team committed to results and engagement.",
+               "Keep improving customer satisfaction through a customer-driven approach."]
     values = [("Passion", "We stay curious and accountable to our customers' needs."),
               ("Teamwork", "Strong cooperation across disciplines and departments."),
               ("Efficiency", "Efficient, effective service at an affordable cost."),
@@ -588,12 +588,9 @@ def about():
             ("5", "Manish Kumar", "Graduate", "Sales &amp; Services"),
             ("2", "Gunjan Kumar Mandal", "B.Tech – Electrical Engineering", "Service &amp; Support")]
     crew_html = "".join(f'<li><b class="yrs">{y}<small> yrs</small></b><h3>{n}</h3><span>{q}</span><span class="role">{r}</span></li>' for y, n, q, r in crew)
-    reasons = ["Single-point coordination across process, electrical and automation requirements.",
+    reasons = ["Single-point coordination across electrical, automation and process requirements.",
                "Practical engineering focused on reliability, maintainability and ease of operation.",
-               "A wide product portfolio for industrial utilities and process applications.",
-               "Integration of third-party equipment with PLC / HMI / SCADA based controls.",
-               "Service-oriented support for commissioning, troubleshooting and plant improvement.",
-               "Licensed electrical contractor in Bihar and Delhi; BCD Bihar Class 3 and Haryana Engineering Works Portal registered."]
+               "Service support for commissioning, troubleshooting and plant improvement."]
 
     body = f"""
 {page_hero("About Us", "A young team with decades of plant experience", "We understand how production works, what quality means on the shop floor, and how to present a solution that fits. That is how we have earned the trust of organisations of repute.", "About Chemotech")}
@@ -606,10 +603,8 @@ def about():
       <p class="lead">Since 2014–15, Chemotech has grown into a stronger, more focused firm, with a team that brings a wide range of experience and looks for new challenges.</p>
     </div>
     <div class="prose">
-      <p>We keep a professional and ethical work environment that encourages creativity and teamwork. Our experience lets us deliver cost-effective, well-directed and carefully thought-through work without compromising on quality.</p>
-      <p>We bring products, engineering and service together under one roof. Our team recommends equipment around site conditions, specifications and budget, then coordinates supply, installation, commissioning and after-sales support. Clients have a single point of responsibility across the complete job.</p>
-      <p>We care about the quality of our work, and we believe that is why clients have trusted us with more challenging assignments over the years. Our consultative approach is guided by the client's objectives and has proven effective. Our best projects are collaborative: our team and the client listen closely to each other and arrive at practical, result-oriented solutions.</p>
-      <p><strong>We stay focused on reliable execution and project timelines.</strong> From requirement study and design to sourcing, installation, commissioning and maintenance, the team coordinates every stage.</p>
+      <p>We bring products, engineering and service together under one roof. Our team recommends equipment around site conditions, specifications and budget, then coordinates supply, installation, commissioning and after-sales support.</p>
+      <p>Our best projects are collaborative. We work closely with clients to develop practical solutions, coordinate the disciplines involved and maintain a clear point of responsibility through execution and ongoing service.</p>
     </div>
   </div>
   <div class="wrap mt-lg">
@@ -628,7 +623,7 @@ def about():
     <div class="split mt-lg">
       <div class="stack" style="gap:14px">
         <h3 style="font-size:var(--fs-xl)">Our mission</h3>
-        <p class="muted">Consistently exceed customer satisfaction. To do this, we commit to:</p>
+        <p class="muted">Consistently exceed customer expectations. To do this, we commit to:</p>
       </div>
       <ul class="checklist">{"".join(f"<li>{m}</li>" for m in mission)}</ul>
     </div>
@@ -679,16 +674,7 @@ def about():
       <span class="tag">Our approach</span>
       <h2>Expertise you can build on</h2>
     </div>
-    <ul class="strengths">
-      <li><b>Team</b><div>An intelligent, devoted team of highly qualified, motivated and experienced professionals is the company's main strength.</div></li>
-      <li><b>Design</b><div>We design the equipment to ensure a cost-effective solution.</div></li>
-      <li><b>Execution</b><div>We execute turnkey projects in the shortest possible time with a fully professional approach, leaving clients satisfied.<div class="chips"><span>Quality-conscious approach</span><span>Safety, health &amp; environment conscious</span></div></div></li>
-      <li><b>Repeat orders</b><div>Many satisfied clients come back to us for the same and other projects. The Chemotech team has earned their respect.</div></li>
-    </ul>
-    <div class="mt-lg">
-      <h3 style="font-size:var(--fs-xl);margin-bottom:20px">Why work with us</h3>
-      <ul class="reasons">{"".join(f"<li>{r}</li>" for r in reasons)}</ul>
-    </div>
+    <ul class="reasons">{"".join(f"<li>{r}</li>" for r in reasons)}</ul>
   </div>
 </section>
 {cta()}"""
@@ -738,7 +724,7 @@ def products():
           </div>
         </button>
         <div class="pcard__foot"><small>{nv} {"type" if nv == 1 else "variants"}</small>
-          <button class="add-btn" type="button" data-add="{p['no']}" aria-pressed="false"><span class="ic-off">+ Shortlist</span><span class="ic-on">&check; Shortlisted</span></button></div>
+          <button class="add-btn" type="button" data-add="{p['no']}" aria-pressed="false"><span class="ic-off">+ Add to enquiry</span><span class="ic-on">&check; Added</span></button></div>
       </article>""")
 
     groups = []
@@ -805,8 +791,9 @@ def products():
 <section class="section on-navy" style="background:var(--navy)">
   <div class="wrap">
     <div class="section-head">
-      <span class="tag">Included with every product</span>
-      <h2 style="color:var(--on-navy)">Services we provide with each supply</h2>
+      <span class="tag">Beyond equipment supply</span>
+      <h2 style="color:var(--on-navy)">Support matched to your project</h2>
+      <p>Engineering, installation, commissioning and maintenance are available to match the agreed scope of work.</p>
     </div>
     <ol class="services">{services}</ol>
   </div>
@@ -844,9 +831,6 @@ def products():
 # COMPANY PROFILE
 # --------------------------------------------------------------------------
 def company_profile():
-    cap_rows = "".join(
-        f'<tr><th scope="row"><a href="products.html#cat-{c[0]}" style="color:inherit">{E(c[1])}</a></th><td>{" · ".join(E(p["name"]) for p in PRODUCTS if p["cat"] == c[0])}</td><td class="mono">{sum(1 for p in PRODUCTS if p["cat"] == c[0])}</td></tr>'
-        for c in CATEGORIES)
     clients = "".join(f"<li>{E(c)}</li>" for c in CLIENTS)
     sugar = "".join(f"<li><span><b>{E(a)}</b><small>{E(b)}</small></span><span class=\"cap\">Sugar mill</span></li>" for a, b in SUGAR)
     dairy = "".join(f"<li><span><b>{E(a)}</b><small>{E(b)}</small></span><span class=\"cap\">{E(c)}</span></li>" for a, b, c in DAIRY)
@@ -872,8 +856,7 @@ def company_profile():
           <tr><th scope="row">Partners</th><td>Tapan Kumar Jha · Shailendra Kumar Jha</td></tr>
           <tr><th scope="row">Year of establishment</th><td>2014–15</td></tr>
           <tr><th scope="row">PAN</th><td class="mono">AATFC8340G <small>Common for all offices</small></td></tr>
-          <tr><th scope="row">Phone</th><td><b>Patna:</b> +91 98999 82418 · 99106 80998 · 87574 46605 · 93122 82418 (Tapan Kumar Jha)<br><b>Delhi:</b> +91 93122 82418 · 87574 46605</td></tr>
-          <tr><th scope="row">Email</th><td style="overflow-wrap:anywhere">{INBOX}<br>{MAIL_MAIN}<br>{MAIL_TAPAN}</td></tr>
+          <tr><th scope="row">Contact</th><td><a href="contact.html">Office addresses, phone numbers &amp; email</a></td></tr>
           <tr><th scope="row">Auditor</th><td>Mr. Ajit Choudhary, CA</td></tr>
         </tbody>
       </table>
@@ -881,15 +864,7 @@ def company_profile():
   </div>
 </section>
 
-<section class="section section--wash">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="tag">Offices &amp; GST registrations</span>
-      <h2>Where to find us</h2>
-    </div>
-    {office_cards()}
-  </div>
-</section>
+<nav class="office-links" aria-label="Office locations"><div class="wrap"><a href="contact.html#office-patna"><span>Head office · Bihar</span><b>Patna <span aria-hidden="true">↗</span></b></a><a href="contact.html#office-delhi"><span>Branch office · Delhi</span><b>Delhi <span aria-hidden="true">↗</span></b></a></div></nav>
 
 <section class="section" id="clients">
   <div class="wrap">
@@ -931,20 +906,7 @@ def company_profile():
   </div>
 </section>
 
-<section class="section section--wash">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="tag">Capabilities at a glance</span>
-      <h2>Eight categories, {N_PRODUCTS} products, {N_VARIANTS} variants</h2>
-    </div>
-    <div class="table-wrap">
-      <table class="data">
-        <thead><tr><th scope="col">Category</th><th scope="col">Products</th><th scope="col">Count</th></tr></thead>
-        <tbody>{cap_rows}</tbody>
-      </table>
-    </div>
-  </div>
-</section>
+<section class="section section--tight"><div class="wrap portfolio-link"><div><span class="tag">Explore our capabilities</span><h2>{N_PRODUCTS} product families. One integrated portfolio.</h2><p>Browse specifications, variants and makes in our dedicated product catalogue.</p></div><a class="btn btn--ghost" href="products.html">Explore products {ARROW}</a></div></section>
 
 
 {cta()}"""
@@ -1024,7 +986,6 @@ def certifications():
           <tr><th scope="row">PAN</th><td class="mono">AATFC8340G</td><td>09/04/2024</td></tr>
           <tr><th scope="row">Udyam (MSME) – Micro</th><td class="mono">UDYAM-BR-26-0136033</td><td>10/07/2024</td></tr>
           <tr><th scope="row">Firm Registration – Bihar</th><td class="mono">F2600000083<small>Register No. F000233/2026 · Indian Partnership Act, 1932</small></td><td>21/04/2026</td></tr>
-          <tr><th scope="row">Haryana Engineering Works Portal</th><td class="mono">2026R31684<small>Contractor ID · Govt. of Haryana</small></td><td>26/10/2026</td></tr>
         </tbody>
       </table>
     </div>
@@ -1100,17 +1061,11 @@ def contact():
       </fieldset>
       {status_box()}
       <div class="form-foot">
-        <button class="btn" type="submit">Send message {ARROW}</button>
+        <button class="btn" type="submit">Prepare message {ARROW}</button>
         <small>Opens your email app with the message filled in, addressed to {INBOX}.</small>
       </div>
     </form>
     <aside class="aside">
-      <div class="aside-card">
-        <h3>General enquiries</h3>
-        <a class="big-phone" href="tel:+919899982418">+91 98999 82418</a>
-        <a href="mailto:{INBOX}">{INBOX}</a>
-
-      </div>
       <div class="aside-card">
         <h3>Need a price?</h3>
         <p>Pick products in the catalogue, then use the quote form to share quantities and site location. It helps us respond faster with the right technical offer.</p>
@@ -1183,7 +1138,7 @@ def quote():
       </fieldset>
       {status_box()}
       <div class="form-foot">
-        <button class="btn" type="submit">Send quote request {ARROW}</button>
+        <button class="btn" type="submit">Prepare quote email {ARROW}</button>
         <small>Opens your email app with your request filled in. Attach drawings, BOQs or datasheets there before sending.</small>
       </div>
     </form>
