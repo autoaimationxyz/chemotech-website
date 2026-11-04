@@ -1,0 +1,20 @@
+name: fetch-product-photos
+on: push
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and resize
+        run: |
+          mkdir out
+          while read no url; do
+            curl -fsSL -A "ChemotechWebsite/1.0 (github.com/autoaimationxyz/chemotech-website)" "$url" -o "raw_$no" || echo "FAIL $no"
+            convert "raw_$no" -auto-orient -resize '900x900>' -strip -quality 80 "out/p$no.jpg" || echo "CONVFAIL $no"
+            sleep 1
+          done < urls.txt
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: photos
+          path: out/
