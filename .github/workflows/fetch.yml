@@ -9,8 +9,7 @@ jobs:
         run: |
           mkdir out
           while read no url; do
-            curl -fsSL -A "ChemotechWebsite/1.0 (github.com/autoaimationxyz/chemotech-website)" "$url" -o "raw_$no" || echo "FAIL $no"
-            convert "raw_$no" -auto-orient -resize '900x900>' -strip -quality 80 "out/p$no.jpg" || echo "CONVFAIL $no"
+            curl -fsSL -A "ChemotechWebsite/1.0 (github.com/autoaimationxyz/chemotech-website)" "$url" -o "out/p$no.jpg" || echo "FAIL $no"
             sleep 1
           done < urls.txt
           ls -la out
