@@ -17,8 +17,22 @@
       if (e.key === "Escape" && nav.classList.contains("is-open")) {
         nav.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open menu");
         toggle.focus();
       }
+    });
+  }
+
+  /* Reveal only when animation and intersection observation are supported.
+     Content remains visible when JavaScript is unavailable. */
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var reveal = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); reveal.unobserve(entry.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll(".section-head, .feature-card, .vpanel, .partner, .steps").forEach(function (el) {
+      el.classList.add("reveal-ready"); reveal.observe(el);
     });
   }
 
@@ -141,4 +155,48 @@
       window.location.href = href;
     });
   });
+})();
+
+/* Illustrative engineering ecosystem: focus a discipline, or pause its motion. */
+(function () {
+  "use strict";
+  var root = document.querySelector('.system-experience');
+  if (!root) return;
+  var descriptions = {
+    all: 'Power, control and process utilities. Engineered to work together.',
+    power: 'Electrical distribution, backup generation and renewable energy connect the site.',
+    automation: 'PLC, HMI and SCADA connect equipment, monitoring and process control.',
+    water: 'Treatment, filtration and process utilities connect resources to operations.'
+  };
+  root.querySelectorAll('[data-system-mode]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      root.dataset.system = button.dataset.systemMode;
+      root.querySelectorAll('[data-system-mode]').forEach(function (other) {
+        other.setAttribute('aria-pressed', String(other === button));
+      });
+      root.querySelector('#system-copy').textContent = descriptions[button.dataset.systemMode];
+    });
+  });
+  var pause = root.querySelector('.motion-toggle');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function syncMotion() {
+    if (reduced.matches) {
+      document.body.classList.add('motion-paused');
+      pause.disabled = true;
+      pause.textContent = 'Reduced motion enabled';
+      pause.setAttribute('aria-pressed', 'true');
+    } else {
+      pause.disabled = false;
+      document.body.classList.remove('motion-paused');
+      pause.setAttribute('aria-pressed', 'false');
+      pause.textContent = 'Pause animation Ⅱ';
+    }
+  }
+  pause.addEventListener('click', function () {
+    var paused = document.body.classList.toggle('motion-paused');
+    pause.setAttribute('aria-pressed', String(paused));
+    pause.textContent = paused ? 'Play animation ▷' : 'Pause animation Ⅱ';
+  });
+  if (reduced.addEventListener) reduced.addEventListener('change', syncMotion);
+  syncMotion();
 })();

@@ -82,6 +82,18 @@
       apply();
     });
   });
+  $$("[data-gateway]").forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      state = { cat: link.dataset.gateway, make: "", q: "" };
+      if (search) search.value = "";
+      if (makeSel) makeSel.value = "";
+      setHash("cat-" + state.cat);
+      apply();
+      var catalogue = $("#catalogue");
+      if (catalogue) catalogue.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
+  });
   if (search) search.addEventListener("input", function () { state.q = norm(search.value.trim()); apply(); });
   if (makeSel) makeSel.addEventListener("change", function () { state.make = makeSel.value; apply(); });
   $$("[data-reset]").forEach(function (b) {
@@ -146,13 +158,10 @@
   var X_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   function highlight(text) {
-    var t = esc(text);
-    if (!state.q) return t;
-    state.q.split(/\s+/).filter(Boolean).forEach(function (w) {
-      var re = new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig");
-      t = t.replace(re, '<mark class="hl">$1</mark>');
-    });
-    return t;
+    if (!state.q) return esc(text);
+    var words = state.q.split(/\s+/).filter(Boolean).map(function (w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); });
+    var re = new RegExp("(" + words.join("|") + ")", "ig");
+    return String(text).split(re).map(function (part, i) { return i % 2 ? '<mark class="hl">' + esc(part) + '</mark>' : esc(part); }).join('');
   }
 
   function groupVariants(p) {
@@ -184,8 +193,8 @@
     var imgs = p.images;
     var c = CATS[p.cat];
     if (!imgs.length) {
-      return '<div class="pd-main"><div class="ph-tile"><b>' + pad(p.no) + "</b>" + c.icon + "</div></div>" +
-        '<p class="pd-caption"><span>Photos for this product are coming soon. Ask us for datasheets and references.</span></p>';
+      return '<div class="pd-main"><div class="equipment-tile">' + (p.illustration || c.icon) + '<span class="illustration-caption">Configuration illustration</span></div></div>' +
+        '<p class="pd-caption"><span>Conceptual illustration. Ask our team for model-specific photographs and datasheets.</span></p>';
     }
     var im = imgs[i];
     var h = '<div class="pd-main"><img src="' + im.src + '" alt="' + esc(im.title) + '"></div>' +
@@ -221,6 +230,8 @@
       '<div class="pd-body"><div class="pd-media" id="pd-media">' + mediaHtml(p, imgIndex || 0) + "</div>" +
       '<div class="pd-info"><p class="lead">' + highlight(p.desc) + "</p>" +
       (p.note ? '<p class="pd-note">' + esc(p.note) + "</p>" : "") +
+      '<div class="pd-block"><h3>Specifications at a glance</h3><dl class="spec-grid">' + (p.specs || []).map(function (s) { return '<div><dt>' + esc(s[0]) + '</dt><dd>' + esc(s[1]) + '</dd></div>'; }).join('') + '</dl><p class="spec-note">Ratings and options vary by model. Ask our team for the datasheet and selection for your site.</p></div>' +
+      '<div class="application-note"><b>Where it fits</b>' + esc(p.application || '') + '</div>' +
       '<div class="pd-block"><h3>Main makes</h3><ul class="mk">' + p.main.map(function (m) { return '<li class="' + (m === state.make ? "is-hit" : "") + '">' + esc(m) + "</li>"; }).join("") + "</ul></div>" +
       '<div class="pd-block"><h3>' + p.variants.length + (p.variants.length === 1 ? " type" : " variants & types") + " · makes we supply</h3>" + vhtml + "</div></div></div>" +
       '<footer class="pd-foot"><div class="pd-nav"><button type="button" data-step="-1" aria-label="Previous product">&larr;<span class="lbl"> Previous</span></button><button type="button" data-step="1" aria-label="Next product"><span class="lbl">Next </span>&rarr;</button></div>' +

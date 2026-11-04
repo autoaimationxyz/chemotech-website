@@ -8,10 +8,10 @@ Upload the folder contents to any web host.
 
 | File | Page |
 |---|---|
-| `index.html` | Home: verticals, solution photos, Delta partnership, clients, industries, licences |
+| `index.html` | Home: animated engineering ecosystem, capabilities, technology makes, clients and industries |
 | `about.html` | About Us: story, vision, mission, values, quality policy, team |
 | `products.html` | Our Products: interactive catalogue of 56 products / 328 variants / 150+ makes, solutions gallery |
-| `company-profile.html` | Company Profile: key information, offices, clients & projects, partners, industries, downloads |
+| `company-profile.html` | Company Profile: key information, offices, clients & projects, partners and industries |
 | `certifications.html` | Licences & registrations (Delhi, Bihar, BCD Class 3, Haryana, GST, MSME) |
 | `contact.html` | Contact: both offices + message form |
 | `quote.html` | Request Quote form (pre-filled with products picked in the catalogue) |
@@ -29,12 +29,15 @@ Upload the folder contents to any web host.
 ## Structure
 
 ```
-assets/css/style.css        design system (brand colours, one Helvetica/sans-serif stack)
+assets/css/style.css        base layout and component styles
+assets/css/modern.css       shared responsive theme, product cards, animations
 assets/js/main.js           mobile menu, forms, quote pre-fill
 assets/js/catalogue.js      product catalogue, product panel, enquiry list, photo lightbox
 assets/img/                 logo, emblem, product photos
 assets/img/solutions/       30 solution photos from the 2026 company profile
-assets/docs/                downloadable Company Profile and Work Profile PDFs
+tools/company.json          verified industries and partner makes from the latest profiles
+tools/system-graphic.html   interactive, animated engineering ecosystem
+assets/css/immersive.css    dark industrial theme and aligned office/registration layouts
 tools/build.py              generator for all pages (copy, clients, partners, contact details)
 tools/products.json         product data (generated from the Product Master List)
 tools/solutions.json        solution photos: captions, makes, linked product numbers
@@ -65,3 +68,34 @@ Edits made directly in the HTML files are overwritten the next time the generato
 
 The Contact and Request Quote forms open the visitor's email app with a pre-filled
 message to `info.chemotechinternational@gmail.com` (set in `assets/js/main.js`).
+
+## Redesigned product experience
+
+- The homepage features an interactive animated industrial ecosystem, selected technology makes and product discovery. Pause controls and reduced-motion support are included.
+- All 56 families retain their descriptions, 328 variants, makes, filtering and enquiry workflow.
+- Cards preview available options. Product dialogs add specification summaries and application guidance.
+- Specifications are maintained in `SPECIFICATIONS` in `tools/build.py`; model-specific ratings must be confirmed with the engineering team. Do not invent missing ratings.
+- Where a product has no supplied photo, a labelled conceptual equipment illustration is shown. Add actual photos through the existing image data when available.
+- `assets/css/immersive.css` applies the dark industrial theme across all seven pages on top of the shared layouts.
+- The latest profiles confirm 23 sectors, 44 named partner makes, 56 product families and 328 variants. Unsupported turnover/business-hours claims and old production/group-company copy were removed.
+- Profile PDFs and their public download links were removed. Office GST rows align at the bottom of equal-height cards.
+- Internet photo sourcing and live-site inspection currently require the pending network-domain access changes; do not describe these as completed.
+
+## Local preview and checks
+
+No application dependencies or build framework are required:
+
+```sh
+python3 tools/build.py .
+python3 -m http.server 8080
+```
+
+Optional browser regression checks require Playwright and its Chromium browser. Install test tools outside the checkout to keep the static site dependency-free:
+
+```sh
+npm install --prefix /tmp/chemotech-checks playwright
+/tmp/chemotech-checks/node_modules/.bin/playwright install chromium
+NODE_PATH=/tmp/chemotech-checks/node_modules node tools/browser-check.cjs
+```
+
+Keep the local server running in another terminal. `SITE_URL` can override the default test server address. Checks cover all seven pages at 320, 390, 768, 1024, 1440 and 1920 pixels, catalogue filters, enquiries, product deep links, mobile navigation, dialogs and reduced motion. These checks use Chromium; physical iOS/Android devices and Safari are separate compatibility checks.
