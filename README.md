@@ -8,7 +8,7 @@ Upload the folder contents to any web host.
 
 | File | Page |
 |---|---|
-| `index.html` | Home: animated engineering ecosystem, capabilities, technology makes, clients and industries |
+| `index.html` | Home: animated engineering ecosystem, compact capabilities, selected products and links to company details |
 | `about.html` | About Us: story, vision, mission, values, quality policy, team |
 | `products.html` | Our Products: interactive catalogue of 56 products / 328 variants / 150+ makes, solutions gallery |
 | `company-profile.html` | Company Profile: key information, offices, clients & projects, partners and industries |

@@ -9,7 +9,7 @@ Content sources (edit these, then re-run):
   tools/solutions.json  solution photos, captions, makes and linked product numbers
   this file             page copy, clients, partners, registrations, contact details
 """
-import html, json, os, re, sys
+import hashlib, html, json, os, re, sys
 
 OUT = sys.argv[1]
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -183,9 +183,7 @@ def header(active):
       <span class="topbar__hide-sm">Patna · Delhi</span>
     </div>
     <div class="topbar__group">
-      <a href="tel:+919899982418">+91 98999 82418</a>
       <a href="mailto:{INBOX}">{INBOX}</a>
-
     </div>
   </div>
 </div>
@@ -256,6 +254,8 @@ def footer():
 
 def page(filename, title, description, body, extra_scripts=""):
     full_title = "Chemotech International" if filename == "index.html" else f"{title} · Chemotech International"
+    with open(os.path.join(HERE, "../assets/css/immersive.css"), "rb") as theme:
+        theme_version = hashlib.sha256(theme.read()).hexdigest()[:12]
     doc = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -271,7 +271,7 @@ def page(filename, title, description, body, extra_scripts=""):
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/modern.css">
-<link rel="stylesheet" href="assets/css/immersive.css">
+<link rel="stylesheet" href="assets/css/immersive.css?v={theme_version}">
 </head>
 <body>
 {header(filename)}
@@ -457,9 +457,11 @@ def product_illustration(p):
     return f'<svg class="equipment-illustration" viewBox="0 0 600 340" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><ellipse cx="300" cy="302" rx="158" ry="8" fill="currentColor" opacity=".07" stroke="none"/>{shapes}</svg>'
 
 
-def featured_products():
+def featured_products(numbers=(27, 35, 39, 33)):
     cards = []
     for no, label in [(27, "Power without interruption"), (35, "Control with precision"), (39, "Water that works harder"), (33, "Moving energy forward")]:
+        if no not in numbers:
+            continue
         p = next(p for p in PRODUCTS if p["no"] == no)
         im = p["images"][0]
         cards.append(f'''<a class="feature-card" href="products.html#p-{no}"><div class="feature-card__image"><img src="{im['src']}" alt="{E(im['title'])}" loading="lazy"><span>{E(CAT[p['cat']][1])}</span></div><div class="feature-card__copy"><small>{E(label)}</small><h3>{E(p['name'])}</h3><p>{E(p['desc'])}</p><span class="text-link">Explore {len(p['variants'])} variants {ARROW}</span></div></a>''')
@@ -486,32 +488,13 @@ def home():
              (str(N_PRODUCTS), "Products"), (str(N_VARIANTS), "Variants &amp; types"), (MAKES_LABEL, "Makes supplied")]
     facts_html = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in facts)
 
-    vpanels = "".join(f"""<a class="vpanel {vc}" href="products.html#cat-{cat}">
-        <div class="vpanel__top"><span class="vcode">V{i}</span></div>
-        {icon(ic)}
-        <div class="stack" style="gap:10px"><h3>{E(name)}</h3><p>{E(text)}</p></div>
-        <span class="text-link">View products {ARROW}</span>
-      </a>""" for i, (vc, ic, name, cat, text) in enumerate(VERTICALS, 1))
-
-    def mos(slug, cls=""):
-        s = sol(slug)
-        return f'<a class="{cls}" href="products.html#p-{s["products"][0]}"><img src="{s["img"]}" alt="{E(s["title"])}" loading="lazy"><span><small>{E(s["make"])}</small>{E(s["title"])}</span></a>'
-    mosaic = (mos("wtp-on-site", "big") + mos("scada-system") + mos("silent-dg-set") + mos("led-video-wall") + mos("solar-power")
-              + mos("industrial-ro-plant", "wide") + mos("hygiene-station") + mos("cold-clean-rooms"))
-
-    steps = [("Study", "Understand the process requirement and operating conditions."),
-             ("Engineer", "Develop the right technical solution and select the equipment."),
-             ("Coordinate", "Align electrical, instrumentation, automation and process requirements."),
-             ("Supply &amp; integrate", "Equipment, panels, instruments and associated systems."),
-             ("Commission", "Support installation, testing and commissioning."),
-             ("Support", "Troubleshooting, preventive maintenance and ongoing service.")]
-    steps_html = "".join(f'<li><div class="node"><b>{i:02d}</b></div><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(steps, 1))
-
-    gallery = [("assets/img/delta-vfd.jpg", "VFD", 35), (sol("vfd-plc-hmi")["img"], "PLC", 36), ("assets/img/delta-hmi.jpg", "HMI", 36),
-               (sol("online-ups")["img"], "Online UPS", 27), (sol("energy-storage")["img"], "Energy storage", 28), (sol("ev-chargers")["img"], "EV chargers", 33)]
-    gal = "".join(f'<figure><a class="ph" href="products.html#p-{n}"><img src="{f}" alt="Delta {c}" loading="lazy"></a><figcaption>{c}</figcaption></figure>' for f, c, n in gallery)
-
-    trusted = "".join(f"<li>{E(c)}</li>" for c in CLIENTS[:12])
+    capabilities = [
+        ("electrical", "Power & energy", "pd", "Electrical distribution, backup power, renewables and power quality, connected around your site."),
+        ("automation", "Automation & control", "au", "Drives, instrumentation and PLC / HMI / SCADA integration for smarter plant operations."),
+        ("water", "Water & process", "wp", "Water treatment, process utilities, chemicals and hygiene systems, from selection to service."),
+        ("building", "Buildings & infrastructure", "bi", "Building systems, clean rooms, ICT and security for connected working environments."),
+    ]
+    vpanels = "".join(f'''<a class="vpanel" href="products.html#cat-{cat}">{icon(ic)}<h3>{E(name)}</h3><p>{E(text)}</p><span class="text-link">Explore solutions {ARROW}</span></a>''' for ic, name, cat, text in capabilities)
 
     body = f"""
 <section class="hero on-navy">
@@ -534,112 +517,37 @@ def home():
   <div class="wrap"><ul>{facts_html}</ul></div>
 </section>
 
-<section class="section featured-section">
-  <div class="wrap">
-    <div class="section-head section-head--split"><div class="stack"><span class="tag">Explore our expertise</span><h2>The right systems.<br>Real possibilities.</h2><p>Discover equipment, explore the options, and build a solution around your project.</p></div><a class="text-link" href="products.html">All 56 product families {ARROW}</a></div>
-    <div class="featured-grid">{featured_products()}</div>
-  </div>
-</section>
-
-<section class="section">
+<section class="section home-capabilities">
   <div class="wrap">
     <div class="section-head section-head--split">
       <div class="stack" style="gap:14px">
         <span class="tag">What we do</span>
-        <h2>Seven verticals. One accountable team.</h2>
-        <p>Most plants need power, control, utilities and building systems to work together. We cover all of them, so you deal with one team from equipment selection to after-sales service.</p>
+        <h2>Connected expertise.<br>One accountable team.</h2>
+        <p>Engineering, supply, installation and support across the systems your facility depends on.</p>
       </div>
-      <a class="btn btn--ghost" href="products.html">Open the catalogue {ARROW}</a>
+      <a class="text-link" href="products.html">Explore all capabilities {ARROW}</a>
     </div>
     <div class="verticals verticals--4">{vpanels}</div>
   </div>
 </section>
 
-<section class="section section--wash">
+<section class="section section--wash featured-section">
   <div class="wrap">
     <div class="section-head section-head--split">
-      <div class="stack" style="gap:14px">
-        <span class="tag">Our solutions</span>
-        <h2>Systems we supply, install and commission</h2>
-      </div>
-      <a class="text-link" href="products.html#solutions">All 30 solution photos {ARROW}</a>
+      <div class="stack" style="gap:14px"><span class="tag">Selected systems</span><h2>Solutions in focus.</h2><p>A starting point for your next project. Explore our full portfolio for every product family and variant.</p></div>
+      <a class="text-link" href="products.html">All {N_PRODUCTS} product families {ARROW}</a>
     </div>
-    <div class="mosaic">{mosaic}</div>
+    <div class="featured-grid home-featured-grid">{featured_products((27, 39))}</div>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap partner">
-    <div class="stack" style="gap:20px">
-      <span class="tag">Technology ecosystem</span>
-      <img class="partner__logo" src="assets/img/delta-logo.jpg" width="511" height="127" alt="Delta Electronics" loading="lazy">
-      <h2 style="font-size:var(--fs-2xl)">Global technology.<br>Integrated expertise.</h2>
-      <p class="muted">We supply, integrate and support Delta products across industrial automation, power continuity and energy systems. Our wider portfolio brings together leading makes in electrical equipment, water treatment, building systems and ICT, selected around each project’s requirements.</p>
-      <div class="partner__stats">
-        <div><b>1 – 4000 kVA</b><span>Online UPS range</span></div>
-        <div><b>PLC · HMI · SCADA</b><span>Connected automation</span></div>
-        <div><b>AC &amp; DC</b><span>EV charging</span></div>
-      </div>
-    </div>
-    <div class="gallery">{gal}</div>
-  </div>
-</section>
-
-<section class="section section--wash">
+<nav class="home-explore" aria-label="Explore Chemotech">
   <div class="wrap">
-    <div class="section-head">
-      <span class="tag">How we work</span>
-      <h2>From process study to plant support</h2>
-      <p>Engineering, supply, system integration, installation, commissioning, maintenance and after-sales support, handled by the same team.</p>
-    </div>
-    <ol class="steps">{steps_html}</ol>
+    <a href="about.html"><span>Our people &amp; approach</span><b>Meet Chemotech <span aria-hidden="true">↗</span></b></a>
+    <a href="company-profile.html#clients"><span>Clients &amp; project references</span><b>Explore our experience <span aria-hidden="true">↗</span></b></a>
+    <a href="certifications.html"><span>Licences &amp; registrations</span><b>View our credentials <span aria-hidden="true">↗</span></b></a>
   </div>
-</section>
-
-<section class="section section--tight">
-  <div class="wrap">
-    <div class="section-head section-head--split" style="margin-bottom:22px">
-      <div class="stack" style="gap:14px">
-        <span class="tag">Our clients</span>
-        <h2>Trusted by industry, institutions and government</h2>
-      </div>
-      <a class="text-link" href="company-profile.html#clients">Clients &amp; project references {ARROW}</a>
-    </div>
-    <ul class="trusted">{trusted}</ul>
-  </div>
-</section>
-
-<section class="section section--wash">
-  <div class="wrap">
-    <div class="section-head section-head--split">
-      <div class="stack" style="gap:14px">
-        <span class="tag">Our presence</span>
-        <h2>{len(INDUSTRIES)} industries we supply and serve</h2>
-        <div class="presence"><span>India</span><span>Nepal</span><span>Bhutan</span></div>
-      </div>
-      <a class="text-link" href="company-profile.html#presence">Company profile {ARROW}</a>
-    </div>
-    <ul class="industries">{industries_list()}</ul>
-  </div>
-</section>
-
-<section class="section section--tight">
-  <div class="wrap">
-    <div class="section-head section-head--split" style="margin-bottom:28px">
-      <div class="stack" style="gap:14px">
-        <span class="tag">Licensed &amp; registered</span>
-        <h2>Approved to execute in Bihar, Delhi and Haryana</h2>
-      </div>
-      <a class="text-link" href="certifications.html">All certifications {ARROW}</a>
-    </div>
-    <ul class="licences">
-      <li><small>Delhi</small><b>Electrical Contractor Licence</b><span>Govt. of NCT of Delhi · valid till 2050</span></li>
-      <li><small>Bihar</small><b>Electrical Contractor Licence</b><span>Electrical Licensing Board, Patna · valid till 2030</span></li>
-      <li><small>Bihar</small><b>BCD Class 3 Contractor</b><span>Building Construction Department · valid till 2031</span></li>
-      <li><small>Haryana</small><b>Engineering Works Portal</b><span>Registered contractor · ID 2026R31684</span></li>
-    </ul>
-  </div>
-</section>
+</nav>
 {cta()}"""
     page("index.html", "Home",
          "Chemotech International: electrical works, DG sets, UPS, VFD / PLC / SCADA automation, water and wastewater treatment, solar, EV charging, building and ICT systems for industry across India, Nepal and Bhutan.",

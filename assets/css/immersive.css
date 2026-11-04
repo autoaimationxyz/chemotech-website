@@ -350,3 +350,27 @@ a:hover { color: #fff; }
 #catalogue { scroll-margin-top: 200px; }
 @media (max-width:760px) { #catalogue { scroll-margin-top: 0; } }
 @media (max-height:600px) { .cat-toolbar { position: static; } #catalogue { scroll-margin-top: 0; } }
+/* Keep the homepage focused; detailed portfolios and credentials have their own pages. */
+.home-capabilities .vpanel { grid-template-rows: auto auto 1fr auto; gap: 14px; }
+.home-capabilities .vpanel h3 { font-size: 22px; }
+.home-featured-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.home-featured-grid .feature-card { display: grid; grid-template-columns: .9fr 1.1fr; }
+.home-featured-grid .feature-card__image { margin: 12px 0 12px 12px; aspect-ratio: auto; min-height: 230px; }
+.home-featured-grid .feature-card__copy { padding: 28px 24px; }
+.home-explore { background: #0c1722; border-block: 1px solid #2b3f4c; }
+.home-explore .wrap { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.home-explore a { display: grid; gap: 8px; padding: 28px; color: #dce6eb; text-decoration: none; border-left: 1px solid #2b3f4c; }
+.home-explore a:first-child { border-left: 0; padding-left: 0; }
+.home-explore a > span { font-size: 10px; color: #99afbe; }
+.home-explore b { font-size: 15px; font-weight: 400; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.home-explore b span { color: var(--green); }
+.home-explore a:hover b { color: var(--green); }
+@media (max-width:1080px) { .home-featured-grid .feature-card { display: flex; } .home-featured-grid .feature-card__image { margin: 12px 12px 0; aspect-ratio: 1.8; min-height: 0; } }
+@media (max-width:600px) {
+  .home-featured-grid { grid-template-columns: minmax(0,1fr); }
+  .home-capabilities .vpanel { padding: 22px; gap: 10px; }
+  .home-capabilities .vpanel svg { width: 30px; height: 30px; }
+  .home-explore .wrap { grid-template-columns: minmax(0,1fr); }
+  .home-explore a, .home-explore a:first-child { padding: 22px 0; border-left: 0; border-top: 1px solid #2b3f4c; }
+  .home-explore a:first-child { border-top: 0; }
+}
