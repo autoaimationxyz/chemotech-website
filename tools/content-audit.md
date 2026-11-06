@@ -26,3 +26,11 @@ Document numbers changed. Stable website IDs are retained by product identity, w
 All 56 families have an image. The 34 supplied representative Commons photographs remain unchanged. Six equipment/control-room photographs were extracted from the updated company profile, increasing the solution gallery to 36. The new Water Quality Analysers image is explicitly described as process-monitoring application context rather than an image of a particular analyser model.
 
 Three existing Commons credit entries still use a generic creator label (products with stable IDs 05, 24 and 25). Their supplied source/licence records are exposed in the product details, but independent creator confirmation remains outstanding because Wikimedia access is blocked in this environment. No creator names or model claims were invented. The source profiles and previous source-image credit document remain the authority for provenance.
+
+## Readability and final contact-reference review
+
+Main reading copy was previously 11–14px in several components and mobile labels reached 8–9px. The revised native-font scale raises body/product reading copy to 16–18px, navigation to 15px and supporting labels to 12–14px. Mission/reason markers, workflow/industry numbers and card text are inset and aligned to first lines. Input controls are at least 16px, and the menu/filter offsets adjust to the larger text.
+
+Office contacts are centralised, with readable lists and optional line breaks before email @ signs. The primary email is the first email common to both PDFs. A required clarification is pending because the Company PDF lists 98999 → 87574 → 99106 → 93122, while the Work PDF's final page lists 98999 → 99106 → 87574 for both offices and uses a different email order for Delhi. Existing office-list data is retained until the user selects the reference. The Company PDF's “80 more makes” and client-coverage wording take precedence over the differing DOCX copy for those passages.
+
+The copy-enquiry option validates the form and copies a correctly addressed draft, including selected products. A selectable readonly draft is provided when clipboard access fails. No direct server-side delivery is claimed.

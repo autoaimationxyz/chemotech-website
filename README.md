@@ -69,7 +69,7 @@ Edits made directly in the HTML files are overwritten the next time the generato
 ## Forms
 
 The Contact and Request Quote forms open the visitor's email app with a pre-filled
-message to `info.chemotechinternational@gmail.com` (set in `assets/js/main.js`).
+message to the primary email in `tools/company.json` (`contacts.primary_email`). The copy option prepares the same enquiry for pasting into any email service; if clipboard access is unavailable, a selectable draft is shown.
 
 ## Redesigned product experience
 
@@ -106,6 +106,14 @@ Keep the local server running in another terminal. `SITE_URL` can override the d
 
 ## GitHub Pages hosting
 
-The latest website is on `website-redesign`. In repository Settings → Pages, select **Deploy from a branch**, then **website-redesign** and **/ (root)**, and save. The `.nojekyll` file ensures the generated HTML and assets are served directly. A public repository can use GitHub Pages on GitHub Free.
+The source branch is `website-redesign`; the live GitHub Pages site is published from `gh-pages`. Publish the same commit to both branches with `git push --atomic origin HEAD:refs/heads/website-redesign HEAD:refs/heads/gh-pages`. The `.nojekyll` file ensures the generated HTML and assets are served directly. A public repository can use GitHub Pages on GitHub Free.
 
 No custom domain or DNS changes are required for the GitHub-provided address. Publishing Pages makes the website publicly accessible. This does not replace the existing schoolerp.org website.
+
+## Readability and final usability refinements
+
+The active type scale uses native system fonts, 17px base copy, 16–18px main reading text, 15px navigation, 14px actions and 12–14px supporting labels. Sizes use rem units to follow browser font preferences. Form fields remain at least 16px. Compact layouts use a scrollable mobile menu, larger graphic controls and a dynamically measured catalogue-toolbar offset. Bullet/number rows have inset padding and explicit text columns.
+
+Contact details are centralised in `tools/company.json`. The newest Company PDF and the Work PDF's final contact page differ in phone count/order and office email order; final selection is awaiting the user's answer. The primary email is common to both PDFs. Do not infer that the unresolved office lists have already been reconciled.
+
+Workflow and office pictograms, viewport reveals and a short process-line animation provide visual guidance. Reduced-motion preferences disable animation. The email forms do not submit to a server; users must send the prepared/copied draft from their own email service.

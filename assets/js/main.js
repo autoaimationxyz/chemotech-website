@@ -8,11 +8,19 @@
   var toggle = document.querySelector(".menu-toggle");
   var nav = document.getElementById("site-nav");
   if (toggle && nav) {
+    var fitMenu = function () {
+      var header = toggle.closest('.site-header');
+      var available = window.innerHeight - header.getBoundingClientRect().bottom - 12;
+      nav.style.setProperty('--nav-space', Math.max(100, available) + 'px');
+    };
     toggle.addEventListener("click", function () {
       var open = nav.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      if (open) fitMenu();
     });
+    window.addEventListener('resize', fitMenu, {passive:true});
+    window.addEventListener('scroll', function () { if (nav.classList.contains('is-open')) fitMenu(); }, {passive:true});
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && nav.classList.contains("is-open")) {
         nav.classList.remove("is-open");
@@ -31,9 +39,21 @@
         if (entry.isIntersecting) { entry.target.classList.add("is-visible"); reveal.unobserve(entry.target); }
       });
     }, { threshold: 0.08 });
-    document.querySelectorAll(".section-head, .feature-card, .vpanel, .partner, .steps").forEach(function (el) {
+    document.querySelectorAll(".section-head, .feature-card, .vpanel, .partner, .steps, .delivery-visual, .delivery-copy, .chain, .values li, .office").forEach(function (el) {
       el.classList.add("reveal-ready"); reveal.observe(el);
     });
+  }
+
+  /* Keep catalogue anchors below the larger, responsive filter toolbar. */
+  var toolbar = document.querySelector('.cat-toolbar');
+  if (toolbar) {
+    var syncCatalogueOffset = function () {
+      var height = window.getComputedStyle(toolbar).position === 'sticky' ? toolbar.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty('--catalogue-toolbar-height', height + 'px');
+    };
+    syncCatalogueOffset();
+    if ('ResizeObserver' in window) new ResizeObserver(syncCatalogueOffset).observe(toolbar);
+    else window.addEventListener('resize', syncCatalogueOffset, {passive:true});
   }
 
   /* ---- Footer year ---- */
@@ -139,9 +159,13 @@
   /* ---- Forms: validate, then open the visitor's email app ---- */
   document.querySelectorAll("form[data-mailto]").forEach(function (form) {
     var status = form.querySelector(".form-status");
+    form.addEventListener('input', function () {
+      if (status) status.hidden = true;
+      var draft = form.querySelector('.prepared-message');
+      if (draft) draft.hidden = true;
+    });
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    function prepareMessage() {
       var ok = true;
       form.querySelectorAll("[required]").forEach(function (el) {
         var err = form.querySelector('[data-err-for="' + el.id + '"]');
@@ -167,10 +191,52 @@
       var org = (form.querySelector("#company") || {}).value || "";
       var subject = form.dataset.mailto + (org ? " — " + org : who ? " — " + who : "");
       var body = lines.join("\n") + "\n\nSent from chemotech-international website";
-      var href = "mailto:" + INBOX + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      var recipient = form.dataset.recipient || INBOX;
+      return {subject:subject, body:body, recipient:recipient, href:"mailto:" + recipient + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body)};
+    }
 
-      if (status) status.hidden = false;
-      window.location.href = href;
+    function showStatus(title, detail) {
+      if (!status) return;
+      var heading = document.createElement('b');
+      var text = document.createElement('p');
+      heading.textContent = title;
+      text.textContent = detail;
+      status.replaceChildren(heading, text);
+      status.hidden = false;
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var message = prepareMessage();
+      if (!message) return;
+      showStatus('Your email draft is ready.', 'Your email app should open. Press send there, or use the copy option to paste the enquiry into your own email service.');
+      window.location.href = message.href;
+    });
+
+    var copy = form.querySelector('[data-copy-message]');
+    if (copy) copy.addEventListener('click', async function () {
+      var message = prepareMessage();
+      if (!message) return;
+      var plain = 'To: ' + message.recipient + '\nSubject: ' + message.subject + '\n\n' + message.body;
+      try {
+        if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(plain);
+        showStatus('Message copied.', 'Paste it into your email service and send it to ' + message.recipient + '.');
+      } catch (error) {
+        var draft = form.querySelector('.prepared-message');
+        if (!draft) {
+          draft = document.createElement('textarea');
+          draft.className = 'prepared-message';
+          draft.readOnly = true;
+          draft.setAttribute('aria-label', 'Prepared enquiry to copy');
+          form.insertBefore(draft, form.querySelector('.form-foot'));
+        }
+        draft.value = plain;
+        draft.hidden = false;
+        draft.focus();
+        draft.select();
+        showStatus('Copy your prepared message below.', 'Copy this draft into your email service, then send it to ' + message.recipient + '.');
+      }
     });
   });
 })();

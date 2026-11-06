@@ -230,5 +230,41 @@
         "100 KLD"
       ]
     ]
+  },
+  "contacts": {
+    "primary_email": "chemotech.international@gmail.com",
+    "general_phones": [
+      "+91 98999 82418",
+      "+91 99106 80998",
+      "+91 87574 46605",
+      "+91 93122 82418"
+    ],
+    "offices": {
+      "patna": {
+        "phones": [
+          "+91 98999 82418",
+          "+91 99106 80998",
+          "+91 87574 46605",
+          "+91 93122 82418"
+        ],
+        "emails": [
+          "info.chemotechinternational@gmail.com",
+          "chemotech.international@gmail.com",
+          "tapan.chemotech@gmail.com"
+        ]
+      },
+      "delhi": {
+        "phones": [
+          "+91 98999 82418",
+          "+91 99106 80998",
+          "+91 87574 46605"
+        ],
+        "emails": [
+          "info.chemotechinternational@gmail.com",
+          "chemotech.international@gmail.com",
+          "tapan.chemotech@gmail.com"
+        ]
+      }
+    }
   }
 }

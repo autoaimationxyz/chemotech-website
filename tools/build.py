@@ -49,6 +49,7 @@ ICONS = {
     "automation": '<rect x="7" y="7" width="10" height="10"/><rect x="10" y="10" width="4" height="4"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/>',
     "water": '<path d="M12 3c-4 5-6.2 8.2-6.2 11.2a6.2 6.2 0 0 0 12.4 0C18.2 11.2 16 8 12 3z"/><path d="M9 15a3 3 0 0 0 3 3"/>',
     "chemicals": '<path d="M9 3h6M10 3v6.2l-5.3 8.9A2 2 0 0 0 6.4 21h11.2a2 2 0 0 0 1.7-2.9L14 9.2V3"/><path d="M7.4 15h9.2"/>',
+    "location": '<path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/>',
     "building": '<path d="M4 21V8.5L12 3l8 5.5V21"/><path d="M2.5 21h19M9.5 21v-5.5h5V21M8 10.5h2M14 10.5h2"/>',
     "ict": '<rect x="3" y="4" width="18" height="12"/><path d="M8 20h8M12 16v4M7 8h4M7 11h7"/>',
     "service": '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.5 17.5l3 3 5.8-5.8a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.9-2.9z"/>',
@@ -66,6 +67,7 @@ def icon(key, cls="vicon"):
 PRODUCTS = json.loads(Path(HERE, "products.json").read_text(encoding="utf-8"))
 SOLUTIONS = json.loads(Path(HERE, "solutions.json").read_text(encoding="utf-8"))
 COMPANY = json.loads(Path(HERE, "company.json").read_text(encoding="utf-8"))
+INBOX = COMPANY["contacts"]["primary_email"]
 
 # 8 product categories, as colour-keyed in the 2026 company profile (product numbers in order)
 CATEGORIES = [
@@ -180,9 +182,13 @@ SERVICES = ["Engineering & technical solution design", "Equipment selection & su
             "Installation", "Testing & commissioning", "Troubleshooting",
             "Preventive maintenance & O&M support", "After-sales service & plant improvement"]
 
-PHONES_PATNA = [("+919899982418", "+91 98999 82418"), ("+919910680998", "+91 99106 80998"),
-                ("+918757446605", "+91 87574 46605"), ("+919312282418", "+91 93122 82418")]
-PHONES_DELHI = [("+919899982418", "+91 98999 82418"), ("+919910680998", "+91 99106 80998"), ("+918757446605", "+91 87574 46605")]
+def phone_links(numbers):
+    return [("+" + re.sub(r"\D", "", number), number) for number in numbers]
+
+
+PHONES_PATNA = phone_links(COMPANY["contacts"]["offices"]["patna"]["phones"])
+PHONES_DELHI = phone_links(COMPANY["contacts"]["offices"]["delhi"]["phones"])
+PHONES_GENERAL = phone_links(COMPANY["contacts"]["general_phones"])
 
 
 def split_variant(name):
@@ -244,7 +250,7 @@ def header(active):
 
 def footer():
     clinks = "".join(f'<li><a href="products.html#cat-{c[0]}">{E(c[1])}</a></li>' for c in CATEGORIES)
-    phones = "".join(f'<li><a href="tel:{a}">{b}</a></li>' for a, b in PHONES_PATNA)
+    phones = "".join(f'<li><a href="tel:{a}">{b}</a></li>' for a, b in PHONES_GENERAL)
     return f"""<footer class="site-footer">
   <div class="wrap">
     <div class="footer-top">
@@ -349,7 +355,7 @@ def cta():
     return f"""<section class="cta on-navy">
   <div class="wrap">
     <div>
-      <h2>Tell us about your plant. We will propose the right system.</h2>
+      <h2>Let’s plan the right solution for your site.</h2>
       <p>Call <a href="tel:+919899982418">+91 98999 82418</a> or write to <a href="mailto:{INBOX}">{INBOX}</a></p>
     </div>
     <div class="btn-row">
@@ -365,26 +371,29 @@ def industries_list():
 
 
 def office_cards():
-    pp = "<br>".join(f'<a href="tel:{a}">{b}</a>' for a, b in PHONES_PATNA)
-    dp = "<br>".join(f'<a href="tel:{a}">{b}</a>' for a, b in PHONES_DELHI)
+    pp = '<ul class="contact-methods">' + "".join(f'<li><a href="tel:{a}">{b}</a></li>' for a, b in PHONES_PATNA) + '</ul>'
+    dp = '<ul class="contact-methods">' + "".join(f'<li><a href="tel:{a}">{b}</a></li>' for a, b in PHONES_DELHI) + '</ul>'
+    def email_links(office):
+        return '<ul class="contact-methods">' + ''.join('<li><a href="mailto:' + E(email) + '">' + E(email).replace('@', '<wbr>@') + '</a></li>' for email in COMPANY["contacts"]["offices"][office]["emails"]) + '</ul>'
+    ep, ed = email_links("patna"), email_links("delhi")
     return f"""<div class="offices">
       <article class="office" id="office-patna">
         <span class="tag">Head office · Bihar</span>
-        <h3>Patna</h3>
+        <div class="office-heading">{icon("location")}<h3>Patna</h3></div>
         <address>Pratiksha Bhawan, Maurya Vihar Colony,<br>Near Bihar Urology Centre, Transport Nagar,<br>Patna, Bihar – 800026</address>
         <dl>
           <dt>Phone</dt><dd>{pp}</dd>
-          <dt>Email</dt><dd><a href="mailto:{INBOX}">{INBOX}</a><br><a href="mailto:{MAIL_MAIN}">{MAIL_MAIN}</a><br><a href="mailto:{MAIL_TAPAN}">{MAIL_TAPAN}</a></dd>
+          <dt>Email</dt><dd>{ep}</dd>
         </dl>
         <div class="gstin"><span class="gstin__label">GSTIN · Bihar</span><span class="gstin__number">10AATFC8340G1ZJ</span></div>
       </article>
       <article class="office" id="office-delhi">
         <span class="tag">Branch office · Delhi</span>
-        <h3>Delhi</h3>
+        <div class="office-heading">{icon("location")}<h3>Delhi</h3></div>
         <address>Maya Garden, Ground Floor, Kh. No. 44/18 &amp; 44/19,<br>Gate No. 02, Inderprastha (IP) Colony, Block-C,<br>Village Burari, North Delhi – 110084</address>
         <dl>
           <dt>Phone</dt><dd>{dp}</dd>
-          <dt>Email</dt><dd><a href="mailto:{INBOX}">{INBOX}</a><br><a href="mailto:{MAIL_MAIN}">{MAIL_MAIN}</a><br><a href="mailto:{MAIL_TAPAN}">{MAIL_TAPAN}</a></dd>
+          <dt>Email</dt><dd>{ed}</dd>
         </dl>
         <div class="gstin"><span class="gstin__label">GSTIN · Delhi</span><span class="gstin__number">07AATFC8340G1Z6</span></div>
       </article>
@@ -622,14 +631,15 @@ def home():
 # --------------------------------------------------------------------------
 def about():
     chain = ["Requirement & Design", "Sourcing & Supply", "Installation", "Commissioning", "Service & AMC"]
-    chain_html = "".join(f"<li><small>Step {i}</small><b>{c}</b></li>" for i, c in enumerate(chain, 1))
+    chain_icons = ["automation", "electrical", "service", "switch", "service"]
+    chain_html = "".join(f'<li><div class="chain-head"><small>Step {i}</small>{icon(chain_icons[i-1])}</div><b>{c}</b></li>' for i, c in enumerate(chain, 1))
     mission = ["Understand each customer's needs, priorities and operating conditions.",
                "Provide tailored solutions through a team committed to results and engagement.",
                "Keep improving customer satisfaction through a customer-driven approach."]
     values = [("Passion", "We stay curious and accountable to our customers' needs."),
               ("Teamwork", "Strong cooperation across disciplines and departments."),
-              ("Efficiency", "Efficient, effective service at an affordable cost."),
-              ("Innovation", "We support trade enquiries and question products and assumptions."),
+              ("Efficiency", "Practical, cost-effective engineering and service."),
+              ("Innovation", "We explore better equipment, methods and ideas for each application."),
               ("Profitability", "Customer loyalty that sustains long-term growth."),
               ("Integrity", "Business success and service quality built on ethical conduct.")]
     key_people = [
@@ -845,7 +855,7 @@ def products():
     <div class="pgrid">{"".join(cards)}</div>
     <div class="empty-state" id="cat-empty" hidden>
       <b>No products match these filters</b>
-      <p>Try a shorter search, another make, or all categories. We also source items outside this list, so ask us if you can't find something.</p>
+      <p>Try a shorter search, another make, or all categories. If you can't find the item, share your requirement with our team.</p>
       <div class="btn-row"><button class="btn btn--ghost" type="button" data-reset>Clear filters</button><a class="btn" href="contact.html">Ask us</a></div>
     </div>
   </div>
@@ -878,7 +888,7 @@ def products():
 <div class="tray" id="tray" hidden>
   <div class="tray__in">
     <span class="tray__count"><b id="tray-count">0</b><span class="tray__long" id="tray-label">products in your enquiry</span><span class="tray__short">in enquiry</span></span>
-    <div class="tray__list" id="tray-list"></div>
+    <div class="tray__list" id="tray-list" tabindex="0" role="region" aria-label="Products in your enquiry"></div>
     <div class="tray__actions"><button class="link-btn" type="button" id="tray-clear">Clear</button><a class="btn btn--green" href="quote.html">Request quote {ARROW}</a></div>
   </div>
 </div>
@@ -909,7 +919,7 @@ def company_profile():
       <p class="muted">A partnership firm established in 2014–15, headquartered in Patna with a branch office in Delhi. One PAN covers both offices.</p>
       <a class="btn btn--ghost" href="certifications.html" style="justify-self:start">Licences &amp; registrations {ARROW}</a>
     </div>
-    <div class="table-wrap">
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Company information table">
       <table class="data data--kv">
         <tbody>
           <tr><th scope="row">Name of the company</th><td><b>Chemotech International</b></td></tr>
@@ -932,7 +942,7 @@ def company_profile():
     <div class="section-head">
       <span class="tag">Our clients</span>
       <h2>Clients &amp; project references</h2>
-      <p>A growing base of industries, institutions, hospitals, townships and government projects across India.</p>
+      <p>Government bodies, PSUs, industries, institutions, hospitals and infrastructure projects across India, Nepal and Bhutan.</p>
     </div>
     <ul class="names">{clients}</ul>
     <div class="refs mt-lg">{project_cards}</div>
@@ -959,7 +969,7 @@ def company_profile():
       <h2>Original equipment manufacturers we work with</h2>
     </div>
     <ul class="names names--partners">{partners}</ul>
-    <p class="more-band">+ 90 more makes <span>across electrical, power, automation, water, building &amp; ICT</span></p>
+    <p class="more-band">+ 80 more makes <span>across electrical, power, automation, water, building &amp; ICT</span></p>
   </div>
 </section>
 
@@ -1034,7 +1044,7 @@ def certifications():
       <span class="tag">Tax &amp; business registrations</span>
       <h2>Registration details</h2>
     </div>
-    <div class="table-wrap">
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Registration details table">
       <table class="data">
         <thead><tr><th scope="col">Registration</th><th scope="col">Number</th><th scope="col">Registered on</th></tr></thead>
         <tbody>
@@ -1095,9 +1105,9 @@ def contact():
 
 <section class="section section--wash">
   <div class="wrap form-layout">
-    <form class="form" data-mailto="Website enquiry" novalidate>
+    <form class="form" data-mailto="Website enquiry" data-recipient="{INBOX}" novalidate>
       <fieldset>
-        <legend>Send us a message</legend>
+        <legend>Prepare your enquiry</legend>
         <div class="row">
           {field("name", "Your name", required=True, attrs='autocomplete="name"', msg="Please enter your name.", full_label="Name")}
           {field("company", "Company", opt=True, attrs='autocomplete="organization"')}
@@ -1118,7 +1128,7 @@ def contact():
       </fieldset>
       {status_box()}
       <div class="form-foot">
-        <button class="btn" type="submit">Prepare message {ARROW}</button>
+        <div class="btn-row form-actions"><button class="btn" type="submit">Prepare message {ARROW}</button><button class="btn btn--ghost" type="button" data-copy-message>Copy message</button></div>
         <small>Opens your email app with the message filled in, addressed to {INBOX}.</small>
       </div>
     </form>
@@ -1144,7 +1154,7 @@ def quote():
 <script type="application/json" id="product-index">{json.dumps({str(p["no"]): {"name": p["name"], "catalogue_no": p["catalogue_no"]} for p in PRODUCTS}, ensure_ascii=False).replace("</", "<\\/")}</script>
 <section class="section section--wash">
   <div class="wrap form-layout">
-    <form class="form" data-mailto="Quote request" novalidate>
+    <form class="form" data-mailto="Quote request" data-recipient="{INBOX}" novalidate>
       <fieldset>
         <legend>1 · Your details</legend>
         <div class="row">
@@ -1196,7 +1206,7 @@ def quote():
       </fieldset>
       {status_box()}
       <div class="form-foot">
-        <button class="btn" type="submit">Prepare quote email {ARROW}</button>
+        <div class="btn-row form-actions"><button class="btn" type="submit">Prepare quote email {ARROW}</button><button class="btn btn--ghost" type="button" data-copy-message>Copy enquiry</button></div>
         <small>Opens your email app with your request filled in. Attach drawings, BOQs or datasheets there before sending.</small>
       </div>
     </form>
@@ -1205,14 +1215,14 @@ def quote():
         <h3>What happens next</h3>
         <ol>
           <li><span class="list-copy">We review your requirement and operating conditions.</span></li>
-          <li><span class="list-copy">An engineer calls if we need site details or drawings.</span></li>
+          <li><span class="list-copy">Our team may contact you for site details or drawings.</span></li>
           <li><span class="list-copy">You receive a technical and commercial offer.</span></li>
         </ol>
       </div>
       <div class="aside-card">
         <h3>Prefer to call?</h3>
         <a class="big-phone" href="tel:+919899982418">+91 98999 82418</a>
-        <p>Delhi: <a href="tel:+919899982418">+91 98999 82418</a></p>
+        <a class="text-link" href="contact.html">All office contacts {ARROW}</a>
         <a href="mailto:{INBOX}">{INBOX}</a>
       </div>
       <div class="aside-card">

@@ -250,7 +250,7 @@
     dlg.innerHTML =
       '<header class="pd-head"><div><small>' + esc(c.name) + " · Product " + pad(p.catalogue_no || p.no) + " of " + PRODUCTS.length + '</small><h2 id="pd-title">' + esc(p.name) + "</h2></div>" +
       '<button class="icon-btn" type="button" data-close aria-label="Close">' + X_ICON + "</button></header>" +
-      '<div class="pd-body"><div class="pd-media" id="pd-media">' + mediaHtml(p, imgIndex || 0) + "</div>" +
+      '<div class="pd-body" tabindex="0" role="region" aria-label="Product specifications and variants"><div class="pd-media" id="pd-media">' + mediaHtml(p, imgIndex || 0) + "</div>" +
       '<div class="pd-info"><p class="lead">' + highlight(p.desc) + "</p>" +
       (p.note ? '<p class="pd-note">' + esc(p.note) + "</p>" : "") +
       '<div class="pd-block"><h3>Specifications at a glance</h3><dl class="spec-grid">' + (p.specs || []).map(function (s) { return '<div><dt>' + esc(s[0]) + '</dt><dd>' + esc(s[1]) + '</dd></div>'; }).join('') + '</dl><p class="spec-note">Ratings and options vary by model. Ask our team for the datasheet and selection for your site.</p></div>' +
