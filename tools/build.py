@@ -19,9 +19,6 @@ E = html.escape
 # Set to False to hide per-variant makes on the public site (main makes still show).
 SHOW_VARIANT_MAKES = True
 
-INBOX = "info.chemotechinternational@gmail.com"
-MAIL_MAIN = "chemotech.international@gmail.com"
-MAIL_TAPAN = "tapan.chemotech@gmail.com"
 
 NAV = [
     ("index.html", "Home"),
@@ -1142,7 +1139,7 @@ def contact():
   </div>
 </section>"""
     page("contact.html", "Contact",
-         "Contact Chemotech International: head office in Patna, Bihar and branch office in Burari, Delhi. Phone +91 98999 82418, info.chemotechinternational@gmail.com.",
+         f"Contact Chemotech International: head office in Patna, Bihar and branch office in Burari, Delhi. Phone +91 98999 82418, {INBOX}.",
          body)
 
 

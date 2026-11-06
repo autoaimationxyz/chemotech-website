@@ -114,6 +114,6 @@ No custom domain or DNS changes are required for the GitHub-provided address. Pu
 
 The active type scale uses native system fonts, 17px base copy, 16–18px main reading text, 15px navigation, 14px actions and 12–14px supporting labels. Sizes use rem units to follow browser font preferences. Form fields remain at least 16px. Compact layouts use a scrollable mobile menu, larger graphic controls and a dynamically measured catalogue-toolbar offset. Bullet/number rows have inset padding and explicit text columns.
 
-Contact details are centralised in `tools/company.json`. The newest Company PDF and the Work PDF's final contact page differ in phone count/order and office email order; final selection is awaiting the user's answer. The primary email is common to both PDFs. Do not infer that the unresolved office lists have already been reconciled.
+Contact details are centralised in `tools/company.json`. The user selected the Company Profile PDF as the final reference for both offices and the footer. Phone order: 98999 82418, 87574 46605, 99106 80998, 93122 82418. Email order: chemotech.international@gmail.com, info.chemotechinternational@gmail.com, tapan.chemotech@gmail.com.
 
 Workflow and office pictograms, viewport reveals and a short process-line animation provide visual guidance. Reduced-motion preferences disable animation. The email forms do not submit to a server; users must send the prepared/copied draft from their own email service.

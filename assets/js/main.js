@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  var INBOX = "info.chemotechinternational@gmail.com";
+  var INBOX = "chemotech.international@gmail.com";
 
   /* ---- Mobile navigation ---- */
   var toggle = document.querySelector(".menu-toggle");
