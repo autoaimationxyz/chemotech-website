@@ -52,4 +52,4 @@ Confirmed and fixed two issues: search/make filters were lost on reload/sharing,
 
 ## Promotional number presentation
 
-At the user's request, promotional totals use conservative rounded thresholds: 10+ years in business, 20+ sectors, 50+ product families, 300+ variants and 50+ named OEMs. The country total stays exactly 3. Catalogue result/category counts, product specifications, profile-derived team experience, establishment dates, registrations and contacts retain their precise source values.
+At the user's request, promotional totals use conservative rounded thresholds: 10+ years in business, 20+ sectors, 56 product families (exact, per the user’s final preference), 300+ variants and 50+ named OEMs. The country total stays exactly 3. Catalogue result/category counts, product specifications, profile-derived team experience, establishment dates, registrations and contacts retain their precise source values.

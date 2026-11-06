@@ -522,7 +522,7 @@ def solution_gateways():
 
 def home():
     facts = [("10+", "Years in business"), ("3", "Countries: India · Nepal · Bhutan"), ("20+", "Industry sectors served"),
-             ("50+", "Product families"), ("300+", "Variants &amp; types"), ("50+", "Named OEM partners")]
+             (str(N_PRODUCTS), "Product families"), ("300+", "Variants &amp; types"), ("50+", "Named OEM partners")]
     facts_html = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in facts)
 
     capabilities = [
@@ -572,7 +572,7 @@ def home():
   <div class="wrap">
     <div class="section-head section-head--split">
       <div class="stack" style="gap:14px"><span class="tag">Selected systems</span><h2>Solutions in focus.</h2><p>A starting point for your next project. Explore our full portfolio for every product family and variant.</p></div>
-      <a class="text-link" href="products.html">Explore 50+ product families {ARROW}</a>
+      <a class="text-link" href="products.html">Explore {N_PRODUCTS} product families {ARROW}</a>
     </div>
     <div class="featured-grid home-featured-grid">{featured_products((27, 39))}</div>
   </div>
@@ -753,7 +753,7 @@ def products():
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
     body = f"""
-<section class="catalogue-hero"><div class="wrap"><div class="crumbs"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Products</span></div><h1>Find the equipment for your project.</h1><p>50+ product families · 300+ variants. Search by equipment, specification or make.</p><a class="text-link" href="solutions.html">Need help defining the system? Explore solutions {ARROW}</a></div></section>
+<section class="catalogue-hero"><div class="wrap"><div class="crumbs"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Products</span></div><h1>Find the equipment for your project.</h1><p>{N_PRODUCTS} product families · 300+ variants. Search by equipment, specification or make.</p><a class="text-link" href="solutions.html">Need help defining the system? Explore solutions {ARROW}</a></div></section>
 <div class="cat-toolbar" role="search" aria-label="Filter products">
   <div class="wrap">
     <div class="cat-row">
