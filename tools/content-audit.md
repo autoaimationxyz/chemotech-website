@@ -1,40 +1,28 @@
-# Content audit — latest supplied profiles
+# Profile/content audit — 6 November 2026
 
-Reference material: latest uploaded Company Profile (DOCX and PDF), Work Profile (DOCX and PDF), and Product Master List (DOCX). This is a source comparison, not independent verification of legal registrations or third-party commercial relationships.
+Sources: the newly uploaded Company Profile (DOCX/PDF), Work Profile (DOCX) and Product Master List (DOCX). Source comparison does not independently establish legal registration status or commercial relationships.
 
-- Product descriptions and all 328 variants/make lists match the latest 56-product master. Four source em dashes represent unnamed variants and remain empty strings in the data, displayed using the product family name.
-- All 44 named partner makes match the latest profile. Removed the unsupported Delta revenue/turnover figure and revised the Delta feature into a broader technology ecosystem.
-- Industries now match the 23 named sectors in the profile, removing the separately duplicated brewery category. Counts use the data rather than hardcoded totals.
-- Company type, partners, establishment period, locations, phone numbers, emails, PAN, GSTINs, licences, contractor registrations, MSME and firm registration details were compared against the profiles. GSTINs match exactly: Bihar 10AATFC8340G1ZJ; Delhi 07AATFC8340G1Z6.
-- Replaced obsolete company/group/production descriptions with requirement/design, sourcing/supply, installation, commissioning and service/AMC. Removed business hours absent from the latest profiles.
-- Public Company Profile and Work Profile PDF files and download links removed as requested. The HTML company/credentials page remains.
-- Office cards use equal-height layouts with aligned GST rows; registration identifiers use consistent numeric typography and controlled wrapping.
-- Solution images are described as equipment/solution imagery rather than claiming every manufacturer image is a completed Chemotech project.
+## Brand and presentation
 
-## External verification limits
+The palette is taken directly from document colour records and checked against the rendered company-profile cover: royal navy `#00008B`, purple `#422772`, leaf green `#9BBB59`, green ink `#5E7A2A`, white and pale lavender `#F3F1F8`. Main page surfaces are white/lavender; navy is used for headings, primary controls and the footer. `profile.css` is the active colour layer over the retained responsive layouts. The supplied higher-resolution logo and the animated system model follow the updated palette.
 
-The environment returns an HTTP proxy 403 for the supplied live site at web.schoolerp.org and for Wikimedia Commons image sourcing. The required hostnames are saved in the environment draft, preserving the package-manager presets:
+Existing thin SVG arrows, responsive 3:2 product-image frames, first-line bullet/number alignment, email-only top bar, reduced-motion controls and the expanded homepage delivery preview are retained. PDF downloads remain removed. Banking details in the source profiles are not added to public pages.
 
-- web.schoolerp.org
-- commons.wikimedia.org
-- upload.wikimedia.org
+## Current source data
 
-The draft save does not apply live network access. The user subsequently supplied 34 representative Wikimedia photographs with credit records, covering every product family. These local files and source links are checked; independent verification of the live site and source metadata remains blocked. Three supplied credit records use the generic author label “Wikimedia Commons contributor” and still need confirmation from the original source pages.
+- 56 product families / 332 variants, compared field-by-field with the DOCX master tables, including descriptions, main makes and per-variant makes.
+- 51 named OEM partners, 33 named clients and 23 sectors from the latest company profile.
+- Current project groups: Automation/SCADA/WTP instrumentation, Industrial RO/WTP plants, Sugar mills and Dairy ETP plants. Their names, locations and capacities follow the new profile.
+- Team experience updated exactly as supplied: Raman 34+, Tapan 29+, Shailendra 19+ (14 years in sales/marketing), Mukund 8+; supporting team 21 / 8 / 8 / 5 years.
+- Delhi office phone list follows the latest Work Profile. General company contacts, addresses, GST, PAN and contractor registrations were compared with the sources. Tax dates are labelled “Registered on”.
+- Product maker updates include SBEM, Toshcon, KEC International, Plaza Wires, Recon and the expanded supplier lists. The OEM section includes the latest additions and removes the previous partner-list entry absent from the latest list.
 
-## Further repetition and detail audit
+## Product identity and compatibility
 
-- Detailed office addresses and contact lists now live on Contact; Company links directly to each office instead of repeating the complete cards and phone/email rows.
-- Company no longer repeats the entire 56-product inventory. It links to the catalogue; clients, industries and named partner makes remain on Company.
-- About consolidates repeated company/strength statements and mission commitments. The workflow, people, quality policy and distinct working principles remain.
-- Haryana contractor registration appears once on Certifications, in the contractor section.
-- Product support is described as available according to agreed scope, rather than automatically included with every supply.
-- Product cards and detail dialogs consistently use “Add to enquiry”. Form actions say “Prepare message” / “Prepare quote email” to describe the existing email-app behavior accurately.
-- `missing-photos.csv` now records the 34 supplied representative photo additions; no product family is missing a photograph.
+Document numbers changed. Stable website IDs are retained by product identity, while `catalogue_no` carries the new display order. This preserves existing product-image mappings, links and saved selections. Diesel generator service/spares are now variants of Diesel Generator Sets: `p-10` redirects to `p-9`, and saved duplicate selections merge. Flow/Level/Pressure uses the former instrumentation ID `p-38`; Water Quality Analysers uses new stable ID `p-57` and displays as profile product 38. The source DOCX importer validates summary and detailed variant counts before writing.
 
-## Homepage expansion, image and alignment review
+## Images
 
-- Fast-forwarded to the user’s photo commit `4f1c8ba`, preserving all 34 image binaries and existing credit records.
-- Every image file decodes, all 56 catalogue families have images, and the 34 added image records link to their recorded Commons source. Licence links are exposed where the supplied record includes one. Images describe product types rather than promising the displayed brand/model.
-- Added a three-stage delivery preview to Home, increasing rendered page length by approximately 20% while keeping detailed client/registration lists on their dedicated pages.
-- About mission/reason bullets, quality-policy numbers, workflow labels, product service numbers, industry numbers and quote-process text use explicit marker/text columns aligned to the first line.
-- Fixed singular variant labels (“1 type”). Updated stale documentation that still claimed 34 product photos were missing.
+All 56 families have an image. The 34 supplied representative Commons photographs remain unchanged. Six equipment/control-room photographs were extracted from the updated company profile, increasing the solution gallery to 36. The new Water Quality Analysers image is explicitly described as process-monitoring application context rather than an image of a particular analyser model.
+
+Three existing Commons credit entries still use a generic creator label (products with stable IDs 05, 24 and 25). Their supplied source/licence records are exposed in the product details, but independent creator confirmation remains outstanding because Wikimedia access is blocked in this environment. No creator names or model claims were invented. The source profiles and previous source-image credit document remain the authority for provenance.

@@ -1,370 +1,442 @@
 [
- {
-  "group": "Power Backup, Generation & Power Quality",
-  "img": "assets/img/solutions/online-ups.jpg",
-  "w": 287,
-  "h": 206,
-  "title": "Online UPS Systems",
-  "sub": "1 kVA – 4000 kVA, modular & unitary",
-  "make": "Delta · Krykard",
-  "products": [
-   27
-  ]
- },
- {
-  "group": "Power Backup, Generation & Power Quality",
-  "img": "assets/img/solutions/silent-dg-set.jpg",
-  "w": 1000,
-  "h": 675,
-  "title": "Silent Diesel Generator Sets",
-  "sub": "25 – 2000 kVA · Eicher & Baudouin engines",
-  "make": "Paikane",
-  "products": [
-   9,
-   10
-  ]
- },
- {
-  "group": "Power Backup, Generation & Power Quality",
-  "img": "assets/img/solutions/kirloskar-dg-set.jpg",
-  "w": 513,
-  "h": 429,
-  "title": "Diesel Generator Sets",
-  "sub": "CPCB IV+ compliant, 82.5 – 160 kVA",
-  "make": "Kirloskar",
-  "products": [
-   9
-  ]
- },
- {
-  "group": "Power Backup, Generation & Power Quality",
-  "img": "assets/img/solutions/servo-stabiliser.jpg",
-  "w": 310,
-  "h": 541,
-  "title": "Servo Voltage Stabilisers",
-  "sub": "Servo-controlled stabilisers & static regulators",
-  "make": "Krykard",
-  "products": [
-   29
-  ]
- },
- {
-  "group": "Power Backup, Generation & Power Quality",
-  "img": "assets/img/solutions/automatic-voltage-controller.jpg",
-  "w": 311,
-  "h": 428,
-  "title": "Automatic Voltage Controllers",
-  "sub": "Servo stabilisers & special transformers",
-  "make": "Jindal Electric",
-  "products": [
-   29
-  ]
- },
- {
-  "group": "Power Backup, Generation & Power Quality",
-  "img": "assets/img/solutions/solar-power.jpg",
-  "w": 840,
-  "h": 410,
-  "title": "Solar Power Systems",
-  "sub": "Rooftop & ground-mounted, with solar inverters",
-  "make": "Delta",
-  "products": [
-   32
-  ]
- },
- {
-  "group": "Automation, Instrumentation & Water",
-  "img": "assets/img/solutions/vfd-plc-hmi.jpg",
-  "w": 388,
-  "h": 355,
-  "title": "VFD · PLC · HMI",
-  "sub": "Drives & controls for plant automation",
-  "make": "Delta",
-  "products": [
-   35,
-   36
-  ]
- },
- {
-  "group": "Automation, Instrumentation & Water",
-  "img": "assets/img/solutions/scada-system.jpg",
-  "w": 1000,
-  "h": 543,
-  "title": "SCADA System",
-  "sub": "Centralised monitoring, alarms & reporting",
-  "make": "Delta",
-  "products": [
-   36
-  ]
- },
- {
-  "group": "Automation, Instrumentation & Water",
-  "img": "assets/img/solutions/dam-gate-control.jpg",
-  "w": 946,
-  "h": 479,
-  "title": "Automatic Dam Gate Control",
-  "sub": "PLC / SCADA with VFD-driven gates",
-  "make": "Delta",
-  "products": [
-   37
-  ]
- },
- {
-  "group": "Automation, Instrumentation & Water",
-  "img": "assets/img/solutions/power-quality-instruments.jpg",
-  "w": 378,
-  "h": 469,
-  "title": "Power Quality & Test Instruments",
-  "sub": "Analysers, earth & insulation testers, clamp meters",
-  "make": "Krykard",
-  "products": [
-   38
-  ]
- },
- {
-  "group": "Automation, Instrumentation & Water",
-  "img": "assets/img/solutions/water-treatment-plant.jpg",
-  "w": 274,
-  "h": 184,
-  "title": "Water Treatment Plants",
-  "sub": "WTP · RO · DM · Softening · UF · ETP · STP",
-  "make": "Micro Filteration Technologies",
-  "products": [
-   39,
-   40,
-   41
-  ]
- },
- {
-  "group": "Automation, Instrumentation & Water",
-  "img": "assets/img/solutions/industrial-ro-plant.jpg",
-  "w": 900,
-  "h": 438,
-  "title": "Industrial RO Plants",
-  "sub": "Skid-mounted reverse osmosis",
-  "make": "Micro Filteration Technologies",
-  "products": [
-   42
-  ]
- },
- {
-  "group": "Building, Hygiene & Structures",
-  "img": "assets/img/solutions/building-management-system.jpg",
-  "w": 830,
-  "h": 689,
-  "title": "Building Management System",
-  "sub": "Smart building with LOYTEC",
-  "make": "Delta · Loytec",
-  "products": [
-   47
-  ]
- },
- {
-  "group": "Building, Hygiene & Structures",
-  "img": "assets/img/solutions/led-video-wall.jpg",
-  "w": 630,
-  "h": 400,
-  "title": "LED Screens & Video Walls",
-  "sub": "Indoor & outdoor displays",
-  "make": "Delta",
-  "products": [
-   50
-  ]
- },
- {
-  "group": "Building, Hygiene & Structures",
-  "img": "assets/img/solutions/ev-chargers.jpg",
-  "w": 646,
-  "h": 292,
-  "title": "EV Chargers – AC & DC",
-  "sub": "Wall-mount & fast chargers",
-  "make": "Delta",
-  "products": [
-   33
-  ]
- },
- {
-  "group": "Building, Hygiene & Structures",
-  "img": "assets/img/solutions/hygiene-station.jpg",
-  "w": 700,
-  "h": 490,
-  "title": "Hygiene Stations",
-  "sub": "Touch-free SS 304 hygiene stations",
-  "make": "Nexgen Hygiene Systems",
-  "products": [
-   46
-  ]
- },
- {
-  "group": "Building, Hygiene & Structures",
-  "img": "assets/img/solutions/prefab-building.jpg",
-  "w": 444,
-  "h": 323,
-  "title": "Pre-Fab Buildings",
-  "sub": "PUF / PIR panels & porta cabins",
-  "make": "Dignus Infra",
-  "products": [
-   51
-  ]
- },
- {
-  "group": "Building, Hygiene & Structures",
-  "img": "assets/img/solutions/cold-clean-rooms.jpg",
-  "w": 410,
-  "h": 383,
-  "title": "Cold Rooms & Clean Rooms",
-  "sub": "Walk-in cold rooms & cleanroom partitions",
-  "make": "Dignus Infra",
-  "products": [
-   51
-  ]
- },
- {
-  "group": "Power, Energy & Water Plants",
-  "img": "assets/img/solutions/data-centre.jpg",
-  "w": 404,
-  "h": 302,
-  "title": "Data Centre Infrastructure",
-  "sub": "Modular UPS & edge data centres",
-  "make": "Delta",
-  "products": [
-   27
-  ]
- },
- {
-  "group": "Power, Energy & Water Plants",
-  "img": "assets/img/solutions/energy-storage.jpg",
-  "w": 845,
-  "h": 864,
-  "title": "Energy Storage Systems",
-  "sub": "Lithium-ion battery energy storage",
-  "make": "Delta",
-  "products": [
-   28
-  ]
- },
- {
-  "group": "Power, Energy & Water Plants",
-  "img": "assets/img/solutions/isolation-transformer.jpg",
-  "w": 353,
-  "h": 623,
-  "title": "Isolation & Auto Transformers",
-  "sub": "Safe, clean power for sensitive loads",
-  "make": "Krykard",
-  "products": [
-   7,
-   29
-  ]
- },
- {
-  "group": "Power, Energy & Water Plants",
-  "img": "assets/img/solutions/static-voltage-regulator.jpg",
-  "w": 192,
-  "h": 477,
-  "title": "Static Voltage Regulators",
-  "sub": "Fast-response regulation for sensitive equipment",
-  "make": "Krykard",
-  "products": [
-   29
-  ]
- },
- {
-  "group": "Power, Energy & Water Plants",
-  "img": "assets/img/solutions/wtp-on-site.jpg",
-  "w": 900,
-  "h": 675,
-  "title": "Water Treatment Plant – On Site",
-  "sub": "Installed & commissioned for industry",
-  "make": "Micro Filteration Technologies",
-  "products": [
-   39,
-   43
-  ]
- },
- {
-  "group": "Power, Energy & Water Plants",
-  "img": "assets/img/solutions/ultrafiltration.jpg",
-  "w": 675,
-  "h": 900,
-  "title": "Ultrafiltration (UF) Systems",
-  "sub": "UF membranes & skids",
-  "make": "Micro Filteration Technologies",
-  "products": [
-   42
-  ]
- },
- {
-  "group": "Process, Hygiene & Insulated Panels",
-  "img": "assets/img/solutions/ss-fabricated-plant.jpg",
-  "w": 900,
-  "h": 590,
-  "title": "SS Fabricated Plants & Tanks",
-  "sub": "Packaged drinking water & process",
-  "make": "Micro Filteration Technologies",
-  "products": [
-   42,
-   44
-  ]
- },
- {
-  "group": "Process, Hygiene & Insulated Panels",
-  "img": "assets/img/solutions/softening-dm-vessels.jpg",
-  "w": 900,
-  "h": 897,
-  "title": "Softening / DM Vessels",
-  "sub": "FRP pressure vessels",
-  "make": "Micro Filteration Technologies · Pentair",
-  "products": [
-   42,
-   43
-  ]
- },
- {
-  "group": "Process, Hygiene & Insulated Panels",
-  "img": "assets/img/solutions/sole-cleaning.jpg",
-  "w": 700,
-  "h": 507,
-  "title": "Sole Cleaning & Hand Disinfection",
-  "sub": "Up to 10 persons / min",
-  "make": "Nexgen Hygiene Systems",
-  "products": [
-   46
-  ]
- },
- {
-  "group": "Process, Hygiene & Insulated Panels",
-  "img": "assets/img/solutions/cleanroom-air-shower.jpg",
-  "w": 586,
-  "h": 700,
-  "title": "Cleanroom Air Showers",
-  "sub": "HEPA-filtered, sensor-operated entry",
-  "make": "Nexgen Hygiene Systems",
-  "products": [
-   46
-  ]
- },
- {
-  "group": "Process, Hygiene & Insulated Panels",
-  "img": "assets/img/solutions/puf-pir-panels.jpg",
-  "w": 424,
-  "h": 258,
-  "title": "PUF / PIR & Roofing Panels",
-  "sub": "30 – 200 mm, wall & roof",
-  "make": "Dignus Infra",
-  "products": [
-   51
-  ]
- },
- {
-  "group": "Process, Hygiene & Insulated Panels",
-  "img": "assets/img/solutions/refrigerated-van.jpg",
-  "w": 475,
-  "h": 282,
-  "title": "Refrigerated Van Bodies",
-  "sub": "Insulated PUF panel bodies",
-  "make": "Dignus Infra",
-  "products": [
-   51
-  ]
- }
+  {
+    "group": "Power Backup, Generation & Power Quality",
+    "img": "assets/img/solutions/online-ups.jpg",
+    "w": 287,
+    "h": 206,
+    "title": "Online UPS Systems",
+    "sub": "1 kVA – 4000 kVA, modular & unitary",
+    "make": "Delta · Krykard",
+    "products": [
+      27
+    ]
+  },
+  {
+    "group": "Power Backup, Generation & Power Quality",
+    "img": "assets/img/solutions/silent-dg-set.jpg",
+    "w": 1000,
+    "h": 675,
+    "title": "Silent Diesel Generator Sets",
+    "sub": "25 – 2000 kVA · Eicher & Baudouin engines",
+    "make": "Paikane",
+    "products": [
+      9
+    ]
+  },
+  {
+    "group": "Power Backup, Generation & Power Quality",
+    "img": "assets/img/solutions/kirloskar-dg-set.jpg",
+    "w": 513,
+    "h": 429,
+    "title": "Diesel Generator Sets",
+    "sub": "CPCB IV+ compliant, 82.5 – 160 kVA",
+    "make": "Kirloskar",
+    "products": [
+      9
+    ]
+  },
+  {
+    "group": "Power Backup, Generation & Power Quality",
+    "img": "assets/img/solutions/servo-stabiliser.jpg",
+    "w": 310,
+    "h": 541,
+    "title": "Servo Voltage Stabilisers",
+    "sub": "Servo-controlled stabilisers & static regulators",
+    "make": "Krykard",
+    "products": [
+      29
+    ]
+  },
+  {
+    "group": "Power Backup, Generation & Power Quality",
+    "img": "assets/img/solutions/automatic-voltage-controller.jpg",
+    "w": 311,
+    "h": 428,
+    "title": "Automatic Voltage Controllers",
+    "sub": "Servo stabilisers & special transformers",
+    "make": "Jindal Electric",
+    "products": [
+      29
+    ]
+  },
+  {
+    "group": "Power Backup, Generation & Power Quality",
+    "img": "assets/img/solutions/solar-power.jpg",
+    "w": 840,
+    "h": 410,
+    "title": "Solar Power Systems",
+    "sub": "Rooftop & ground-mounted, with solar inverters",
+    "make": "Delta",
+    "products": [
+      32
+    ]
+  },
+  {
+    "group": "Automation, Instrumentation & Water",
+    "img": "assets/img/solutions/vfd-plc-hmi.jpg",
+    "w": 388,
+    "h": 355,
+    "title": "VFD · PLC · HMI",
+    "sub": "Drives & controls for plant automation",
+    "make": "Delta",
+    "products": [
+      35,
+      36
+    ]
+  },
+  {
+    "group": "Automation, Instrumentation & Water",
+    "img": "assets/img/solutions/scada-system.jpg",
+    "w": 1000,
+    "h": 543,
+    "title": "SCADA System",
+    "sub": "Centralised monitoring, alarms & reporting",
+    "make": "Delta · SBEM · Toshcon",
+    "products": [
+      36
+    ]
+  },
+  {
+    "group": "Automation, Instrumentation & Water",
+    "img": "assets/img/solutions/dam-gate-control.jpg",
+    "w": 946,
+    "h": 479,
+    "title": "Automatic Dam Gate Control",
+    "sub": "PLC / SCADA with VFD-driven gates",
+    "make": "Delta · SBEM",
+    "products": [
+      37
+    ]
+  },
+  {
+    "group": "Instrumentation & Control Rooms",
+    "img": "assets/img/solutions/flow-meters.jpg",
+    "w": 260,
+    "h": 312,
+    "title": "Electromagnetic & Ultrasonic Flow Meters",
+    "sub": "For water supply, effluent & process lines",
+    "make": "SBEM · Toshcon",
+    "products": [
+      38
+    ]
+  },
+  {
+    "group": "Automation, Instrumentation & Water",
+    "img": "assets/img/solutions/power-quality-instruments.jpg",
+    "w": 378,
+    "h": 469,
+    "title": "Power Quality & Test Instruments",
+    "sub": "Analysers, earth & insulation testers, clamp meters",
+    "make": "Krykard · Toshcon",
+    "products": [
+      38
+    ]
+  },
+  {
+    "group": "Automation, Instrumentation & Water",
+    "img": "assets/img/solutions/water-treatment-plant.jpg",
+    "w": 274,
+    "h": 184,
+    "title": "Water Treatment Plants",
+    "sub": "WTP · RO · DM · Softening · UF · ETP · STP",
+    "make": "Micro Filteration Technologies · Toshcon",
+    "products": [
+      39,
+      40,
+      41
+    ]
+  },
+  {
+    "group": "Automation, Instrumentation & Water",
+    "img": "assets/img/solutions/industrial-ro-plant.jpg",
+    "w": 900,
+    "h": 438,
+    "title": "Industrial RO Plants",
+    "sub": "Skid-mounted reverse osmosis",
+    "make": "Micro Filteration Technologies",
+    "products": [
+      42
+    ]
+  },
+  {
+    "group": "Building, Hygiene & Structures",
+    "img": "assets/img/solutions/building-management-system.jpg",
+    "w": 830,
+    "h": 689,
+    "title": "Building Management System",
+    "sub": "Smart building with LOYTEC",
+    "make": "Delta · Loytec",
+    "products": [
+      47
+    ]
+  },
+  {
+    "group": "Building, Hygiene & Structures",
+    "img": "assets/img/solutions/led-video-wall.jpg",
+    "w": 630,
+    "h": 400,
+    "title": "LED Screens & Video Walls",
+    "sub": "Indoor & outdoor displays",
+    "make": "Delta",
+    "products": [
+      50
+    ]
+  },
+  {
+    "group": "Building, Hygiene & Structures",
+    "img": "assets/img/solutions/ev-chargers.jpg",
+    "w": 646,
+    "h": 292,
+    "title": "EV Chargers – AC & DC",
+    "sub": "Wall-mount & fast chargers",
+    "make": "Delta",
+    "products": [
+      33
+    ]
+  },
+  {
+    "group": "Building, Hygiene & Structures",
+    "img": "assets/img/solutions/hygiene-station.jpg",
+    "w": 700,
+    "h": 490,
+    "title": "Hygiene Stations",
+    "sub": "Touch-free SS 304 hygiene stations",
+    "make": "Nexgen Hygiene Systems",
+    "products": [
+      46
+    ]
+  },
+  {
+    "group": "Building, Hygiene & Structures",
+    "img": "assets/img/solutions/prefab-building.jpg",
+    "w": 444,
+    "h": 323,
+    "title": "Pre-Fab Buildings",
+    "sub": "PUF / PIR panels & porta cabins",
+    "make": "Dignus Infra",
+    "products": [
+      51
+    ]
+  },
+  {
+    "group": "Building, Hygiene & Structures",
+    "img": "assets/img/solutions/cold-clean-rooms.jpg",
+    "w": 410,
+    "h": 383,
+    "title": "Cold Rooms & Clean Rooms",
+    "sub": "Walk-in cold rooms & cleanroom partitions",
+    "make": "Dignus Infra",
+    "products": [
+      51
+    ]
+  },
+  {
+    "group": "Power, Energy & Water Plants",
+    "img": "assets/img/solutions/data-centre.jpg",
+    "w": 404,
+    "h": 302,
+    "title": "Data Centre Infrastructure",
+    "sub": "Modular UPS & edge data centres",
+    "make": "Delta",
+    "products": [
+      27
+    ]
+  },
+  {
+    "group": "Power, Energy & Water Plants",
+    "img": "assets/img/solutions/energy-storage.jpg",
+    "w": 845,
+    "h": 864,
+    "title": "Energy Storage Systems",
+    "sub": "Lithium-ion battery energy storage",
+    "make": "Delta",
+    "products": [
+      28
+    ]
+  },
+  {
+    "group": "Power, Energy & Water Plants",
+    "img": "assets/img/solutions/isolation-transformer.jpg",
+    "w": 353,
+    "h": 623,
+    "title": "Isolation & Auto Transformers",
+    "sub": "Safe, clean power for sensitive loads",
+    "make": "Krykard",
+    "products": [
+      7,
+      29
+    ]
+  },
+  {
+    "group": "Power, Energy & Water Plants",
+    "img": "assets/img/solutions/static-voltage-regulator.jpg",
+    "w": 192,
+    "h": 477,
+    "title": "Static Voltage Regulators",
+    "sub": "Fast-response regulation for sensitive equipment",
+    "make": "Krykard",
+    "products": [
+      29
+    ]
+  },
+  {
+    "group": "Power, Energy & Water Plants",
+    "img": "assets/img/solutions/wtp-on-site.jpg",
+    "w": 900,
+    "h": 675,
+    "title": "Water Treatment Plant – On Site",
+    "sub": "Installed & commissioned for industry",
+    "make": "Micro Filteration Technologies",
+    "products": [
+      39,
+      43
+    ]
+  },
+  {
+    "group": "Power, Energy & Water Plants",
+    "img": "assets/img/solutions/ultrafiltration.jpg",
+    "w": 675,
+    "h": 900,
+    "title": "Ultrafiltration (UF) Systems",
+    "sub": "UF membranes & skids",
+    "make": "Micro Filteration Technologies",
+    "products": [
+      42
+    ]
+  },
+  {
+    "group": "Process, Hygiene & Insulated Panels",
+    "img": "assets/img/solutions/ss-fabricated-plant.jpg",
+    "w": 900,
+    "h": 590,
+    "title": "SS Fabricated Plants & Tanks",
+    "sub": "Packaged drinking water & process",
+    "make": "Micro Filteration Technologies",
+    "products": [
+      42,
+      44
+    ]
+  },
+  {
+    "group": "Process, Hygiene & Insulated Panels",
+    "img": "assets/img/solutions/softening-dm-vessels.jpg",
+    "w": 900,
+    "h": 897,
+    "title": "Softening / DM Vessels",
+    "sub": "FRP pressure vessels",
+    "make": "Micro Filteration Technologies · Pentair",
+    "products": [
+      42,
+      43
+    ]
+  },
+  {
+    "group": "Process, Hygiene & Insulated Panels",
+    "img": "assets/img/solutions/sole-cleaning.jpg",
+    "w": 700,
+    "h": 507,
+    "title": "Sole Cleaning & Hand Disinfection",
+    "sub": "Up to 10 persons / min",
+    "make": "Nexgen Hygiene Systems",
+    "products": [
+      46
+    ]
+  },
+  {
+    "group": "Process, Hygiene & Insulated Panels",
+    "img": "assets/img/solutions/cleanroom-air-shower.jpg",
+    "w": 586,
+    "h": 700,
+    "title": "Cleanroom Air Showers",
+    "sub": "HEPA-filtered, sensor-operated entry",
+    "make": "Nexgen Hygiene Systems",
+    "products": [
+      46
+    ]
+  },
+  {
+    "group": "Process, Hygiene & Insulated Panels",
+    "img": "assets/img/solutions/puf-pir-panels.jpg",
+    "w": 424,
+    "h": 258,
+    "title": "PUF / PIR & Roofing Panels",
+    "sub": "30 – 200 mm, wall & roof",
+    "make": "Dignus Infra",
+    "products": [
+      51
+    ]
+  },
+  {
+    "group": "Process, Hygiene & Insulated Panels",
+    "img": "assets/img/solutions/refrigerated-van.jpg",
+    "w": 475,
+    "h": 282,
+    "title": "Refrigerated Van Bodies",
+    "sub": "Insulated PUF panel bodies",
+    "make": "Dignus Infra",
+    "products": [
+      51
+    ]
+  },
+  {
+    "group": "Instrumentation & Control Rooms",
+    "img": "assets/img/solutions/radar-level-transmitters.jpg",
+    "w": 288,
+    "h": 324,
+    "title": "Radar & Level Transmitters",
+    "sub": "Pulse & FMCW radar for tanks and channels",
+    "make": "SBEM · Toshcon",
+    "products": [
+      38
+    ]
+  },
+  {
+    "group": "Instrumentation & Control Rooms",
+    "img": "assets/img/solutions/pressure-transmitters.jpg",
+    "w": 368,
+    "h": 316,
+    "title": "Pressure Transmitters",
+    "sub": "Intelligent, HART & battery-operated",
+    "make": "SBEM · Toshcon",
+    "products": [
+      38
+    ]
+  },
+  {
+    "group": "Instrumentation & Control Rooms",
+    "img": "assets/img/solutions/variable-frequency-drives.jpg",
+    "w": 282,
+    "h": 355,
+    "title": "Variable Frequency Drives",
+    "sub": "For pumps, blowers & conveyors",
+    "make": "Delta",
+    "products": [
+      35
+    ]
+  },
+  {
+    "group": "Instrumentation & Control Rooms",
+    "img": "assets/img/solutions/hmi-touch-panels.jpg",
+    "w": 313,
+    "h": 303,
+    "title": "HMI & Touch Panels",
+    "sub": "Operator panels for PLC / SCADA",
+    "make": "Delta",
+    "products": [
+      36
+    ]
+  },
+  {
+    "group": "Instrumentation & Control Rooms",
+    "img": "assets/img/solutions/process-control-room.jpg",
+    "w": 840,
+    "h": 539,
+    "title": "Process Monitoring Control Room",
+    "sub": "Application context for online process monitoring; not a specific analyser model",
+    "make": "",
+    "products": [
+      57,
+      36
+    ]
+  }
 ]

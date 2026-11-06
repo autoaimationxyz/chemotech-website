@@ -8,6 +8,7 @@
   if (!dataEl) return;
   var DATA = JSON.parse(dataEl.textContent);
   var PRODUCTS = DATA.products;
+  var REDIRECTS = DATA.redirects || {};
   var CATS = {};
   DATA.categories.forEach(function (c) { CATS[c.id] = c; });
   var BY_NO = {};
@@ -116,7 +117,20 @@
   /* ---------------- Enquiry list ---------------- */
   var KEY = "chemotech-enquiry";
   function readList() {
-    try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return memList; }
+    var list;
+    try { list = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { list = memList; }
+    if (!Array.isArray(list)) return [];
+    var seen = {};
+    return list.reduce(function (result, item) {
+      if (!item) return result;
+      var no = +(REDIRECTS[item.no] || item.no);
+      var product = BY_NO[no];
+      if (product && !seen[no]) {
+        seen[no] = true;
+        result.push({ no: no, catalogue_no: product.catalogue_no, name: product.name });
+      }
+      return result;
+    }, []);
   }
   var memList = [];
   function writeList(list) {
@@ -128,7 +142,7 @@
   function toggle(no) {
     var list = readList();
     var i = list.map(function (x) { return x.no; }).indexOf(no);
-    if (i === -1) list.push({ no: no, name: BY_NO[no].name }); else list.splice(i, 1);
+    if (i === -1) list.push({ no: no, catalogue_no: BY_NO[no].catalogue_no, name: BY_NO[no].name }); else list.splice(i, 1);
     writeList(list);
   }
   function syncButtons() {
@@ -143,7 +157,7 @@
     document.body.classList.toggle("has-tray", list.length > 0);
     $("#tray-count", tray).textContent = list.length;
     $("#tray-label", tray).textContent = list.length === 1 ? "product in your enquiry" : "products in your enquiry";
-    $("#tray-list", tray).innerHTML = list.map(function (x) { return "<span>" + pad(x.no) + " · " + esc(x.name) + "</span>"; }).join("");
+    $("#tray-list", tray).innerHTML = list.map(function (x) { return "<span>" + pad(x.catalogue_no || x.no) + " · " + esc(x.name) + "</span>"; }).join("");
   }
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-add]");
@@ -217,6 +231,7 @@
   }
 
   function openProduct(no, imgIndex) {
+    no = +(REDIRECTS[no] || no);
     var p = BY_NO[no];
     if (!p || !dlg) return;
     current = no;
@@ -233,7 +248,7 @@
     }).join("");
 
     dlg.innerHTML =
-      '<header class="pd-head"><div><small>' + esc(c.name) + " · Product " + pad(p.no) + " of " + PRODUCTS.length + '</small><h2 id="pd-title">' + esc(p.name) + "</h2></div>" +
+      '<header class="pd-head"><div><small>' + esc(c.name) + " · Product " + pad(p.catalogue_no || p.no) + " of " + PRODUCTS.length + '</small><h2 id="pd-title">' + esc(p.name) + "</h2></div>" +
       '<button class="icon-btn" type="button" data-close aria-label="Close">' + X_ICON + "</button></header>" +
       '<div class="pd-body"><div class="pd-media" id="pd-media">' + mediaHtml(p, imgIndex || 0) + "</div>" +
       '<div class="pd-info"><p class="lead">' + highlight(p.desc) + "</p>" +
@@ -302,7 +317,7 @@
       '<div class="lb-head"><span>' + esc(d.group) + " · " + (lbIndex + 1) + " / " + list.length + '</span><button class="icon-btn" type="button" data-close aria-label="Close">' + X_ICON + "</button></div>" +
       '<div class="lb-stage"><img src="' + d.img + '" alt="' + esc(d.title) + '">' +
       '<button class="icon-btn lb-arrow prev" type="button" data-lb="-1" aria-label="Previous photo">' + LEFT_ARROW + '</button><button class="icon-btn lb-arrow next" type="button" data-lb="1" aria-label="Next photo">' + RIGHT_ARROW + '</button></div>' +
-      '<div class="lb-cap"><div><b>' + esc(d.title) + "</b><span>" + esc(d.sub) + " · Make: " + esc(d.make) + "</span></div>" +
+      '<div class="lb-cap"><div><b>' + esc(d.title) + "</b><span>" + esc(d.sub) + (d.make ? " · Make: " + esc(d.make) : "") + "</span></div>" +
       (prod ? '<button class="btn btn--green" type="button" data-lb-product="' + prod + '">View ' + esc(BY_NO[prod].name) + " " + RIGHT_ARROW + "</button>" : "") + "</div>";
     if (!lb.open) { lb.showModal(); document.body.classList.add("has-dialog"); }
   }
@@ -329,7 +344,7 @@
     var h = location.hash.slice(1);
     var m;
     if ((m = h.match(/^cat-([a-z]{2})$/)) && CATS[m[1]]) { state.cat = m[1]; apply(); var t = $("#catalogue"); if (t) t.scrollIntoView(); }
-    else if ((m = h.match(/^p-(\d+)$/)) && BY_NO[m[1]]) { apply(); openProduct(+m[1]); }
+    else if ((m = h.match(/^p-(\d+)$/)) && (BY_NO[m[1]] || REDIRECTS[m[1]])) { apply(); openProduct(+m[1]); }
   }
   window.addEventListener("hashchange", fromHash);
   apply();

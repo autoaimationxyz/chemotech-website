@@ -38,7 +38,7 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
  assert.equal(await page.locator('.pcard:visible').count(),2);
  await page.locator('[data-reset]').first().click();
  await page.locator('[data-cat="au"]').click();
- assert.equal(await page.locator('.pcard:visible').count(),5);
+ assert.equal(await page.locator('.pcard:visible').count(),6);
  await page.locator('#cat-make').selectOption('Delta');
  assert((await page.locator('.pcard:visible').count())>0);
  await page.locator('[data-reset]').first().click();
@@ -73,8 +73,20 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
  await page.goto(base + '/index.html');
  assert.equal(await page.locator('.hero__copy').evaluate(el=>getComputedStyle(el).animationName),'none');
  await page.setViewportSize({width:390,height:844});
+ await page.goto(base + '/products.html#p-57');
+ assert((await page.locator('#pd-title').textContent()).includes('Water Quality Analysers'));
+ assert((await page.locator('.pd-head small').textContent()).includes('Product 38 of 56'));
+ await page.keyboard.press('Escape');
+ await page.evaluate(() => localStorage.setItem('chemotech-enquiry', JSON.stringify([{no:10,name:'DG Service & Spare Parts'},{no:9,name:'Diesel Generator Sets'},{no:27,name:'Online UPS & Data Centre Power'}])));
+ await page.goto(base + '/quote.html');
+ assert.equal(await page.locator('#picked li').count(),2);
+ const numbers = await page.locator('#picked li code').allTextContents();
+ assert(numbers.includes('07') && numbers.includes('26'));
+ await page.goto(base + '/products.html#p-10');
+ assert((await page.locator('#pd-title').textContent()).includes('Diesel Generator Sets'));
+ assert((await page.locator('.pd-head small').textContent()).includes('Product 07 of 56'));
  assert.deepEqual(errors,[]);
- console.log('PASS: system focus and pause, aligned GST rows, PDF removal, capability navigation, search, categories, makes, reset, empty state, specs, enquiry persistence, deep links, search highlighting, mobile dialog/menu, reduced motion; no JS errors.');
+ console.log('PASS: latest profile numbering, analyser family and legacy enquiry/deep-link compatibility; system focus and pause, aligned GST rows, PDF removal, capability navigation, search, categories, makes, reset, empty state, specs, enquiry persistence, deep links, search highlighting, mobile dialog/menu, reduced motion; no JS errors.');
  await page.close();
 }
 module.exports = checkSite;

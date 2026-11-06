@@ -47,7 +47,6 @@
     "Bosch",
     "Cummins",
     "Kirloskar",
-    "Perkins",
     "Caterpillar",
     "Volvo Penta",
     "Eaton",
@@ -75,7 +74,15 @@
     "Micro Filteration Technologies",
     "Nexgen Hygiene Systems",
     "Dignus Infra",
-    "Jindal Steel"
+    "Jindal Steel",
+    "Recon",
+    "SBEM",
+    "Toshcon Instruments",
+    "Vigilance Technology & Services",
+    "Xtreme Media",
+    "Ahuja",
+    "Plaza Wires",
+    "KEC International"
   ],
   "established": "2014–15",
   "countries": [
@@ -87,5 +94,141 @@
     "Bihar": "10AATFC8340G1ZJ",
     "Delhi": "07AATFC8340G1Z6"
   },
-  "pan": "AATFC8340G"
+  "pan": "AATFC8340G",
+  "profile_revision": "2026-11-06",
+  "brand_palette": {
+    "navy": "#00008B",
+    "purple": "#422772",
+    "green": "#9BBB59",
+    "green_ink": "#5E7A2A",
+    "tint": "#F3F1F8",
+    "ink": "#1B1B2F",
+    "muted": "#4A4A5E",
+    "red": "#E2231A"
+  },
+  "clients": [
+    "Sudha Dairy (COMFED) – 10+ plants · Bihar & Jharkhand",
+    "Rail Vikas Nigam Ltd (RVNL)",
+    "KEC International Ltd",
+    "Energy Efficiency Services Ltd (EESL)",
+    "HSIIDC, Haryana",
+    "Delhi Metro Rail Corporation",
+    "Safdarjung Hospital, New Delhi",
+    "JSW Hydro Energy Ltd (JSW Group)",
+    "Simplex Castings Ltd",
+    "Indian Potash Limited",
+    "Triveni Sugar",
+    "Bisleri",
+    "LG",
+    "OP Jindal Global University",
+    "BML Munjal University",
+    "Lloyds Metals & Energy Ltd",
+    "Pearl Global Industries Ltd",
+    "Taj Forging Pvt Ltd",
+    "Aero Fasteners Pvt Ltd",
+    "J4S Tech Innovation Pvt Ltd",
+    "3-S Comnet Pvt Ltd",
+    "Umang Infra",
+    "Shivara Infra",
+    "Govinda Constructions",
+    "Marriott Hotel, Ramnagar",
+    "Catch",
+    "Sagar Rice",
+    "Richa Global",
+    "M.R. Proview Real Tech",
+    "Pinax Paper Mills",
+    "DPSG Faridabad",
+    "Aztek India Pvt Ltd",
+    "Pradhan Mantri Awas Yojana Projects"
+  ],
+  "projects": {
+    "Automation, SCADA & WTP instrumentation": [
+      [
+        "Grannus Water & Environmental",
+        "Bhutan",
+        ""
+      ],
+      [
+        "Invenia Systems",
+        "Kolkata",
+        ""
+      ],
+      [
+        "UMANG-AWADHESH (JV)",
+        "Darbhanga",
+        ""
+      ],
+      [
+        "Vitra India Glass",
+        "Patna",
+        ""
+      ]
+    ],
+    "Industrial RO & WTP plants": [
+      [
+        "Ashoka Paper, Mathura",
+        "RO",
+        "24,000 LPH"
+      ],
+      [
+        "Ashoka Paper, Assam",
+        "RO",
+        "24,000 LPH"
+      ],
+      [
+        "Suchi Paper",
+        "RO",
+        "15,000 LPH"
+      ],
+      [
+        "K.K. Duplex & Paper Mills (P) Ltd",
+        "RO",
+        "15,000 LPH"
+      ]
+    ],
+    "Sugar mills": [
+      [
+        "Bazpur Sugar Mills",
+        "Uttarakhand",
+        ""
+      ],
+      [
+        "The Kisan Sugar Mills (Nadehi)",
+        "Uttarakhand",
+        ""
+      ],
+      [
+        "Triveni Sugar",
+        "Khatauli",
+        ""
+      ],
+      [
+        "White Gold",
+        "Lanka, Assam",
+        ""
+      ]
+    ],
+    "Dairy plants · ETP": [
+      [
+        "Shri Gayatri Food",
+        "Meerut",
+        "1,200 KLD"
+      ],
+      [
+        "Harbans Lal Dairy",
+        "Meerut",
+        "800 KLD"
+      ],
+      [
+        "Kailash Dairy",
+        "Meerut",
+        "250 KLD"
+      ],
+      [
+        "Hira Lal Dairy",
+        "Ghaziabad",
+        "100 KLD"
+      ]
+    ]
+  }
 }

@@ -4,12 +4,13 @@
 Usage:  python3 tools/build.py .
 
 Content sources (edit these, then re-run):
-  tools/products.json   56 products / 328 variants / makes (from the Product Master List,
-                        regenerate with tools/parse_master_list.py)
+  tools/products.json   56 products / 332 variants / makes (from the Product Master List,
+                        refresh with tools/import_products_docx.py)
   tools/solutions.json  solution photos, captions, makes and linked product numbers
   this file             page copy, clients, partners, registrations, contact details
 """
 import hashlib, html, json, os, re, sys
+from pathlib import Path
 
 OUT = sys.argv[1]
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -62,17 +63,17 @@ def icon(key, cls="vicon"):
 # --------------------------------------------------------------------------
 # Data
 # --------------------------------------------------------------------------
-PRODUCTS = json.load(open(os.path.join(HERE, "products.json"), encoding="utf-8"))
-SOLUTIONS = json.load(open(os.path.join(HERE, "solutions.json"), encoding="utf-8"))
-COMPANY = json.load(open(os.path.join(HERE, "company.json"), encoding="utf-8"))
+PRODUCTS = json.loads(Path(HERE, "products.json").read_text(encoding="utf-8"))
+SOLUTIONS = json.loads(Path(HERE, "solutions.json").read_text(encoding="utf-8"))
+COMPANY = json.loads(Path(HERE, "company.json").read_text(encoding="utf-8"))
 
 # 8 product categories, as colour-keyed in the 2026 company profile (product numbers in order)
 CATEGORIES = [
-    ("pd", "Power Distribution", range(1, 11), "electrical", "HT and LT panels, MCC, synchronising and APFC panels, transformers, substations and multi-brand DG sets."),
+    ("pd", "Power Distribution", range(1, 10), "electrical", "HT and LT panels, MCC, synchronising and APFC panels, transformers, substations and multi-brand DG sets."),
     ("sw", "Switchgear & Controls", range(11, 17), "switch", "Breakers, earth-leakage protection, DBs, changeovers, contactors, relays, indication and metering."),
     ("cl", "Cabling, Lighting & Safety", range(17, 27), "cable", "Power and control cables, wires, accessories, LED and street lighting, fans, earthing, fire alarm and PA."),
     ("pb", "Power Backup & Energy", range(27, 34), "power", "Online UPS and data-centre power, batteries, stabilisers, harmonic filters, EMS, solar and EV charging."),
-    ("au", "Automation & Instrumentation", range(34, 39), "automation", "Motors, VFD and servo drives, PLC / HMI / SCADA, robotics, dam-gate control and field instruments."),
+    ("au", "Automation & Instrumentation", [34, 35, 36, 37, 38, 57], "automation", "Motors, drives, PLC / HMI / SCADA, plant automation, flow / level / pressure instruments and water quality analysers."),
     ("wp", "Water & Process", range(39, 47), "water", "WTP, ETP, STP, RO / DM / UF plants, components and O&M, steam and piping, process chemicals and hygiene."),
     ("bi", "Building & ICT", range(47, 55), "building", "BMS, lifts, AC and ventilation, LED video walls, pre-fab structures, networking, CCTV and IT."),
     ("sv", "Services", range(55, 57), "service", "Licensed electrical installation, testing, commissioning, O&M and annual maintenance contracts."),
@@ -156,8 +157,7 @@ for p in PRODUCTS:
 N_PRODUCTS = len(PRODUCTS)
 N_VARIANTS = sum(len(p["variants"]) for p in PRODUCTS)
 N_MAKES = len({m for p in PRODUCTS for v in p["variants"] for m in v["makes"]} | {m for p in PRODUCTS for m in p["main_makes"]})
-assert (N_PRODUCTS, N_VARIANTS) == (56, 328)
-MAKES_LABEL = f"{(N_MAKES // 10) * 10}+"
+assert (N_PRODUCTS, N_VARIANTS) == (56, 332)
 
 # 7 business verticals (work profile) + services, each linking into the catalogue
 VERTICALS = [
@@ -173,22 +173,7 @@ VERTICALS = [
 
 INDUSTRIES = COMPANY["industries"]
 
-CLIENTS = ["OP Jindal Global University", "BML Munjal University", "Safdarjung Hospital, New Delhi",
-           "JSW Hydro Energy Ltd (JSW Group)", "Triveni Sugar", "Indian Potash Limited",
-           "Delhi Metro Rail Corporation", "Bisleri", "Catch", "Sagar Rice", "LG", "Pearl Global Industries Ltd",
-           "Richa Global", "M.R. Proview Real Tech", "Pinax Paper Mills", "DPSG Faridabad",
-           "Marriott Hotel, Ramnagar", "Lloyds Metals & Energy Ltd", "Aztek India Pvt Ltd",
-           "Pradhan Mantri Awas Yojana Projects"]
-SUGAR = [("Bazpur Sugar Mills", "Uttarakhand"), ("The Kisan Sugar Mills (Nadehi)", "Uttarakhand"),
-         ("Triveni Sugar", "Khatauli"), ("White Gold", "Lanka, Assam"), ("Trivatinath Sugar", "Bareilly"),
-         ("Baleni Sugar", "Meerut")]
-DAIRY = [("Hira Lal Dairy", "ETP · Ghaziabad", "100 KLD"), ("Harbans Lal Dairy", "ETP · Meerut", "800 KLD"),
-         ("Shri Gayatri Food", "ETP · Meerut", "1,200 KLD"), ("Kailash Dairy", "ETP · Meerut", "250 KLD")]
-WATER = [("DPSG, Faridabad", "Water treatment", "150 KLD"),
-         ("Bazpur Sugar Mills, Uttarakhand", "With mixed-bed plant", "2,500 KLD"),
-         ("Nikita Greentech Recycling Ltd, Panipat", "Softening plant", "720 KLD"),
-         ("Safdarjung Hospital, Delhi", "Softening plant", "500 KLD"),
-         ("Lloyds Metals & Energy Ltd, Maharashtra", "Softening plant", "30 m³/hr")]
+CLIENTS = COMPANY["clients"]
 PARTNERS = COMPANY["partners"]
 
 SERVICES = ["Engineering & technical solution design", "Equipment selection & supply", "System integration",
@@ -197,7 +182,7 @@ SERVICES = ["Engineering & technical solution design", "Equipment selection & su
 
 PHONES_PATNA = [("+919899982418", "+91 98999 82418"), ("+919910680998", "+91 99106 80998"),
                 ("+918757446605", "+91 87574 46605"), ("+919312282418", "+91 93122 82418")]
-PHONES_DELHI = [("+919312282418", "+91 93122 82418"), ("+918757446605", "+91 87574 46605")]
+PHONES_DELHI = [("+919899982418", "+91 98999 82418"), ("+919910680998", "+91 99106 80998"), ("+918757446605", "+91 87574 46605")]
 
 
 def split_variant(name):
@@ -245,7 +230,7 @@ def header(active):
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="Chemotech International, home">
-      <img src="assets/img/chemotech-logo.png" width="880" height="135" alt="Chemotech International – a Clean and Conditioning Company">
+      <img src="assets/img/chemotech-logo.png" width="1820" height="300" alt="Chemotech International – a Clean and Conditioning Company">
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
@@ -264,7 +249,7 @@ def footer():
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="logo-tile"><img src="assets/img/chemotech-logo.png" width="880" height="135" alt="Chemotech International" loading="lazy"></div>
+        <div class="logo-tile"><img src="assets/img/chemotech-logo.png" width="1820" height="300" alt="Chemotech International" loading="lazy"></div>
         <p class="tagline">…a Clean and Conditioning company</p>
         <p>Integrated electrical, power, automation, water, process, building and ICT solutions for industry and government projects since 2014–15.</p>
       </div>
@@ -311,6 +296,9 @@ def page(filename, title, description, body, extra_scripts=""):
     full_title = "Chemotech International" if filename == "index.html" else f"{title} · Chemotech International"
     with open(os.path.join(HERE, "../assets/css/immersive.css"), "rb") as theme:
         theme_version = hashlib.sha256(theme.read()).hexdigest()[:12]
+    with open(os.path.join(HERE, "../assets/css/profile.css"), "rb") as profile_theme:
+        profile_version = hashlib.sha256(profile_theme.read()).hexdigest()[:12]
+    main_version = hashlib.sha256(Path(HERE, "../assets/js/main.js").read_bytes()).hexdigest()[:12]
     doc = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -318,7 +306,7 @@ def page(filename, title, description, body, extra_scripts=""):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{full_title}</title>
 <meta name="description" content="{E(description)}">
-<meta name="theme-color" content="#080e17">
+<meta name="theme-color" content="#00008B">
 <meta property="og:title" content="{full_title}">
 <meta property="og:description" content="{E(description)}">
 <meta property="og:type" content="website">
@@ -327,6 +315,7 @@ def page(filename, title, description, body, extra_scripts=""):
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/modern.css">
 <link rel="stylesheet" href="assets/css/immersive.css?v={theme_version}">
+<link rel="stylesheet" href="assets/css/profile.css?v={profile_version}">
 </head>
 <body>
 {header(filename)}
@@ -334,7 +323,7 @@ def page(filename, title, description, body, extra_scripts=""):
 {body}
 </main>
 {footer()}
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v={main_version}"></script>
 {extra_scripts}
 </body>
 </html>
@@ -465,6 +454,8 @@ APPLICATIONS = {
     "sv": "New installations, operating facilities and plant improvement projects.",
 }
 SPECIFICATIONS = {
+    38: [("Measurements", "Flow / level / pressure"), ("Flow options", "Electromagnetic / ultrasonic"), ("Level options", "Radar / ultrasonic")],
+    57: [("Measurements", "Chlorine / turbidity / pH / ORP / conductivity"), ("Wastewater analysis", "BOD / COD"), ("Applications", "Water supply & wastewater")],
     1: [("Voltage", "11 kV"), ("Breaker technology", "VCB / SF6"), ("Installation", "Indoor / outdoor kiosk")],
     7: [("Construction", "Oil & dry type"), ("Tap changing", "OLTC / OCTC"), ("Options", "Isolation & special purpose")],
     9: [("Configuration", "Silent / open"), ("Emissions", "CPCB IV+ options"), ("Support", "Service & spare parts")],
@@ -524,13 +515,13 @@ def featured_products(numbers=(27, 35, 39, 33)):
 
 
 def system_graphic():
-    return open(os.path.join(HERE, "system-graphic.html"), encoding="utf-8").read()
+    return Path(HERE, "system-graphic.html").read_text(encoding="utf-8")
 
 
 def ecosystem_band():
-    names = ["Delta", "Siemens", "ABB", "Schneider", "Honeywell", "Grundfos", "Kirloskar", "Eaton"]
+    names = ["Delta", "Eaton", "Kirloskar", "Paikane", "Krykard", "SBEM", "Toshcon Instruments", "KEC International"]
     brands = ''.join(f'<span>{E(n)}</span>' for n in names if n in PARTNERS)
-    return f'<section class="ecosystem-band" aria-label="Selected makes from our technology ecosystem"><div class="wrap"><p>Global technology.<br><b>Local accountability.</b></p><div class="ecosystem-makes">{brands}</div><a href="company-profile.html#partners" aria-label="See all business partners and makes">{ARROW_UP_RIGHT}</a></div></section>'
+    return f'<section class="ecosystem-band" aria-label="Selected OEM partners"><div class="wrap"><p>OEM technology.<br><b>Local accountability.</b></p><div class="ecosystem-makes">{brands}</div><a href="company-profile.html#partners" aria-label="See all OEM partners">{ARROW_UP_RIGHT}</a></div></section>'
 
 
 def solution_gateways():
@@ -540,7 +531,7 @@ def solution_gateways():
 
 def home():
     facts = [("2014–15", "Established"), ("3", "Countries: India · Nepal · Bhutan"), (str(len(INDUSTRIES)), "Industry sectors served"),
-             (str(N_PRODUCTS), "Products"), (str(N_VARIANTS), "Variants &amp; types"), (MAKES_LABEL, "Makes supplied")]
+             (str(N_PRODUCTS), "Products"), (str(N_VARIANTS), "Variants &amp; types"), (str(len(PARTNERS)), "Named OEM partners")]
     facts_html = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in facts)
 
     capabilities = [
@@ -642,23 +633,23 @@ def about():
               ("Profitability", "Customer loyalty that sustains long-term growth."),
               ("Integrity", "Business success and service quality built on ethical conduct.")]
     key_people = [
-        ("30+", "Raman Kumar Jha", "", "Operations &amp; Project Handling",
-         "Mechanical Engineer with more than 30 years in marketing and after-sales support for electro-mechanical equipment: diesel generating sets, industrial motors, power and distribution transformers and electrical panels."),
-        ("25+", "Tapan Kumar Jha", "Partner", "Sales &amp; Marketing",
-         "Science graduate with more than 25 years in marketing and project execution."),
-        ("15+", "Shailendra Kumar Jha", "Partner", "Sales &amp; Marketing",
-         "Graduate with more than 15 years in engineering material purchase and project execution, and 10 years in sales and marketing of industrial equipment, consumables and chemicals."),
-        ("5+", "Mukund Jha", "", "Marketing &amp; Project Handling",
-         "Mechanical Engineering graduate with more than 5 years in industrial water treatment and steam distribution projects."),
+        ("34+", "Raman Kumar Jha", "", "Operations &amp; Project Handling",
+         "Mechanical Engineer with more than 34 years in marketing and after-sales support for electro-mechanical equipment: diesel generating sets, industrial motors, power and distribution transformers and electrical panels."),
+        ("29+", "Tapan Kumar Jha", "Partner", "Sales &amp; Marketing",
+         "Science graduate with more than 29 years in marketing and project execution."),
+        ("19+", "Shailendra Kumar Jha", "Partner", "Sales &amp; Marketing",
+         "Graduate with more than 19 years in engineering material purchase and project execution, and 14 years in sales and marketing of industrial equipment, consumables and chemicals."),
+        ("8+", "Mukund Jha", "", "Marketing &amp; Project Handling",
+         "Mechanical Engineering graduate with more than 8 years in industrial water treatment and steam distribution projects."),
     ]
     people_html = "".join(f"""<article class="person">
         <div class="person__yrs"><b>{y}</b><span>years</span></div>
         <div><h3>{n}{f' <small>{p}</small>' if p else ''}</h3><p class="role">{r}</p><p>{d}</p></div>
       </article>""" for y, n, p, r, d in key_people)
-    crew = [("18", "Murari Prashad", "Graduate", "Sales &amp; Marketing"),
-            ("5", "Ajitanshu Anand", "B.Tech – Electrical &amp; Electronics", "Design, Programming, Sales &amp; Support"),
-            ("5", "Manish Kumar", "Graduate", "Sales &amp; Services"),
-            ("2", "Gunjan Kumar Mandal", "B.Tech – Electrical Engineering", "Service &amp; Support")]
+    crew = [("21", "Murari Prashad", "Graduate", "Sales &amp; Marketing"),
+            ("8", "Ajitanshu Anand", "B.Tech – Electrical &amp; Electronics", "Design, Programming, Sales &amp; Support"),
+            ("8", "Manish Kumar", "Graduate", "Sales &amp; Services"),
+            ("5", "Gunjan Kumar Mandal", "B.Tech – Electrical Engineering", "Service &amp; Support")]
     crew_html = "".join(f'<li><b class="yrs">{y}<small> yrs</small></b><h3>{n}</h3><span>{q}</span><span class="role">{r}</span></li>' for y, n, q, r in crew)
     reasons = ["Single-point coordination across electrical, automation and process requirements.",
                "Practical engineering focused on reliability, maintainability and ease of operation.",
@@ -802,26 +793,27 @@ def products():
     for s in SOLUTIONS:
         if s["group"] not in groups:
             groups.append(s["group"])
-    tabs = '<button class="chip chip--all" type="button" data-group="all" aria-pressed="true">All <span>30</span></button>' + "".join(
+    tabs = f'<button class="chip chip--all" type="button" data-group="all" aria-pressed="true">All <span>{len(SOLUTIONS)}</span></button>' + "".join(
         f'<button class="chip" type="button" data-group="{E(g)}" aria-pressed="false">{E(g)} <span>{sum(1 for s in SOLUTIONS if s["group"] == g)}</span></button>' for g in groups)
     sol_cards = "".join(
         f'<button class="sol c-{CAT_BY_NO[s["products"][0]]}" type="button" data-i="{i}" data-group="{E(s["group"])}" aria-label="Enlarge photo: {E(s["title"])}">'
         f'<span class="media"><img src="{s["img"]}" alt="{E(s["title"])}" loading="lazy"></span>'
-        f'<span class="cap"><em>{E(s["make"])}</em><b>{E(s["title"])}</b><span>{E(s["sub"])}</span></span></button>'
+        f'<span class="cap"><em>{E(s["make"]) if s["make"] else "Application context"}</em><b>{E(s["title"])}</b><span>{E(s["sub"])}</span></span></button>'
         for i, s in enumerate(SOLUTIONS))
 
     services = "".join(f'<li><span class="list-number" aria-hidden="true">{i:02d}</span><span class="list-copy">{E(s)}</span></li>' for i, s in enumerate(SERVICES, 1))
 
     data = {
+        "redirects": {"10": 9},
         "categories": [{"id": c[0], "name": c[1], "blurb": c[4], "icon": icon(c[3], "")} for c in CATEGORIES],
-        "products": [{"no": p["no"], "name": p["name"], "cat": p["cat"], "desc": p["desc"], "note": p["note"],
+        "products": [{"no": p["no"], "catalogue_no": p["catalogue_no"], "name": p["name"], "cat": p["cat"], "desc": p["desc"], "note": p["note"],
                       "main": p["main_makes"], "variants": p["variants"], "images": p["images"], "specs": product_specs(p), "application": APPLICATIONS[p["cat"]], "illustration": product_illustration(p) if not p["images"] else ""} for p in PRODUCTS],
         "solutions": [{"group": s["group"], "img": s["img"], "title": s["title"], "sub": s["sub"], "make": s["make"], "products": s["products"]} for s in SOLUTIONS],
     }
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
     body = f"""
-{page_hero("Our Products", "Intelligent systems.<br>Lasting impact.", f"Explore {N_PRODUCTS} product families, {N_VARIANTS} variants and connected engineering expertise. Explore the capability, discover the equipment, and shape a solution around your site.", "Product catalogue")}
+{page_hero("Our Products", "Intelligent systems.<br>Lasting impact.", f"Discover {N_PRODUCTS} product families, {N_VARIANTS} variants and connected engineering expertise. Explore the equipment and shape a solution around your site.", "Product catalogue")}
 
 <section class="section solution-discovery"><div class="wrap"><div class="section-head section-head--split"><div class="stack"><span class="tag">Explore by capability</span><h2>Start with the outcome.</h2><p>Every system begins with a real operating need. Find the discipline behind your next project.</p></div><a class="text-link" href="#catalogue">Browse all product families {ARROW_DOWN}</a></div><div class="solution-gateways">{solution_gateways()}</div></div></section>
 <div class="cat-toolbar" role="search" aria-label="Filter products">
@@ -895,7 +887,7 @@ def products():
 <script type="application/json" id="catalogue-data">{data_json}</script>"""
     page("products.html", "Our Products",
          f"Chemotech International product catalogue: {N_PRODUCTS} products and {N_VARIANTS} variants across power distribution, switchgear, cabling, power backup, automation, water & process, building & ICT and services.",
-         body, '<script src="assets/js/catalogue.js?v=' + hashlib.sha256(open(os.path.join(HERE, "../assets/js/catalogue.js"), "rb").read()).hexdigest()[:12] + '"></script>')
+         body, '<script src="assets/js/catalogue.js?v=' + hashlib.sha256(Path(HERE, "../assets/js/catalogue.js").read_bytes()).hexdigest()[:12] + '"></script>')
 
 
 # --------------------------------------------------------------------------
@@ -903,9 +895,7 @@ def products():
 # --------------------------------------------------------------------------
 def company_profile():
     clients = "".join(f"<li>{E(c)}</li>" for c in CLIENTS)
-    sugar = "".join(f"<li><span><b>{E(a)}</b><small>{E(b)}</small></span><span class=\"cap\">Sugar mill</span></li>" for a, b in SUGAR)
-    dairy = "".join(f"<li><span><b>{E(a)}</b><small>{E(b)}</small></span><span class=\"cap\">{E(c)}</span></li>" for a, b, c in DAIRY)
-    water = "".join(f"<li><span><b>{E(a)}</b><small>{E(b)}</small></span><span class=\"cap\">{E(c)}</span></li>" for a, b, c in WATER)
+    project_cards = "".join('<article class="ref"><h3>' + E(title) + '</h3><ul>' + ''.join('<li><span><b>' + E(name) + '</b><small>' + E(location) + '</small></span>' + ('<span class="cap">' + E(capacity) + '</span>' if capacity else '') + '</li>' for name, location, capacity in entries) + '</ul></article>' for title, entries in COMPANY["projects"].items())
     partners = "".join(f'<li{" class=\"is-own\"" if n == "Delta" else ""}>{E(n)}</li>' for n in PARTNERS)
 
     body = f"""
@@ -945,11 +935,7 @@ def company_profile():
       <p>A growing base of industries, institutions, hospitals, townships and government projects across India.</p>
     </div>
     <ul class="names">{clients}</ul>
-    <div class="refs mt-lg">
-      <article class="ref"><h3>Sugar mills</h3><ul>{sugar}</ul></article>
-      <article class="ref"><h3>Dairy plants · ETP</h3><ul>{dairy}</ul></article>
-      <article class="ref"><h3>Water softening, DM &amp; RO</h3><ul>{water}</ul></article>
-    </div>
+    <div class="refs mt-lg">{project_cards}</div>
   </div>
 </section>
 
@@ -969,8 +955,8 @@ def company_profile():
 <section class="section" id="partners">
   <div class="wrap">
     <div class="section-head">
-      <span class="tag">Our business partners</span>
-      <h2>Leading makes we supply, install and service</h2>
+      <span class="tag">Our OEM partners</span>
+      <h2>Original equipment manufacturers we work with</h2>
     </div>
     <ul class="names names--partners">{partners}</ul>
     <p class="more-band">+ 90 more makes <span>across electrical, power, automation, water, building &amp; ICT</span></p>
@@ -982,7 +968,7 @@ def company_profile():
 
 {cta()}"""
     page("company-profile.html", "Company Profile",
-         "Chemotech International company profile: key information, offices in Patna and Delhi, clients and project references, business partners and industries served.",
+         "Chemotech International company profile: key information, offices in Patna and Delhi, clients and project references, OEM partners and industries served.",
          body)
 
 
@@ -1050,7 +1036,7 @@ def certifications():
     </div>
     <div class="table-wrap">
       <table class="data">
-        <thead><tr><th scope="col">Registration</th><th scope="col">Number</th><th scope="col">Valid from</th></tr></thead>
+        <thead><tr><th scope="col">Registration</th><th scope="col">Number</th><th scope="col">Registered on</th></tr></thead>
         <tbody>
           <tr><th scope="row">GST – Bihar</th><td class="mono">10AATFC8340G1ZJ</td><td>21/06/2024</td></tr>
           <tr><th scope="row">GST – Delhi</th><td class="mono">07AATFC8340G1Z6</td><td>01/06/2024</td></tr>
@@ -1155,6 +1141,7 @@ def quote():
     body = f"""
 {page_hero("Request Quote", "Request a quote", "Share what you need and where. Our team will review the scope and come back with a technical and commercial offer.", "Quotation")}
 
+<script type="application/json" id="product-index">{json.dumps({str(p["no"]): {"name": p["name"], "catalogue_no": p["catalogue_no"]} for p in PRODUCTS}, ensure_ascii=False).replace("</", "<\\/")}</script>
 <section class="section section--wash">
   <div class="wrap form-layout">
     <form class="form" data-mailto="Quote request" novalidate>
@@ -1225,7 +1212,7 @@ def quote():
       <div class="aside-card">
         <h3>Prefer to call?</h3>
         <a class="big-phone" href="tel:+919899982418">+91 98999 82418</a>
-        <p>Delhi: <a href="tel:+919312282418">+91 93122 82418</a></p>
+        <p>Delhi: <a href="tel:+919899982418">+91 98999 82418</a></p>
         <a href="mailto:{INBOX}">{INBOX}</a>
       </div>
       <div class="aside-card">

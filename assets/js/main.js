@@ -95,7 +95,25 @@
   var picked = document.getElementById("picked");
   if (picked) {
     var KEY = "chemotech-enquiry";
-    var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return []; } };
+    var indexElement = document.getElementById("product-index");
+    var productIndex = indexElement ? JSON.parse(indexElement.textContent) : {};
+    var read = function () {
+      try {
+        var list = JSON.parse(localStorage.getItem(KEY) || "[]");
+        if (!Array.isArray(list)) return [];
+        var seen = {};
+        return list.reduce(function (result, item) {
+          if (!item) return result;
+          var no = +item.no === 10 ? 9 : +item.no;
+          var product = productIndex[no] || (!indexElement && typeof item.name === "string" ? {name: item.name, catalogue_no: item.catalogue_no || no} : null);
+          if (product && !seen[no]) {
+            seen[no] = true;
+            result.push({no: no, catalogue_no: product.catalogue_no, name: product.name});
+          }
+          return result;
+        }, []);
+      } catch (e) { return []; }
+    };
     var write = function (l) { try { localStorage.setItem(KEY, JSON.stringify(l)); } catch (e) { /* ignore */ } };
     var input = document.getElementById("picked-input");
     var list = picked.querySelector("ul");
@@ -105,9 +123,9 @@
       var items = read();
       picked.hidden = items.length === 0;
       list.innerHTML = items.map(function (x) {
-        return '<li><code>' + pad(x.no) + '</code>' + esc(x.name) + '<button type="button" data-remove="' + x.no + '" aria-label="Remove ' + esc(x.name) + '">&times;</button></li>';
+        return '<li><code>' + pad(x.catalogue_no || x.no) + '</code>' + esc(x.name) + '<button type="button" data-remove="' + x.no + '" aria-label="Remove ' + esc(x.name) + '">&times;</button></li>';
       }).join("");
-      input.value = items.map(function (x) { return pad(x.no) + " " + x.name; }).join("; ");
+      input.value = items.map(function (x) { return pad(x.catalogue_no || x.no) + " " + x.name; }).join("; ");
     };
     picked.addEventListener("click", function (e) {
       var b = e.target.closest("[data-remove]");
