@@ -31,6 +31,9 @@
     p._makes = set;
   });
 
+  var pageSize = 12, limit = pageSize;
+  var more = document.getElementById("show-more");
+  var progress = document.getElementById("catalogue-progress");
   var state = { cat: "all", make: "", q: "" };
   var cards = $$(".pcard");
   var search = $("#cat-search");
@@ -51,21 +54,24 @@
   }
 
   function visibleNos() {
-    return cards.filter(function (c) { return !c.hidden; }).map(function (c) { return +c.dataset.no; });
+    return PRODUCTS.filter(matches).map(function (p) { return p.no; });
   }
 
-  function apply() {
+  function apply(keepLimit) {
+    if (!keepLimit) limit = pageSize;
     var shown = 0;
     cards.forEach(function (card) {
       var p = BY_NO[card.dataset.no];
       var ok = matches(p);
-      card.hidden = !ok;
       if (ok) shown++;
+      card.hidden = !ok || shown > limit;
       $$(".mk li", card).forEach(function (li) { li.classList.toggle("is-hit", !!state.make && li.textContent === state.make); });
     });
     $$(".chips-row .chip").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.cat === state.cat)); });
-    if (countEl) countEl.innerHTML = "Showing <b>" + shown + "</b> of " + PRODUCTS.length + " products";
+    if (countEl) countEl.innerHTML = "<b>" + shown + "</b> matching " + (shown === 1 ? "product" : "products");
     if (empty) empty.hidden = shown !== 0;
+    if (more) { more.hidden = shown <= limit; more.textContent = 'Show ' + Math.min(pageSize, Math.max(0, shown-limit)) + ' more products'; }
+    if (progress) progress.textContent = shown ? Math.min(shown,limit) + ' of ' + shown + ' matching products displayed' : '';
     if (title) {
       var c = CATS[state.cat];
       title.textContent = c ? c.name : "All products";
@@ -75,6 +81,14 @@
       titleNote.textContent = bits.length ? "Filtered by " + bits.join(" · ") : (c ? c.blurb : "Select a product to see every variant and the makes we supply.");
     }
   }
+
+  if (more) more.addEventListener('click', function () {
+    var firstNew = PRODUCTS.filter(matches)[limit];
+    limit += pageSize;
+    apply(true);
+    var next = firstNew && $('.pcard[data-no="' + firstNew.no + '"] .pcard__open');
+    if (next) next.focus();
+  });
 
   $$(".chips-row .chip").forEach(function (b) {
     b.addEventListener("click", function () {
@@ -234,6 +248,8 @@
     no = +(REDIRECTS[no] || no);
     var p = BY_NO[no];
     if (!p || !dlg) return;
+    var position = PRODUCTS.filter(matches).findIndex(function (item) { return item.no === no; });
+    if (position >= limit) { limit = Math.ceil((position + 1) / pageSize) * pageSize; apply(true); }
     current = no;
     var c = CATS[p.cat];
     dlg.className = "pdialog c-" + p.cat;
@@ -296,53 +312,11 @@
     b.addEventListener("click", function (e) { e.preventDefault(); openProduct(+(b.dataset.open || b.closest(".pcard").dataset.no)); });
   });
 
-  /* ---------------- Solutions gallery + lightbox ---------------- */
-  var sols = $$(".sol");
-  var lb = $("#lightbox");
-  var lbIndex = 0;
-  $$(".sol-tabs .chip").forEach(function (b) {
-    b.addEventListener("click", function () {
-      $$(".sol-tabs .chip").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-      sols.forEach(function (s) { s.hidden = b.dataset.group !== "all" && s.dataset.group !== b.dataset.group; });
-    });
-  });
-  function visibleSols() { return sols.filter(function (s) { return !s.hidden; }); }
-  function showLb(i) {
-    var list = visibleSols();
-    lbIndex = (i + list.length) % list.length;
-    var s = list[lbIndex];
-    var d = DATA.solutions[+s.dataset.i];
-    var prod = d.products[0];
-    lb.innerHTML =
-      '<div class="lb-head"><span>' + esc(d.group) + " · " + (lbIndex + 1) + " / " + list.length + '</span><button class="icon-btn" type="button" data-close aria-label="Close">' + X_ICON + "</button></div>" +
-      '<div class="lb-stage"><img src="' + d.img + '" alt="' + esc(d.title) + '">' +
-      '<button class="icon-btn lb-arrow prev" type="button" data-lb="-1" aria-label="Previous photo">' + LEFT_ARROW + '</button><button class="icon-btn lb-arrow next" type="button" data-lb="1" aria-label="Next photo">' + RIGHT_ARROW + '</button></div>' +
-      '<div class="lb-cap"><div><b>' + esc(d.title) + "</b><span>" + esc(d.sub) + (d.make ? " · Make: " + esc(d.make) : "") + "</span></div>" +
-      (prod ? '<button class="btn btn--green" type="button" data-lb-product="' + prod + '">View ' + esc(BY_NO[prod].name) + " " + RIGHT_ARROW + "</button>" : "") + "</div>";
-    if (!lb.open) { lb.showModal(); document.body.classList.add("has-dialog"); }
-  }
-  sols.forEach(function (s) {
-    s.addEventListener("click", function () { showLb(visibleSols().indexOf(s)); });
-  });
-  if (lb) {
-    lb.addEventListener("click", function (e) {
-      if (e.target === lb || e.target.closest("[data-close]")) { lb.close(); return; }
-      var a = e.target.closest("[data-lb]");
-      if (a) { showLb(lbIndex + (+a.dataset.lb)); return; }
-      var p = e.target.closest("[data-lb-product]");
-      if (p) { lb.close(); openProduct(+p.dataset.lbProduct); }
-    });
-    lb.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") showLb(lbIndex + 1);
-      if (e.key === "ArrowLeft") showLb(lbIndex - 1);
-    });
-    lb.addEventListener("close", function () { if (!dlg || !dlg.open) document.body.classList.remove("has-dialog"); });
-  }
-
   /* ---------------- Start ---------------- */
   function fromHash() {
     var h = location.hash.slice(1);
     var m;
+    if (h === "solutions") { location.replace("solutions.html"); return; }
     if ((m = h.match(/^cat-([a-z]{2})$/)) && CATS[m[1]]) { state.cat = m[1]; apply(); var t = $("#catalogue"); if (t) t.scrollIntoView(); }
     else if ((m = h.match(/^p-(\d+)$/)) && (BY_NO[m[1]] || REDIRECTS[m[1]])) { apply(); openProduct(+m[1]); }
   }

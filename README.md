@@ -9,9 +9,11 @@ Upload the folder contents to any web host.
 | File | Page |
 |---|---|
 | `index.html` | Home: animated engineering ecosystem, compact capabilities, selected products and links to company details |
-| `about.html` | About Us: story, vision, mission, values, quality policy, team |
-| `products.html` | Our Products: interactive catalogue of 56 products / 332 variants / make filters, solutions gallery |
-| `company-profile.html` | Company Profile: key information, offices, clients & projects, partners and industries |
+| `about.html` | About: story, people, commitments and company facts |
+| `solutions.html` | Solutions & Services: engineering disciplines, application imagery, delivery and OEMs |
+| `products.html` | Products: searchable catalogue of 56 families / 332 variants, with progressive results |
+| `projects.html` | Projects & Clients: recorded references, locations, capacities and industries |
+| `company-profile.html` | Legacy redirect to the new page structure |
 | `certifications.html` | Licences & registrations (Delhi, Bihar, BCD Class 3, Haryana, GST, MSME) |
 | `contact.html` | Contact: both offices + message form |
 | `quote.html` | Request Quote form (pre-filled with products picked in the catalogue) |
@@ -32,7 +34,7 @@ Upload the folder contents to any web host.
 assets/css/style.css        base layout and component styles
 assets/css/modern.css       shared responsive theme, product cards, animations
 assets/js/main.js           mobile menu, forms, quote pre-fill
-assets/js/catalogue.js      product catalogue, product panel, enquiry list, photo lightbox
+assets/js/catalogue.js      product catalogue, progressive results, product panel and enquiry list
 assets/img/                 logo, emblem, product photos
 assets/img/solutions/       36 solution photos from the 2026 company profile
 tools/company.json          verified industries and partner makes from the latest profiles
@@ -78,7 +80,7 @@ message to the primary email in `tools/company.json` (`contacts.primary_email`).
 - Cards preview available options. Product dialogs add specification summaries and application guidance.
 - Specifications are maintained in `SPECIFICATIONS` in `tools/build.py`; model-specific ratings must be confirmed with the engineering team. Do not invent missing ratings.
 - All 56 product families currently have photographs. The 34 added Wikimedia images are representative equipment photos; their source and licence links appear in product details. Credits are maintained in `assets/img/products/CREDITS.md`. A labelled illustration remains as a fallback for future families without photography.
-- `assets/css/profile.css` applies the updated light palette across all seven pages: white/lavender backgrounds, royal navy `#00008B`, purple `#422772` and leaf green `#9BBB59`. The animated system model uses the same palette.
+- `assets/css/profile.css` applies the updated light palette across all eight pages: white/lavender backgrounds, royal navy `#00008B`, purple `#422772` and leaf green `#9BBB59`. The animated system model uses the same palette.
 - The 6 November profiles confirm 23 sectors, 51 named OEM partners, 33 clients, 56 product families and 332 variants. Company/project references, instrumentation, OEM makes, branch contacts and team-experience figures follow those profiles.
 - Profile PDFs and their public download links were removed. Office GST rows align at the bottom of equal-height cards.
 - The newly supplied photographs are included and checked locally. Independent verification of the live site and external photo-source metadata remains blocked by this environment’s network policy.
@@ -102,7 +104,7 @@ npm install --prefix /tmp/chemotech-checks playwright
 NODE_PATH=/tmp/chemotech-checks/node_modules node tools/browser-check.cjs
 ```
 
-Keep the local server running in another terminal. `SITE_URL` can override the default test server address. Checks cover all seven pages at 320, 390, 768, 1024, 1440 and 1920 pixels, catalogue filters, enquiries, product deep links, mobile navigation, dialogs and reduced motion. These checks use Chromium; physical iOS/Android devices and Safari are separate compatibility checks.
+Keep the local server running in another terminal. `SITE_URL` can override the default test server address. Checks cover all eight pages at 320, 390, 768, 1024, 1440 and 1920 pixels, catalogue filters, enquiries, product deep links, mobile navigation, dialogs and reduced motion. These checks use Chromium; physical iOS/Android devices and Safari are separate compatibility checks.
 
 ## GitHub Pages hosting
 
@@ -117,3 +119,17 @@ The active type scale uses native system fonts, 17px base copy, 16–18px main r
 Contact details are centralised in `tools/company.json`. The user selected the Company Profile PDF as the final reference for both offices and the footer. Phone order: 98999 82418, 87574 46605, 99106 80998, 93122 82418. Email order: chemotech.international@gmail.com, info.chemotechinternational@gmail.com, tapan.chemotech@gmail.com.
 
 Workflow and office pictograms, viewport reveals and a short process-line animation provide visual guidance. Reduced-motion preferences disable animation. The email forms do not submit to a server; users must send the prepared/copied draft from their own email service.
+
+
+## Page structure and visitor journeys
+
+- `index.html`: capability overview, selected systems and concise evidence.
+- `solutions.html`: four engineering disciplines, relevant equipment/application images, delivery process, service scope and complete OEM list.
+- `products.html`: compact searchable catalogue. The first 12 cards are shown initially, with 12 more per activation; filtering always searches all 56 families and 332 variants. Without JavaScript all cards remain available.
+- `projects.html`: recorded project references (locations/capacities), clients and industries. Equipment/application imagery is not presented as project photography.
+- `about.html`: company background, people, concise commitments and legal company facts.
+- `certifications.html`: Licences & Registrations; a supporting page linked from About, Solutions and the footer.
+- `contact.html`: office contacts/maps and short general enquiry, with jump links.
+- `quote.html`: selected products, project scope and quotation enquiry.
+
+`company-profile.html` redirects to Projects, retaining client/presence anchors and routing the old OEM anchor to Solutions. Product IDs, category links, legacy DG redirects and saved enquiry migration are preserved. The former product-gallery anchor routes to Solutions. Contact and quote forms clearly require the visitor to send the prepared/copied email; no submission backend or third-party form endpoint is configured.

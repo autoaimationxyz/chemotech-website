@@ -3,7 +3,7 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
  const errors=[];
  const page=await browser.newPage();
  page.on('pageerror',e=>errors.push(e.message));
- const pages=['index','products','about','company-profile','certifications','contact','quote'];
+ const pages=['index','solutions','products','about','projects','certifications','contact','quote'];
  for(const width of [320,390,768,1024,1440,1920]){
   await page.setViewportSize({width,height:900});
   for(const name of pages){
@@ -17,11 +17,11 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
     assert(await page.locator('.pcard p').first().evaluate(el => parseFloat(getComputedStyle(el).fontSize) >= 16), 'Product copy is too small');
     assert(await page.locator('#cat-search').evaluate(el => parseFloat(getComputedStyle(el).fontSize) >= 16), 'Input text is too small');
    }
-   if (name === 'about') {
+   if (name === 'solutions') {
     assert(await page.locator('.checklist li').first().evaluate(el => parseFloat(getComputedStyle(el).paddingLeft) >= 20), 'Bullet row padding is missing');
    }
   }
-  console.log(`PASS: seven pages at ${width}px`);
+  console.log(`PASS: eight pages at ${width}px`);
  }
  await page.setViewportSize({width:1440,height:1000});
  await page.goto(base + '/index.html');
@@ -37,10 +37,16 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
  assert(Math.abs(gstTops[0]-gstTops[1]) < 1, 'GST rows must align on desktop');
  assert.equal(await page.locator('a[href$=".pdf"]').count(), 0, 'Profile PDF links must be removed');
  await page.goto(base + '/products.html');
- await page.locator('[data-gateway="wp"]').click();
+ await page.locator('[data-cat="wp"]').click();
  assert.equal(await page.locator('.pcard:visible').count(), 8);
  await page.locator('[data-reset]').first().click();
- assert.equal(await page.locator('.pcard:visible').count(),56);
+ assert.equal(await page.locator('.pcard:visible').count(),12);
+ await page.locator('#show-more').click();
+ assert.equal(await page.locator('.pcard:visible').count(),24);
+ assert(await page.locator('.pcard__open').nth(12).evaluate(el => el === document.activeElement));
+ await page.locator('#cat-search').fill('Water Quality Analysers');
+ assert.equal(await page.locator('.pcard:visible').count(),1);
+ await page.locator('[data-reset]').first().click();
  await page.locator('#cat-search').fill('MBBR');
  assert.equal(await page.locator('.pcard:visible').count(),2);
  await page.locator('[data-reset]').first().click();
@@ -52,6 +58,7 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
  await page.locator('#cat-search').fill('no-such-product-xyz');
  assert(await page.locator('#cat-empty').isVisible());
  await page.locator('#cat-empty [data-reset]').click();
+ await page.locator('#cat-search').fill('Online UPS');
  await page.locator('[data-no="27"] .pcard__open').click();
  assert(await page.locator('#pdialog').isVisible());
  assert((await page.locator('.spec-grid').textContent()).includes('1–4000 kVA'));
@@ -92,6 +99,16 @@ async function checkSite(browser, base = 'http://127.0.0.1:8080') {
  await page.goto(base + '/products.html#p-10');
  assert((await page.locator('#pd-title').textContent()).includes('Diesel Generator Sets'));
  assert((await page.locator('.pd-head small').textContent()).includes('Product 07 of 56'));
+ await page.goto(base + '/products.html');
+ while (await page.locator('#show-more').isVisible()) await page.locator('#show-more').click();
+ assert.equal(await page.locator('.pcard:visible').count(),56);
+ await page.goto(base + '/company-profile.html#partners');
+ await page.waitForURL('**/solutions.html#partners');
+ await page.goto(base + '/company-profile.html#clients');
+ await page.waitForURL('**/projects.html#clients');
+ await page.goto(base + '/solutions.html#wp');
+ await page.locator('#wp a[href="products.html#cat-wp"]').click();
+ assert.equal(await page.locator('.pcard:visible').count(),8);
  await page.goto(base + '/contact.html');
  await page.locator('[data-copy-message]').click();
  assert.equal(await page.locator('#name').getAttribute('aria-invalid'),'true');

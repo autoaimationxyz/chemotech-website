@@ -34,3 +34,12 @@ Main reading copy was previously 11–14px in several components and mobile labe
 Office contacts are centralised, with readable lists and optional line breaks before email @ signs. The primary email is the first email common to both PDFs. The user resolved the source discrepancy by selecting the Company Profile's four-number list everywhere: 98999 → 87574 → 99106 → 93122. Both offices use its email order: chemotech.international, info.chemotechinternational, tapan.chemotech (all @gmail.com). The Company PDF's “80 more makes” and client-coverage wording take precedence over the differing DOCX copy for those passages.
 
 The copy-enquiry option validates the form and copies a correctly addressed draft, including selected products. A selectable readonly draft is provided when clipboard access fails. No direct server-side delivery is claimed.
+
+
+## Approved information architecture update
+
+The user approved the review's page restructuring. Solutions & Services now owns capability explanations, the full delivery process, supporting images, service options and OEM information. Projects & Clients owns the unchanged reference data, capacities, locations, client names and sectors. About keeps the company facts and people; overlapping quality/mission/approach passages are consolidated into concise commitments. Home keeps its substantial overview and links to the detailed owners.
+
+Products now starts with search and filters, with 12 cards initially and progressive access to the full catalogue. Full photos, specifications, variants and makes remain in product details. Existing IDs, saved enquiries and legacy links are preserved. The footer retains all four approved phone numbers but removes the repeated registration block and full category list. Page endings have relevant actions. Forms explicitly explain the email-draft workflow; direct submission remains a future backend integration.
+
+Verification includes eight pages at six viewport widths, desktop/mobile WCAG automated checks, full progressive catalogue access, solution/category journeys, legacy redirects, deep-link focus, saved enquiries and reduced motion. Physical-device and Safari testing are not represented by Chromium checks.
