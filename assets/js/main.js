@@ -13,20 +13,29 @@
       var available = window.innerHeight - header.getBoundingClientRect().bottom - 12;
       nav.style.setProperty('--nav-space', Math.max(100, available) + 'px');
     };
+    var closeMenu = function (restoreFocus) {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      if (restoreFocus) toggle.focus();
+    };
+    document.addEventListener('click', function (event) {
+      if (nav.classList.contains('is-open') && !nav.contains(event.target) && !toggle.contains(event.target)) closeMenu(false);
+    });
     toggle.addEventListener("click", function () {
       var open = nav.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       if (open) fitMenu();
     });
-    window.addEventListener('resize', fitMenu, {passive:true});
+    window.addEventListener('resize', function () {
+      if (getComputedStyle(toggle).display === 'none') closeMenu(false);
+      else fitMenu();
+    }, {passive:true});
     window.addEventListener('scroll', function () { if (nav.classList.contains('is-open')) fitMenu(); }, {passive:true});
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && nav.classList.contains("is-open")) {
-        nav.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", "Open menu");
-        toggle.focus();
+        closeMenu(true);
       }
     });
   }
@@ -147,11 +156,30 @@
       }).join("");
       input.value = items.map(function (x) { return pad(x.catalogue_no || x.no) + " " + x.name; }).join("; ");
     };
+    var invalidateDraft = function () {
+      var form = picked.closest('form');
+      if (form) form.dispatchEvent(new Event('input', {bubbles:true}));
+    };
+    var announce = document.getElementById('picked-notice');
+    window.addEventListener('storage', function (event) {
+      if (event.key !== KEY && event.key !== null) return;
+      render();
+      invalidateDraft();
+      if (announce) announce.textContent = 'Your product selection was updated in another tab.';
+    });
+    window.addEventListener('pageshow', function (event) { if (event.persisted) { render(); invalidateDraft(); } });
     picked.addEventListener("click", function (e) {
       var b = e.target.closest("[data-remove]");
       if (!b) return;
+      var buttons = Array.prototype.slice.call(picked.querySelectorAll('[data-remove]'));
+      var position = buttons.indexOf(b);
       write(read().filter(function (x) { return x.no !== +b.dataset.remove; }));
       render();
+      invalidateDraft();
+      var remaining = picked.querySelectorAll('[data-remove]');
+      var next = remaining[Math.min(position, remaining.length - 1)] || document.getElementById('quote-catalogue-link');
+      if (next) next.focus();
+      if (announce) announce.textContent = remaining.length ? 'Product removed. ' + remaining.length + ' remaining in your enquiry.' : 'Product removed. No products selected; you can add products or describe your requirements below.';
     });
     render();
   }

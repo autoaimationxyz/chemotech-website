@@ -1038,8 +1038,9 @@ def quote():
         <div class="picked" id="picked" hidden>
           <p><b>From the catalogue:</b> these products will be included in your request.</p>
           <ul></ul>
-          <a class="text-link" href="products.html">Add more products {ARROW}</a>
         </div>
+        <p id="picked-notice" class="selection-notice" role="status" aria-live="polite"></p>
+        <a class="text-link quote-catalogue-link" id="quote-catalogue-link" href="products.html">Browse products to add to your enquiry {ARROW}</a>
         <input type="hidden" id="picked-input" data-label="Catalogue products">
         <div class="checks" role="group" aria-label="Categories" data-label="Categories">{checks}</div>
       </fieldset>

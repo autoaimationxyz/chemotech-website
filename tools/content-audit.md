@@ -43,3 +43,8 @@ The user approved the review's page restructuring. Solutions & Services now owns
 Products now starts with search and filters, with 12 cards initially and progressive access to the full catalogue. Full photos, specifications, variants and makes remain in product details. Existing IDs, saved enquiries and legacy links are preserved. The footer retains all four approved phone numbers but removes the repeated registration block and full category list. Page endings have relevant actions. Forms explicitly explain the email-draft workflow; direct submission remains a future backend integration.
 
 Verification includes eight pages at six viewport widths, desktop/mobile WCAG automated checks, full progressive catalogue access, solution/category journeys, legacy redirects, deep-link focus, saved enquiries and reduced motion. Physical-device and Safari testing are not represented by Chromium checks.
+
+
+## Post-restructure interaction review
+
+Confirmed and fixed two issues: search/make filters were lost on reload/sharing, and removing selected equipment left a stale prepared enquiry visible while keyboard focus fell back to the document body. Filter URLs now restore search/make/category controls and handle invalid makes. Selection changes invalidate draft feedback, retain useful focus and announce the result. Storage/page-cache events refresh selections across tabs and restored pages. Mobile menu dismissal is consistent on outside clicks and desktop transitions. Focused journey regression tests reproduce the original failures and verify the fixes.

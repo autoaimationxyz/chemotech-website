@@ -535,3 +535,6 @@ summary { cursor:pointer; padding:18px 0; font-size:1rem; font-weight:600; color
 .form-explainer { font-size:1rem; line-height:1.7; margin-bottom:24px; color:var(--muted); }
 #enquiry,#office-patna,#office-delhi { scroll-margin-top:120px; }
 .pcard__foot .add-btn { width:100%; }
+.selection-notice { font-size:1rem; line-height:1.7; margin-bottom:16px; color:var(--purple); }
+.selection-notice:empty { display:none; }
+.quote-catalogue-link { margin-bottom:24px; }

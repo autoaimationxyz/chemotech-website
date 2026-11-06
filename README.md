@@ -102,6 +102,7 @@ Optional browser regression checks require Playwright and its Chromium browser. 
 npm install --prefix /tmp/chemotech-checks playwright
 /tmp/chemotech-checks/node_modules/.bin/playwright install chromium
 NODE_PATH=/tmp/chemotech-checks/node_modules node tools/browser-check.cjs
+NODE_PATH=/tmp/chemotech-checks/node_modules node tools/journey-check.cjs
 ```
 
 Keep the local server running in another terminal. `SITE_URL` can override the default test server address. Checks cover all eight pages at 320, 390, 768, 1024, 1440 and 1920 pixels, catalogue filters, enquiries, product deep links, mobile navigation, dialogs and reduced motion. These checks use Chromium; physical iOS/Android devices and Safari are separate compatibility checks.
@@ -133,3 +134,10 @@ Workflow and office pictograms, viewport reveals and a short process-line animat
 - `quote.html`: selected products, project scope and quotation enquiry.
 
 `company-profile.html` redirects to Projects, retaining client/presence anchors and routing the old OEM anchor to Solutions. Product IDs, category links, legacy DG redirects and saved enquiry migration are preserved. The former product-gallery anchor routes to Solutions. Contact and quote forms clearly require the visitor to send the prepared/copied email; no submission backend or third-party form endpoint is configured.
+
+
+## Post-restructure interaction refinements
+
+Catalogue searches and make filters are encoded in `q` and `make` URL parameters; categories retain the existing hash links. Shared/reloaded filtered product links restore the controls. Reset clears the filter parameters. Invalid make values fall back to the complete make list.
+
+Enquiry selections update across tabs and when returning through the browser's page cache. Removing a selected product returns keyboard focus to the next removal action or the catalogue link, announces the change and hides an outdated prepared draft. Mobile menus dismiss on outside clicks and reset when switching to desktop layout. `tools/journey-check.cjs` covers these interactions.

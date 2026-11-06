@@ -109,8 +109,8 @@
       if (catalogue) catalogue.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     });
   });
-  if (search) search.addEventListener("input", function () { state.q = norm(search.value.trim()); apply(); });
-  if (makeSel) makeSel.addEventListener("change", function () { state.make = makeSel.value; apply(); });
+  if (search) search.addEventListener("input", function () { state.q = norm(search.value.trim()); syncFilters(); apply(); });
+  if (makeSel) makeSel.addEventListener("change", function () { state.make = makeSel.value; syncFilters(); apply(); });
   $$("[data-reset]").forEach(function (b) {
     b.addEventListener("click", function () {
       state = { cat: "all", make: "", q: "" };
@@ -121,11 +121,31 @@
     });
   });
 
+  function syncFilters() {
+    try {
+      var url = new URL(location.href);
+      if (state.q) url.searchParams.set('q', search.value.trim());
+      else url.searchParams.delete('q');
+      if (state.make) url.searchParams.set('make', state.make);
+      else url.searchParams.delete('make');
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } catch (e) { /* File previews and restricted histories keep filters usable. */ }
+  }
   function setHash(h) {
     try {
-      if (h) { if (location.hash !== "#" + h) history.replaceState(null, "", "#" + h); }
-      else if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+      var url = new URL(location.href);
+      url.hash = h;
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
     } catch (e) { /* sandboxed preview: ignore */ }
+    syncFilters();
+  }
+  function restoreFilters() {
+    var params = new URLSearchParams(location.search);
+    if (search) search.value = params.get('q') || '';
+    if (makeSel) makeSel.value = params.get('make') || '';
+    state.q = norm(search ? search.value.trim() : '');
+    state.make = makeSel ? makeSel.value : '';
+    if (makeSel && !state.make) makeSel.value = '';
   }
 
   /* ---------------- Enquiry list ---------------- */
@@ -177,6 +197,10 @@
     var b = e.target.closest("[data-add]");
     if (b) { e.preventDefault(); toggle(+b.dataset.add); }
   });
+  window.addEventListener('storage', function (event) {
+    if (event.key === KEY || event.key === null) renderTray();
+  });
+  window.addEventListener('pageshow', function () { renderTray(); });
   var clearBtn = $("#tray-clear");
   if (clearBtn) clearBtn.addEventListener("click", function () { writeList([]); });
 
@@ -305,7 +329,8 @@
       document.body.classList.remove("has-dialog");
       setHash(state.cat === "all" ? "" : "cat-" + state.cat);
       var card = $('.pcard[data-no="' + current + '"] .pcard__open');
-      if (card) card.focus({ preventScroll: true });
+      if (card && !card.closest(".pcard").hidden) card.focus({ preventScroll: true });
+      else if (search) search.focus({ preventScroll: true });
     });
   }
   $$(".pcard__open, [data-open]").forEach(function (b) {
@@ -314,14 +339,17 @@
 
   /* ---------------- Start ---------------- */
   function fromHash() {
+    restoreFilters();
     var h = location.hash.slice(1);
     var m;
+    state.cat = "all";
     if (h === "solutions") { location.replace("solutions.html"); return; }
     if ((m = h.match(/^cat-([a-z]{2})$/)) && CATS[m[1]]) { state.cat = m[1]; apply(); var t = $("#catalogue"); if (t) t.scrollIntoView(); }
     else if ((m = h.match(/^p-(\d+)$/)) && (BY_NO[m[1]] || REDIRECTS[m[1]])) { apply(); openProduct(+m[1]); }
+    else apply();
   }
   window.addEventListener("hashchange", fromHash);
-  apply();
+  window.addEventListener("popstate", fromHash);
   renderTray();
   fromHash();
 })();
