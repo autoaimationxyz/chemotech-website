@@ -521,8 +521,8 @@ def solution_gateways():
 
 
 def home():
-    facts = [("2014–15", "Established"), ("3", "Countries: India · Nepal · Bhutan"), (str(len(INDUSTRIES)), "Industry sectors served"),
-             (str(N_PRODUCTS), "Products"), (str(N_VARIANTS), "Variants &amp; types"), (str(len(PARTNERS)), "Named OEM partners")]
+    facts = [("10+", "Years in business"), ("3", "Countries: India · Nepal · Bhutan"), ("20+", "Industry sectors served"),
+             ("50+", "Product families"), ("300+", "Variants &amp; types"), ("50+", "Named OEM partners")]
     facts_html = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in facts)
 
     capabilities = [
@@ -572,7 +572,7 @@ def home():
   <div class="wrap">
     <div class="section-head section-head--split">
       <div class="stack" style="gap:14px"><span class="tag">Selected systems</span><h2>Solutions in focus.</h2><p>A starting point for your next project. Explore our full portfolio for every product family and variant.</p></div>
-      <a class="text-link" href="products.html">All {N_PRODUCTS} product families {ARROW}</a>
+      <a class="text-link" href="products.html">Explore 50+ product families {ARROW}</a>
     </div>
     <div class="featured-grid home-featured-grid">{featured_products((27, 39))}</div>
   </div>
@@ -704,7 +704,7 @@ def solutions():
 <nav class="section-nav wrap" aria-label="Solution disciplines"><a href="#pd">Power &amp; energy</a><a href="#au">Automation</a><a href="#wp">Water &amp; process</a><a href="#bi">Buildings</a><a href="#delivery">Delivery &amp; service</a></nav>
 {"".join(sections)}
 <section class="section section--wash" id="delivery"><div class="wrap"><div class="section-head"><span class="tag">From requirement to service</span><h2>One coordinated delivery process.</h2><p>We agree the responsibilities and deliverables for your project before execution.</p></div><ol class="chain">{"".join(f'<li><div class="chain-head"><small>Step {i}</small>{icon(ic)}</div><b>{E(label)}</b></li>' for i,(ic,label) in enumerate([("automation","Requirement & design"),("electrical","Sourcing & supply"),("service","Installation"),("switch","Testing & commissioning"),("service","Service & AMC")],1))}</ol><h3 class="service-heading">Choose the support your project needs</h3><ul class="service-options">{services}</ul><p class="note">Supply-only, installation, turnkey and service scopes are available by agreement. <a href="certifications.html">View our licences and registrations.</a></p></div></section>
-<section class="section" id="partners"><div class="wrap"><div class="section-head"><span class="tag">Equipment sourcing</span><h2>Established makes. Application-led selection.</h2><p>We work with {len(PARTNERS)} named OEMs across our portfolio. Final makes, ratings and model availability are confirmed against your requirements.</p></div><details class="oem-details"><summary>View the full OEM list</summary><ul class="names names--partners">{partners}</ul><p class="more-band">+ 80 more makes <span>across the disciplines we serve</span></p></details></div></section>
+<section class="section" id="partners"><div class="wrap"><div class="section-head"><span class="tag">Equipment sourcing</span><h2>Established makes. Application-led selection.</h2><p>We work with 50+ named OEMs across our portfolio. Final makes, ratings and model availability are confirmed against your requirements.</p></div><details class="oem-details"><summary>View the full OEM list</summary><ul class="names names--partners">{partners}</ul><p class="more-band">+ 80 more makes <span>across the disciplines we serve</span></p></details></div></section>
 {cta("Let’s define the right scope together.", "Discuss your requirements", "contact.html")}"""
     page("solutions.html", "Solutions & Services", "Power, automation, water, process and building engineering: equipment selection, supply, installation, commissioning and maintenance from Chemotech International.", body)
 
@@ -753,7 +753,7 @@ def products():
     data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
     body = f"""
-<section class="catalogue-hero"><div class="wrap"><div class="crumbs"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Products</span></div><h1>Find the equipment for your project.</h1><p>{N_PRODUCTS} product families · {N_VARIANTS} variants. Search by equipment, specification or make.</p><a class="text-link" href="solutions.html">Need help defining the system? Explore solutions {ARROW}</a></div></section>
+<section class="catalogue-hero"><div class="wrap"><div class="crumbs"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Products</span></div><h1>Find the equipment for your project.</h1><p>50+ product families · 300+ variants. Search by equipment, specification or make.</p><a class="text-link" href="solutions.html">Need help defining the system? Explore solutions {ARROW}</a></div></section>
 <div class="cat-toolbar" role="search" aria-label="Filter products">
   <div class="wrap">
     <div class="cat-row">
@@ -834,7 +834,7 @@ def projects():
     <div class="section-head section-head--split">
       <div class="stack" style="gap:14px">
         <span class="tag">Our presence</span>
-        <h2>We supply and serve these {len(INDUSTRIES)} industries</h2>
+        <h2>Serving 20+ industry sectors</h2>
         <div class="presence"><span>India</span><span>Nepal</span><span>Bhutan</span></div>
       </div>
     </div>

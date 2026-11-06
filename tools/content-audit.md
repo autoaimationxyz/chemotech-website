@@ -48,3 +48,8 @@ Verification includes eight pages at six viewport widths, desktop/mobile WCAG au
 ## Post-restructure interaction review
 
 Confirmed and fixed two issues: search/make filters were lost on reload/sharing, and removing selected equipment left a stale prepared enquiry visible while keyboard focus fell back to the document body. Filter URLs now restore search/make/category controls and handle invalid makes. Selection changes invalidate draft feedback, retain useful focus and announce the result. Storage/page-cache events refresh selections across tabs and restored pages. Mobile menu dismissal is consistent on outside clicks and desktop transitions. Focused journey regression tests reproduce the original failures and verify the fixes.
+
+
+## Promotional number presentation
+
+At the user's request, promotional totals use conservative rounded thresholds: 10+ years in business, 20+ sectors, 50+ product families, 300+ variants and 50+ named OEMs. The country total stays exactly 3. Catalogue result/category counts, product specifications, profile-derived team experience, establishment dates, registrations and contacts retain their precise source values.
